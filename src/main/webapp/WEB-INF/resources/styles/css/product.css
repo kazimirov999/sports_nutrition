@@ -1,0 +1,385 @@
+/*------top bar sort------------------------------------*/
+.topNavigationProduct .resultSelect{
+    margin: 14px 0 0 20px;
+}
+.topNavigationProduct .resultSelect .category{
+    font-size: 16px;
+    font-weight: 600;
+    color: #3F3D3D;
+}
+.topNavigationProduct .resultSelect .totalProduct{
+    font-size: 14px;
+    color: #373539;
+}
+.topNavigationProduct .resultSelect .amount{
+    font-size: 16px;
+    font-weight: 600;
+    color: #3F3D3D;
+}
+/*---------------------------------------------------------*/
+
+/*-----product box------------------------------------*/
+.productBox{
+    float: left;
+    width: 260px;
+    height:435px;
+    padding: 20px 0 30px 10px;
+    position: relative;
+
+}
+.productBox .discountLabel{
+    position: absolute;
+    font-weight: 600;
+    color: #f7f7f7;
+    top: 50px;
+    left: 205px;
+    z-index: 1;
+    border: 1px solid #4cc2dc;
+    background: #00a8cc;
+    padding: 21px 10px;
+    border-radius: 70px;
+}
+.productBox .imageBox{
+    width: 230px;
+    height: 250px;
+    text-align: center;
+}
+.productBox .manufactured{
+    height: 10px;
+    padding: 10px 0 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #8b8b8b;
+}
+.productBox .productNameBox{
+    min-height: 23px;
+    padding: 0 0 5px;
+}
+.productBox .productNameBox a {
+    font-weight: 600;
+    font-size: 14px;
+    color: #303030;
+    text-decoration: none;
+}
+.productBox .productNameBox a:hover{
+    color: #0F92BB;
+    cursor: pointer;
+}
+.productBox .priceBox{
+    height: 32px;
+    padding: 6px 0;
+    font-weight: 600;
+    font-size: 14px;
+    color: #8b8b8b;
+}
+.productBox .priceBox .priceWithoutDiscount{
+    position: relative;
+    font-size: 22px;
+    font-family: Trebuchet MS, Roboto, sans-serif;
+    color: #575757;
+    text-decoration: line-through;
+}
+.productBox .priceBox .realPrice {
+    font-size: 22px;
+    margin: 1px;
+    padding: 4px 9px;
+    background: #93A500;
+    color: #fff;
+    border-radius: 8px;
+}
+.productBox .priceBox .currency{
+    font-size: 14px;
+    color: #575757;
+}
+.productBox .priceBox .realPrice .currency{
+    font-size: 14px;
+    color: #fff;
+}
+.productBox .buyBox .tasteBox{
+    text-align: left;
+    padding: 1px 0 10px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #8b8b8b;
+}
+.productBox .buyBox .tasteBox .taste {
+    max-width: 153px
+    text-align: center;
+    padding: 0 9px 2px;
+    background-color: #556063;
+    border-radius: 5px;
+    font: 14px Hevletica, sans-serif;
+    color: #fff;
+}
+.productBox .priceBox .priceWithoutDiscountWrapper{
+    margin: 4px;
+    float: right;
+    text-align: center;
+}
+
+.productBox .buyBox .driveImg{
+    background: url(../images/freeDrive.png);
+    width: 36px;
+    height: 22px;
+}
+.productBox .buyBox .wrraperDriveImg{
+    width: 36px;
+    margin-right: 50px;
+    float: right;
+    height: 21px;
+    padding: 7px;
+    border-radius: 8px;
+    border: 1px solid #00a8cc;
+}
+.productBox .buyBox .buttonBuy{
+    height: 38px;
+    width: 112px;
+    border: none;
+    background: #00a8cc;
+    font: 23px/25px Hevletica, sans-serif;
+    color: #fff;
+    cursor: pointer;
+    outline: none;
+    border-radius: 8px;
+}
+.productBox .buyBox .buttonBuy:hover{
+    height: 38px;
+    width: 112px;
+    border: none;
+    background: #93A500;
+    font: 23px/25px Calibri, sans-serif;
+    color: #fff;
+    cursor: pointer;
+    outline: none;
+    border-radius: 8px;
+}
+.productBox .productAdminBox{
+    text-align: center;
+    color: black;
+    padding: 11px;
+}
+.productBox .productAdminBox a{
+    color:#0C0C0C;
+}
+
+
+.clear{
+    clear: both;
+}
+/*------------------------------------------------------------------*/
+
+
+
+/*--------------------product detail------------------------------------------------------*/
+.productShowContentBox{
+    margin-top: 35px;
+}
+
+.productImageBox{
+    width: 300px;
+    height: 422px;
+    text-align: center;
+    float: left;
+    position: relative;
+}
+.productImageBox .discountLabel{
+    position: absolute;
+    font-weight: 600;
+    color: #f7f7f7;
+    top: 50px;
+    left: 205px;
+    z-index: 1;
+    border: 1px solid #27cbdc;
+    background: #00a8cc;
+    padding: 21px 10px;
+    border-radius: 70px;
+}
+.productMainContentBox .productNameBox{
+    width: 665px;
+    font: 500 26px Hevletica, sans-serif;
+    color: #00a8cc;
+}
+.productMainContentBox .productNameBox .brandName{
+    font-size: 15px;
+    color: black;
+}
+
+.productMainContentBox .driveImg{
+    background: url(../images/freeDrive.png);
+    width: 36px;
+    height: 22px;
+    float: left;
+    margin-right: 12px;
+}
+.productMainContentBox .productAdminBox{
+    text-align: center;
+    color: black;
+    padding: 11px;
+}
+.productMainContentBox .productAdminBox a{
+    color:#0C0C0C;
+}
+.productMainContentBox .wrraperDriveImg{
+    font-size: 12px;
+    width: 121px;
+    height: 21px;
+    padding: 7px;
+    border-radius: 8px;
+    border: 1px solid #00a8cc;
+    position: absolute;
+    top: 50px;
+    left: 681px;
+}
+
+.productMainContentBox .wrapperMainBox{
+    margin: 15px 0 0 300px;
+    min-height: 200px;
+    position: relative;
+    border: 1px solid #d8d8d8;
+    background: #f1f1f1;
+    border-radius: 1px;
+    margin-left: 300px;
+    padding: 15px;
+}
+.productMainContentBox .wrapperMainBox .productTasteBox .tasteSpan{
+    margin-right: 20px;
+    position: relative;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 48px;
+    color: #8b8b8b;
+}
+.productMainContentBox .wrapperMainBox .productTasteBox .taste {
+    width: 238px;
+    height: 39px;
+    padding-left: 7px;
+    padding-right: 15px;
+    border-radius: 10px;
+    border-color: #000;
+    outline: none;
+    font-weight: 500;
+    font-size: 18px;
+    font-family: Calibri, sans-serif;
+}
+.productMainContentBox .wrapperMainBox .productTasteBox .taste:hover{
+    cursor: pointer;
+}
+.productMainContentBox .wrapperMainBox .productBuyBox  .buttonBuy{
+    height: 46px;
+    float: right;
+    width: 112px;
+    border: none;
+    margin: 14px 88px 5px 0;
+    background: #00a8cc;
+    font: 23px/25px Hevletica, sans-serif;
+    color: #fff;
+    cursor: pointer;
+    outline: none;
+    border-radius: 8px;
+}
+.productMainContentBox .wrapperMainBox .productBuyBox .buttonBuy:hover{
+    height: 38px;
+    width: 112px;
+    border: none;
+    background: #93A500;
+    font: 23px/25px Calibri, sans-serif;
+    color: #fff;
+    cursor: pointer;
+    outline: none;
+    border-radius: 8px;
+}
+.productMainContentBox .wrapperMainBox .productPriceBox{
+    float: left;
+}
+.productMainContentBox .wrapperMainBox .productPriceBox .realPrice{
+    font-weight: 500;
+    font-size: 50px;
+    color: #859400;
+    padding: 10px 0 0 0;
+}
+.productMainContentBox .wrapperMainBox .productPriceBox .realPrice .currency{
+    font-weight: 300;
+    font-size: 28px;
+    line-height: 45px;
+    color: #8b8b8b;
+}
+.productMainContentBox .wrapperMainBox .productPriceBox .priceWithoutDiscountWrapper{
+    text-align: right;
+}
+.productMainContentBox .wrapperMainBox .productPriceBox .priceWithoutDiscountWrapper .priceWithoutDiscount{
+    font-weight: 300;
+    font-size: 35px;
+    color: #b9b9b9;
+    text-decoration: line-through;
+    margin: 0;
+    padding: 0;
+}
+.productMainContentBox .wrapperMainBox .productPriceBox .priceWithoutDiscountWrapper .currency{
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 25px;
+    color: #8b8b8b;
+}
+.productMainContentBox .wrapperMainBox .avaibleProductBox{
+    position: absolute;
+    top: 139px;
+    left: 293px;
+}
+.productMainContentBox .wrapperMainBox .avaibleProductBox .avaible{
+    color: #859400;
+    font-weight: 600;
+}
+.productMainContentBox .wrapperMainBox .avaibleProductBox .unavaible{
+    font-weight: 600;
+    color: #5A5858;
+}
+/*-----------------------------------------------------------------------------------------*/
+.productMainContentBox .wrapperMainBox .wrapperShotDescComposition{
+    width: 500px;
+    min-height: 100px;
+    float: initial;
+    margin: 112px 10px 0px 0;
+}
+.productMainContentBox .wrapperMainBox .wrapperShotDescComposition .productShortDesc{
+    padding: 0 20px;
+    text-indent: 30px;
+    text-align: left;
+    line-height: 20px;
+    font-size: 14px;
+    color: #040404;
+}
+.productMainContentBox .wrapperMainBox .wrapperShotDescComposition .productPropertiesBox {
+    padding: 20px 10px 10px 15px;
+}
+.productMainContentBox .wrapperMainBox .wrapperShotDescComposition .productPropertiesBox table td{
+    font-size: 13px;
+    color: #050E10;
+    padding: 5px;;
+}
+.productMainContentBox .fullDescription {
+    font-size: 13px;
+    line-height: 20px;
+    padding: 7px 7px 32px 7px;
+    color: #080808;
+    font-family: Helvetica, Arial, sans-serif;
+}
+.productMainContentBox .fullDescription .product-tab-h {
+    text-indent: 30px;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 10px;
+}
+.productMainContentBox .fullDescription ul {
+    margin: 10px 0 10px 49px;
+    list-style: initial;
+}
+
+
+.productMainContentBox .fullDescription h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 10px;
+}
+.productMainContentBox .fullDescription p {
+    text-indent: 30px;
+}

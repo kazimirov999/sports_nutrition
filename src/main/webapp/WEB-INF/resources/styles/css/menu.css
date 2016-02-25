@@ -1,0 +1,168 @@
+
+/* Base Styles */
+#cssmenu,
+#cssmenu ul,
+#cssmenu li,
+#cssmenu a {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    list-style: none;
+    font-weight: normal;
+    text-decoration: none;
+    line-height: 1;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    position: relative;
+}
+#cssmenu {
+    width: 250px;
+    border-bottom: 0px solid #656659;
+}
+#cssmenu a {
+    line-height: 1.3;
+}
+#cssmenu > ul > li:first-child {
+    background: #848481;
+    background: -moz-linear-gradient(#848481 0%, #45463d 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #848481), color-stop(100%, #45463d));
+    background: -webkit-linear-gradient(#848481 0%, #45463d 100%);
+    background: linear-gradient(#5B6058 0%, #020202 100%);
+}
+#cssmenu > ul > li:first-child > a {
+    padding: 15px 10px;
+    border: none;
+    font-family: 'Ubuntu', sans-serif;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 300;
+    text-shadow: 0 -1px 1px #A70707;
+}
+#cssmenu > ul > li:first-child > a > span {
+    padding: 0;
+}
+#cssmenu > ul > li:first-child:hover {
+    background: #080805;
+}
+#cssmenu > ul > li {
+    background: #545151;
+    background: -moz-linear-gradient(#464444 0%, #131313 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #8C8989), color-stop(100%, #545151));
+    background: -webkit-linear-gradient(#464444 0%, #131313 100%);
+    background: linear-gradient(#464444 0%, #131313 100%);
+}
+#cssmenu > ul > li:hover {
+    background: #58e87d;
+    background: -moz-linear-gradient(#58e87d 0%, #00e893 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#58e87d), color-stop(100%, #00e893));
+    background: -webkit-linear-gradient(#58e87d 0%, #00e893 100%);
+    background: linear-gradient(#58e87d 0%, #00e893 100%);
+}
+#cssmenu > ul > li > a {
+    font-size: 14px;
+    display: block;
+    background: url(../images/pattern.png) top left repeat;
+    color: #ffffff;
+    border: 1px solid #4E4F46;
+    border-top: none;
+    text-shadow: 0 -1px 1px #0E0C0C;
+}
+#cssmenu > ul > li > a > span {
+    display: block;
+    padding: 12px 22px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+#cssmenu > ul > li > a:hover {
+    text-decoration: none;
+}
+#cssmenu > ul > li.active {
+    border-bottom: none;
+}
+#cssmenu > ul > li.has-sub > a span {
+    background: url(../images/icon_plus.png) 96% center no-repeat;
+}
+#cssmenu > ul > li.has-sub.active > a span {
+    background: url(../images/icon_minus.png) 96% center no-repeat;
+}
+/* Sub menu */
+#cssmenu ul ul {
+    display: none;
+    background: #fff;
+    border-right: 0px solid #a2a194;
+    border-left: 0px solid #a2a194;
+}
+#cssmenu ul ul li {
+    padding: 0;
+    border-bottom: 1px solid #d4d4d4;
+    border-top: none;
+    background: #f7f7f7;
+    background: -moz-linear-gradient(#f7f7f7 0%, #ececec 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f7f7f7), color-stop(100%, #ececec));
+    background: -webkit-linear-gradient(#f7f7f7 0%, #ececec 100%);
+    background: linear-gradient(#f7f7f7 0%, #ececec 100%);
+}
+#cssmenu ul ul li:last-child {
+    border-bottom: none;
+}
+#cssmenu ul ul a {
+    padding: 10px 10px 10px 35px;
+    display: block;
+    color: #100505;
+    font-size: 14px;
+    font-weight: normal;
+}
+#cssmenu ul ul a:before {
+    content: "»";
+    position: absolute;
+    left: 15px;
+    color: #0C0302
+}
+#cssmenu ul ul a:hover {
+    color: #109c1c;
+}
+
+#cssmenu ul .visibleBlock{
+    display: block;
+}
+
+
+/*button for admin*/
+
+.buttonDivAdmin{
+    padding-bottom: 5px;
+    text-align: center;
+}
+.buttonDivAdmin .adminButton
+{
+    background: #d1d1d1;
+    background-image: -webkit-linear-gradient(top, #d1d1d1, #d1d1d1);
+    background-image: -moz-linear-gradient(top, #d1d1d1, #d1d1d1);
+    background-image: -ms-linear-gradient(top, #d1d1d1, #d1d1d1);
+    background-image: -o-linear-gradient(top, #d1d1d1, #d1d1d1);
+    background-image: linear-gradient(to bottom, #d1d1d1, #d1d1d1);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    font-family: Helvetica, Arial, sans-serif;
+    color: #080508;
+    font-size: 10px;
+    padding: 1px 9px 1px 9px;
+    border: solid #8a8a8a 1px;
+    text-decoration: none;
+}
+
+.buttonDivAdmin .adminButton:hover {
+    background: #f2eaf2;
+    background-image: -webkit-linear-gradient(top, #f2eaf2, #cacbcc);
+    background-image: -moz-linear-gradient(top, #f2eaf2, #cacbcc);
+    background-image: -ms-linear-gradient(top, #f2eaf2, #cacbcc);
+    background-image: -o-linear-gradient(top, #f2eaf2, #cacbcc);
+    background-image: linear-gradient(to bottom, #f2eaf2, #cacbcc);
+    text-decoration: none;
+}
+/*------------------------------------------------------------*/
+
+
+

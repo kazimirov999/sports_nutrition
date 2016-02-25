@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+
+<tiles-definitions>
+
+    <definition name="defaultTemplate" template="/WEB-INF/views/tiles/template.jsp">
+        <put-attribute name="header" value="/WEB-INF/views/tiles/modules/header.jsp"/>
+        <put-attribute name="menu" value="/WEB-INF/views/tiles/modules/menu.jsp"/>
+        <put-attribute name="footer" value="/WEB-INF/views/tiles/modules/footer.jsp"/>
+        <put-attribute name="filter_form" value=""/>
+        <put-attribute name="titleName" value=""/>
+        <put-attribute name="metaKeysGen" value=""/>
+    </definition>
+    <definition name="index" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/index.jsp"/>
+        <put-attribute name="titleName" value="index.title"/>
+    </definition>
+    <definition name="message_page" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/tiles/modules/message_page.jsp"/>
+        <put-attribute name="titleName" value="message_page.title"/>
+    </definition>
+    <definition name="products" extends="defaultTemplate">
+        <put-attribute name="filter_form" value="/WEB-INF/views/tiles/modules/forms/filter_form.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/tiles/modules/products.jsp"/>
+        <put-attribute name="title" expression="${products.pageList.get(0).category.name}"/>
+        <put-attribute name="metaKeysGen" expression="${products.pageList.get(0).category.name}"/>
+    </definition>
+
+    <definition name="add_category" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/tiles/modules/add_category.jsp"/>
+        <put-attribute name="titleName" value="add_category.title"/>
+    </definition>
+    <definition name="delete_category" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/tiles/modules/category_message.jsp"/>
+        <put-attribute name="titleName" value="delete_category.title"/>
+    </definition>
+    <definition name="edit_category" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/tiles/modules/edit_category.jsp"/>
+        <put-attribute name="titleName" value="edit_category.title"/>
+    </definition>
+    <definition name="edit_category_result" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/tiles/modules/category_message.jsp"/>
+        <put-attribute name="titleName" value="edit_category_result.title"/>
+    </definition>
+    <definition name="show_product" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/tiles/modules/product.jsp"/>
+        <put-attribute name="title" expression="${product.name}"/>
+        <put-attribute name="metaKeysGen" expression="${product.name}"/>
+    </definition>
+    <definition name="add_product" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/tiles/modules/add_product.jsp"/>
+        <put-attribute name="titleName" value="add_product.title"/>
+    </definition>
+    <definition name="edit_product" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/tiles/modules/edit_product.jsp"/>
+        <put-attribute name="titleName" value="edit_product.title"/>
+    </definition>
+    <definition name="property_page" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/tiles/modules/property_pages/property_page.jsp"/>
+        <put-attribute name="titleName" value="property_page.title"/>
+    </definition>
+    <definition name="brand_page" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/tiles/modules/property_pages/brand_page.jsp"/>
+        <put-attribute name="titleName" value="brand_page.title"/>
+    </definition>
+    <definition name="taste_page" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/tiles/modules/property_pages/taste_page.jsp"/>
+        <put-attribute name="titleName" value="taste_page.title"/>
+    </definition>
+    <definition name="discount_page" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/tiles/modules/property_pages/discount_page.jsp"/>
+        <put-attribute name="titleName" value="discount_page.title"/>
+    </definition>
+    <definition name="cart_page" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/tiles/modules/cart_page.jsp"/>
+        <put-attribute name="titleName" value="cart_page.title"/>
+    </definition>
+    <definition name="order_place_page" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/tiles/modules/order_place_page.jsp"/>
+        <put-attribute name="titleName" value="order_place_page.title"/>
+    </definition>
+    <definition name="orders_page" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/tiles/modules/orders_page.jsp"/>
+        <put-attribute name="titleName" value="orders_page.title"/>
+    </definition>
+    <definition name="register_page" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/tiles/modules/register_page.jsp"/>
+        <put-attribute name="titleName" value="register_page.title"/>
+    </definition>
+    <definition name="authentication_page" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/tiles/modules/security_pages/authentication_page.jsp"/>
+        <put-attribute name="titleName" value="authentication_page.title"/>
+    </definition>
+    <definition name="users_page" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/tiles/modules/users_page.jsp"/>
+        <put-attribute name="titleName" value="users_page.title"/>
+    </definition>
+
+
+</tiles-definitions>

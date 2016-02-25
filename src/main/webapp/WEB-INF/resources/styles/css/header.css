@@ -1,0 +1,39 @@
+.header {
+    height: 180px;
+    position: relative;
+    background: #fff;
+    background: url(../images/headerXX.jpg);
+}
+
+.authBlockHeader {
+    position: absolute;
+    left: 870px;
+    background: #060606;
+    top: 4px;
+}
+.authBlockHeader p,a{
+    text-decoration: none;
+    color: #989292;
+    font-weight: 600;
+    font-size: 13px;
+}
+.authBlockHeader a:hover{
+    text-decoration: none;
+    color: #31FF00;
+}
+
+
+.busket {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 78px;
+    left: 983px
+}
+
+.busket p {
+    background: black;
+    margin: 5px;
+    font-weight: 600;
+    color: #E0D9D9;
+}

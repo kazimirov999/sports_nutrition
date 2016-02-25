@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - sport_nutrition_db@localhost" uuid="d0d0c5ac-c909-4661-b594-d9a7c7576206">
+    <database-info product="MySQL" version="5.5.23" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="sport_nutrition_db"/>
+    <table name="brands" schema="" catalog="sport_nutrition_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="description" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="country_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FK_2o0tp8vmwxsa69xlmtpd2nt48" columns="country_id" ref-table="countries" ref-schema="" ref-catalog="sport_nutrition_db" ref-columns="Id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="FK_h95vuklmrmve62d8de3uq7dja" table="products" schema="" catalog="sport_nutrition_db" columns="brand_id"/>
+      <index name="UK_6q7wjrml4axebig73lua6j3ye" unique="true" columns="name"/>
+      <index name="FK_2o0tp8vmwxsa69xlmtpd2nt48" unique="false" columns="country_id"/>
+    </table>
+    <table name="cart_items" schema="" catalog="sport_nutrition_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="quantity" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="totalPrice" sqlType="DECIMAL" precision="19" scale="2" nullable="true" jdbcType="3"/>
+      <column name="product_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="taste_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="cart_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FK_s19cesnp9gduufgwi5xlbxdo7" columns="cart_id" ref-table="carts" ref-schema="" ref-catalog="sport_nutrition_db" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FK_70rgk5dwolad8u2ws8r3cft5w" columns="taste_id" ref-table="tastes" ref-schema="" ref-catalog="sport_nutrition_db" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FK_f64cqq49f6s9me2seyr8jtm20" columns="product_id" ref-table="products" ref-schema="" ref-catalog="sport_nutrition_db" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="FK_70rgk5dwolad8u2ws8r3cft5w" unique="false" columns="taste_id"/>
+      <index name="FK_f64cqq49f6s9me2seyr8jtm20" unique="false" columns="product_id"/>
+      <index name="FK_s19cesnp9gduufgwi5xlbxdo7" unique="false" columns="cart_id"/>
+    </table>
+    <table name="carts" schema="" catalog="sport_nutrition_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="date" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="grandTotalPrice" sqlType="DECIMAL" precision="19" scale="2" nullable="true" jdbcType="3"/>
+      <column name="orderId" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="customer_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FK_mhsc9rwrj7df4wd7wis2f6w9e" columns="customer_id" ref-table="customers" ref-schema="" ref-catalog="sport_nutrition_db" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="FK_s19cesnp9gduufgwi5xlbxdo7" table="cart_items" schema="" catalog="sport_nutrition_db" columns="cart_id"/>
+      <index name="FK_mhsc9rwrj7df4wd7wis2f6w9e" unique="false" columns="customer_id"/>
+    </table>
+    <table name="categories" schema="" catalog="sport_nutrition_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="description" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="imageByte" sqlType="MEDIUMBLOB" precision="16777215" scale="0" nullable="true" jdbcType="-4"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="FK_mwube1yf7h9h1jsulbgdo8u0x" table="products" schema="" catalog="sport_nutrition_db" columns="category_id"/>
+      <index name="UK_cqsfg7tv7vfw6vjx36u4ym0i9" unique="true" columns="name"/>
+    </table>
+    <table name="countries" schema="" catalog="sport_nutrition_db" type="TABLE">
+      <column name="Id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="iso" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="Id"/>
+      <exported-key name="FK_2o0tp8vmwxsa69xlmtpd2nt48" table="brands" schema="" catalog="sport_nutrition_db" columns="country_id"/>
+      <exported-key name="FK_eq7eif3kdxeaj8osek9h3psj4" table="customers" schema="" catalog="sport_nutrition_db" columns="country_id"/>
+      <exported-key name="FK_cshmu848dbab52bgr1kopsvb2" table="users" schema="" catalog="sport_nutrition_db" columns="country_id"/>
+    </table>
+    <table name="customers" schema="" catalog="sport_nutrition_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="address" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="firstName" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="isUser" sqlType="BIT" precision="1" scale="0" nullable="true" jdbcType="-7"/>
+      <column name="lastName" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="phoneNumber" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="country_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FK_eq7eif3kdxeaj8osek9h3psj4" columns="country_id" ref-table="countries" ref-schema="" ref-catalog="sport_nutrition_db" ref-columns="Id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="FK_mhsc9rwrj7df4wd7wis2f6w9e" table="carts" schema="" catalog="sport_nutrition_db" columns="customer_id"/>
+      <index name="FK_eq7eif3kdxeaj8osek9h3psj4" unique="false" columns="country_id"/>
+    </table>
+    <table name="discounts" schema="" catalog="sport_nutrition_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="expirationDate" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="size" sqlType="DECIMAL" precision="19" scale="2" nullable="false" jdbcType="3"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="FK_fxpovyqp0xec5yde9q9a7imxa" table="products" schema="" catalog="sport_nutrition_db" columns="discount_id"/>
+    </table>
+    <table name="product_taste_join" schema="" catalog="sport_nutrition_db" type="TABLE">
+      <column name="product_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="teste_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <foreign-key name="FK_ovqy31y2bukqe98el9in12xrc" columns="product_id" ref-table="products" ref-schema="" ref-catalog="sport_nutrition_db" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FK_b981vd51677pabdvdq0wkpljb" columns="teste_id" ref-table="tastes" ref-schema="" ref-catalog="sport_nutrition_db" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="FK_b981vd51677pabdvdq0wkpljb" unique="false" columns="teste_id"/>
+      <index name="FK_ovqy31y2bukqe98el9in12xrc" unique="false" columns="product_id"/>
+    </table>
+    <table name="products" schema="" catalog="sport_nutrition_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="articleNumber" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="composition" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="description" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="form" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="fullDescription" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="gender" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="imageByte" sqlType="MEDIUMBLOB" precision="16777215" scale="0" nullable="true" jdbcType="-4"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="price" sqlType="DECIMAL" precision="19" scale="2" nullable="false" jdbcType="3"/>
+      <column name="quantityInPackage" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="stockAmount" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="brand_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="category_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="discount_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FK_fxpovyqp0xec5yde9q9a7imxa" columns="discount_id" ref-table="discounts" ref-schema="" ref-catalog="sport_nutrition_db" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FK_h95vuklmrmve62d8de3uq7dja" columns="brand_id" ref-table="brands" ref-schema="" ref-catalog="sport_nutrition_db" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FK_mwube1yf7h9h1jsulbgdo8u0x" columns="category_id" ref-table="categories" ref-schema="" ref-catalog="sport_nutrition_db" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="FK_f64cqq49f6s9me2seyr8jtm20" table="cart_items" schema="" catalog="sport_nutrition_db" columns="product_id"/>
+      <exported-key name="FK_ovqy31y2bukqe98el9in12xrc" table="product_taste_join" schema="" catalog="sport_nutrition_db" columns="product_id"/>
+      <exported-key name="FK_9u8skj1vlbese6xvpu6gbsxim" table="videos" schema="" catalog="sport_nutrition_db" columns="product_id"/>
+      <index name="UK_ighobieshvpguwdwlr6hxjsdk" unique="true" columns="articleNumber"/>
+      <index name="uq_products" unique="true" columns="name,brand_id"/>
+      <index name="FK_fxpovyqp0xec5yde9q9a7imxa" unique="false" columns="discount_id"/>
+      <index name="FK_h95vuklmrmve62d8de3uq7dja" unique="false" columns="brand_id"/>
+      <index name="FK_mwube1yf7h9h1jsulbgdo8u0x" unique="false" columns="category_id"/>
+    </table>
+    <table name="tastes" schema="" catalog="sport_nutrition_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="FK_70rgk5dwolad8u2ws8r3cft5w" table="cart_items" schema="" catalog="sport_nutrition_db" columns="taste_id"/>
+      <exported-key name="FK_b981vd51677pabdvdq0wkpljb" table="product_taste_join" schema="" catalog="sport_nutrition_db" columns="teste_id"/>
+      <index name="UK_3yjsned8kg1m76kypiy2gj04u" unique="true" columns="name"/>
+    </table>
+    <table name="users" schema="" catalog="sport_nutrition_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="address" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="dateRegister" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="enabled" sqlType="BIT" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="firstName" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="lastName" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="loginEmail" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="phoneNumber" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="role" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="country_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FK_cshmu848dbab52bgr1kopsvb2" columns="country_id" ref-table="countries" ref-schema="" ref-catalog="sport_nutrition_db" ref-columns="Id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="FK_cshmu848dbab52bgr1kopsvb2" unique="false" columns="country_id"/>
+    </table>
+    <table name="videos" schema="" catalog="sport_nutrition_db" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="description" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="playerCode" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="product_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FK_9u8skj1vlbese6xvpu6gbsxim" columns="product_id" ref-table="products" ref-schema="" ref-catalog="sport_nutrition_db" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="FK_9u8skj1vlbese6xvpu6gbsxim" unique="false" columns="product_id"/>
+    </table>
+  </data-source>
+</component>

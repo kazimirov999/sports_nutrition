@@ -1,0 +1,26 @@
+/*--------page 404-----------------------------------------------------*/
+
+.wrapperError {
+    margin: 50px auto;
+    text-align: center;
+}
+
+.wrapperError .TitleError {
+    font-size: 60px;
+    color: #8E8282;
+}
+
+.wrapperError .messageError {
+    font-size: 18px;
+}
+
+.wrapperError a {
+    text-decoration: none;
+    color: #3695C3;
+}
+
+.wrapperError a:hover {
+    color: black;
+}
+
+/*-------------------------------------------------------------------------*/
