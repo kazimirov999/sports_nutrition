@@ -75,20 +75,20 @@
 
     <error-page>
         <error-code>404</error-code>
-        <location>/WEB-INF/views/error_pages/404.jsp</location>
+        <location>/WEB-INF/views/tiles/modules/pages/error/404.jsp</location>
     </error-page>
 
     <error-page>
         <error-code>400</error-code>
-        <location>/WEB-INF/views/error_pages/system_error.jsp</location>
+        <location>/WEB-INF/views/tiles/modules/pages/error/system_error.jsp</location>
     </error-page>
     <error-page>
     <error-code>500</error-code>
-    <location>/WEB-INF/views/error_pages/system_error.jsp</location>
+    <location>/WEB-INF/views/tiles/modules/pages/error/system_error.jsp</location>
     </error-page>
     <error-page>
         <exception-type>java.lang.Exception</exception-type>
-        <location>/WEB-INF/views/error_pages/system_error.jsp</location>
+        <location>/WEB-INF/views/tiles/modules/pages/error/system_error.jsp</location>
     </error-page>
 
 </web-app>

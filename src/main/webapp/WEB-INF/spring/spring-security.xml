@@ -9,8 +9,6 @@
         <intercept-url pattern="/" access="permitAll" />
         <intercept-url pattern="/home" access="permitAll" />
         <intercept-url pattern="/add/**" access="hasRole('ADMIN')" />
-        <!--<intercept-url pattern="/dba**" access="hasRole('ADMIN') and hasRole('DBA')" />-->
-        <!--<form-login  authentication-failure-url="/Access_Denied" />-->
 
         <form-login login-processing-url="/j_spring_security_check"
                     login-page="/login" default-target-url="/"
@@ -18,8 +16,6 @@
                     username-parameter="username"
                     password-parameter="password" />
     </http>
-
-
 
     <authentication-manager >
 
@@ -34,6 +30,5 @@
             <!--</user-services>-->
         <!--</authentication-provider>-->
     </authentication-manager>
-
 
 </beans:beans>

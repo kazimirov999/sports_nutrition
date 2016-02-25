@@ -12,10 +12,9 @@
         http://www.springframework.org/schema/context/spring-context-3.0.xsd " >
 
     <mvc:annotation-driven/>
-    <!--<mvc:resources mapping="/web-resources/**" location="/,/META-INF/web-resources/"/>-->
     <mvc:resources mapping="/resources/**" location="WEB-INF/resources/"/>
 
-    <context:component-scan base-package="net.sports_nutrition.controllers"/>
+    <context:component-scan base-package="net.sports.nutrition.controllers"/>
     <mvc:default-servlet-handler/>
 
     <!--Locale settings-->
@@ -25,7 +24,7 @@
 
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <bean class="net.sports_nutrition.interceptors.LastModelAndViewInterceptor"/>
+            <bean class="net.sports.nutrition.interceptors.LastModelAndViewInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 
@@ -36,8 +35,8 @@
         <property name="basenames">
             <list>
                 <value>classpath:ValidationMessages</value>
-                <value>/WEB-INF/resources/i18n/page_properties/site</value>
-                <value>/WEB-INF/resources/i18n/page_properties/page</value>
+                <value>/WEB-INF/resources/i18n/page/properties/site</value>
+                <value>/WEB-INF/resources/i18n/page/properties/page</value>
             </list>
     </property>
 
@@ -84,8 +83,6 @@
     </bean>
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
         <property name="validationMessageSource" ref="messageSource"/></bean>
-
-
 
 </beans>
 
