@@ -2,6 +2,7 @@ package net.sports.nutrition.domain.entities;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -11,7 +12,7 @@ import java.math.BigDecimal;
  */
 
 @Entity
-@Table(name = "Cart_items")
+@Table(name = "cart_items")
 public class CartItem implements Serializable {
 
     @Id
@@ -19,7 +20,7 @@ public class CartItem implements Serializable {
     private Long id;
 
     @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
     @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
@@ -30,7 +31,6 @@ public class CartItem implements Serializable {
     private BigDecimal totalPrice;
 
     public CartItem() {
-
     }
 
     public CartItem(Product product, Taste taste) {
@@ -53,21 +53,16 @@ public class CartItem implements Serializable {
     public void increaseQuantity() {
         this.quantity++;
         this.updateTotalPrice();
-
     }
 
     public void decreaseQuantity() {
         this.quantity--;
         this.updateTotalPrice();
-
     }
 
     private void updateTotalPrice() {
         totalPrice = this.product.getRealPrice().multiply(new BigDecimal(quantity));
-
-
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -76,15 +71,17 @@ public class CartItem implements Serializable {
 
         CartItem cartItem = (CartItem) o;
 
-        if (!product.equals(cartItem.product)) return false;
-        return taste.equals(cartItem.taste);
+        if (id != null ? !id.equals(cartItem.id) : cartItem.id != null) return false;
+        if (product != null ? !product.equals(cartItem.product) : cartItem.product != null) return false;
+        return !(taste != null ? !taste.equals(cartItem.taste) : cartItem.taste != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = product.hashCode();
-        result = 31 * result + taste.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (product != null ? product.hashCode() : 0);
+        result = 31 * result + (taste != null ? taste.hashCode() : 0);
         return result;
     }
 

@@ -37,6 +37,36 @@ public class FormFilterBean implements Serializable{
 
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FormFilterBean)) return false;
+
+        FormFilterBean that = (FormFilterBean) o;
+
+        if (lowPrice != null ? !lowPrice.equals(that.lowPrice) : that.lowPrice != null) return false;
+        if (highPrice != null ? !highPrice.equals(that.highPrice) : that.highPrice != null) return false;
+        if (brandIdList != null ? !brandIdList.equals(that.brandIdList) : that.brandIdList != null) return false;
+        if (tasteIdList != null ? !tasteIdList.equals(that.tasteIdList) : that.tasteIdList != null) return false;
+        if (discountIdList != null ? !discountIdList.equals(that.discountIdList) : that.discountIdList != null)
+            return false;
+        if (formList != null ? !formList.equals(that.formList) : that.formList != null) return false;
+        return !(genderList != null ? !genderList.equals(that.genderList) : that.genderList != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = lowPrice != null ? lowPrice.hashCode() : 0;
+        result = 31 * result + (highPrice != null ? highPrice.hashCode() : 0);
+        result = 31 * result + (brandIdList != null ? brandIdList.hashCode() : 0);
+        result = 31 * result + (tasteIdList != null ? tasteIdList.hashCode() : 0);
+        result = 31 * result + (discountIdList != null ? discountIdList.hashCode() : 0);
+        result = 31 * result + (formList != null ? formList.hashCode() : 0);
+        result = 31 * result + (genderList != null ? genderList.hashCode() : 0);
+        return result;
+    }
+
     public Set<Form> getFormList() {
         return formList;
     }

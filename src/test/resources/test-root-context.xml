@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/jdbc
+        http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
+
+    <context:property-placeholder location="classpath:/config/test-datasource.properties" order="1"
+                                  ignore-unresolvable="true"/>
+
+    <import resource="classpath:/root-context.xml"/>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${driverClassName}"/>
+
+        <!-- where the db will be placed (created automatically) -->
+        <property name="url" value="${url.db}"/>
+        <property name="username" value="${user.db}"/>
+        <property name="password" value="${password.db}"/>
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
+          p:packagesToScan="${packages.to_scan}">
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl}</prop>
+            </props>
+        </property>
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <jdbc:initialize-database data-source="dataSource" enabled="${init.enable}">
+        <jdbc:script location="${location.dump.sql}"/>
+    </jdbc:initialize-database>
+
+</beans>

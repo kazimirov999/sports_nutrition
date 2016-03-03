@@ -14,7 +14,6 @@ import java.util.Map;
  */
 public interface IProductRepository extends IGenericRepository<Product,Long> {
 
-
     Product getProductByName(String name);
 
     Product getProductByArticleNumber(Long articleNumber);
@@ -25,13 +24,11 @@ public interface IProductRepository extends IGenericRepository<Product,Long> {
 
     List<Product> getProductsByCriteria(Long categoryId, FormFilterBean filterParams, SortType sortType,Boolean isExistInStorage, Integer firstResult, Integer maxFetchSize);
 
-    Long getProductsAmountByCriteria(Long categoryId, FormFilterBean filterParams);
-
     Long getProductsAmountByCategoryId(Long categoryId);
 
     <T> Map<T,Long> countProductsByProperty(String field, Long categoryId, List<T> propertyList, FormFilterBean filterParams);
 
-    List<Product> getProductByCategoryId(Long categoryId);
+    List<Product> getProductsByCategoryId(Long categoryId);
 
     Integer deleteAllProductByCategoryId(Long categoryId);
 

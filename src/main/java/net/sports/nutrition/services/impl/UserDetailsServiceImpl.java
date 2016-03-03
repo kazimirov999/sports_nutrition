@@ -33,7 +33,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         User user = userService.findUserByLogin(userName);
         List<GrantedAuthority> authorities = buildUserAuthority(user.getRole());
-        if (user == null) throw new UsernameNotFoundException("user not found");
+        if (user == null) {
+            throw new UsernameNotFoundException("user not found");
+        }
 
         return buildUserForAuthentication(user, authorities);
     }

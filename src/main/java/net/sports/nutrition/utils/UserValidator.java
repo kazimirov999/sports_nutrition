@@ -20,6 +20,7 @@ public class UserValidator implements Validator {
     private IUserService userService;
 
     public boolean supports(Class clazz) {
+        System.out.println(clazz);
         return User.class.isAssignableFrom(clazz);
     }
 
@@ -33,10 +34,10 @@ public class UserValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "address", "error.empty.address", "Field is required.");
 
         if (user.getPasswordOriginal() != null && user.getPasswordDubl() != null
-                && !user.getPasswordOriginal().equalsIgnoreCase(user.getPasswordDubl()))
+                && !user.getPasswordOriginal().equalsIgnoreCase(user.getPasswordDubl())) {
             errors.rejectValue("passwordOriginal", "error.password.not.correct", "Password is not correct");
-
-        if (user.getLoginEmail() != null && userService.loginIsExist(user.getLoginEmail())){
+        }
+        if (user.getLoginEmail() != null && userService.loginIsExist(user.getLoginEmail())) {
             errors.rejectValue("loginEmail", "error.login.is_exist", "Login is exist.");
         }
 

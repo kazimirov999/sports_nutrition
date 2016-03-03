@@ -16,20 +16,20 @@ import java.sql.SQLException;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-
     @ExceptionHandler(SQLException.class)
-    public String handleSQLException(HttpServletRequest request, Exception ex){
+    public String handleSQLException(HttpServletRequest request, Exception ex) {
         return "system_error";
     }
 
-    @ResponseStatus(value= HttpStatus.NOT_FOUND, reason="IOException occured")
+    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "IOException occured")
     @ExceptionHandler(IOException.class)
-    public void handleIOException(){
+    public void handleIOException() {
         //returning 404 error code
     }
-    @ResponseStatus(value= HttpStatus.NOT_FOUND, reason="IndexOutOfBoundsException occured")
+
+    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "IndexOutOfBoundsException occured")
     @ExceptionHandler(IndexOutOfBoundsException.class)
-    public void handleIndexOutOfBoundsException(){
+    public void handleIndexOutOfBoundsException() {
         //returning 404 error code
     }
 }

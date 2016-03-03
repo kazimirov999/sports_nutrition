@@ -13,11 +13,11 @@ public interface IBrandRepository extends IGenericRepository<Brand,Long> {
 
     List<Brand> findAll();
 
-    public List<Brand> getBrandByCategoryId(Long categoryId);
+    public List<Brand> getBrandsByCategoryId(Long categoryId);
 
-    Map<Brand, Long> getAmountProductByBrand();
+    Map<Brand, Long> getAmountProductsByBrand();
 
-    List<Brand> getBrandByCountryId(Long countryId);
+    List<Brand> getBrandsByCountryId(Long countryId);
 
     Brand getBrandByName(String brandName);
 

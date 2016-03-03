@@ -29,6 +29,4 @@ public interface ICategoryService {
     Boolean categoryIsExist(Category category);
 
     Boolean checkBeforeUpdateCategory(Category category);
-
-    List<Category> getRandomCategories(int amountCategory);
 }

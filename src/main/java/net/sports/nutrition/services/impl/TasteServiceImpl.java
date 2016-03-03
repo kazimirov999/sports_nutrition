@@ -35,7 +35,7 @@ public class TasteServiceImpl implements ITasteService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Taste> getAllTastes() {
+    public List<Taste> findAllTastes() {
 
         return tasteRepository.findAll();
     }
@@ -55,12 +55,12 @@ public class TasteServiceImpl implements ITasteService {
 
     @Transactional(readOnly = true)
     @Override
-    public Boolean brandIsExist(Taste taste) {
+    public Boolean tasteIsExist(Taste taste) {
         Boolean isExist = false;
         if (getTasteByName(taste.getName()) != null) {
-            System.out.println("isExist---->>");
             isExist = true;
         }
+
         return isExist;
     }
 
@@ -69,8 +69,10 @@ public class TasteServiceImpl implements ITasteService {
     public Boolean checkBeforeUpdateTaste(Taste taste) {
         Boolean check = true;
         Taste t = getTasteByName(taste.getName());
-        if (t != null && !t.getId().equals(taste.getId()))
+        if (t != null && !t.getId().equals(taste.getId())) {
             check = false;
+        }
+
         return check;
     }
 }

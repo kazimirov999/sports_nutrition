@@ -19,10 +19,19 @@
 <spring:message code="select.taste.label" var="tasteLabel"/>
 <spring:message code="edit" var="edit"/>
 <spring:message code="delete" var="delete"/>
+<spring:message code="from" var="from"/>
+<spring:message code="brand" var="brand"/>
+<spring:message code="article" var="article"/>
+<spring:message code="product.category" var="category"/>
+<spring:message code="packing" var="packing"/>
+<spring:message code="form.produce" var="formProduce"/>
+<spring:message code="gender" var="gender"/>
+<spring:message code="availability.true" var="availibilityTrue"/>
+<spring:message code="availability.false" var="availibilityFalse"/>
 <spring:message code="product.notExistInStorage" var="unavaible"/>
 <spring:message code="product.isExistInStorage" var="avaible"/>
 <spring:message code="freeDrivePrice" var="freeDrivePrice"/>
-<spring:message code="free.drive.label" var="${freeDrive}" />
+<spring:message code="free.drive.label" var="freeDrive"/>
 <spring:message code="${product.form}.form" var="formName"/>
 <spring:message code="${product.gender}.gender" var="genderName"/>
 
@@ -39,13 +48,15 @@
         <div class="productMainContentBox">
             <div class="productNameBox">
                     ${product.name.toUpperCase()}<br>
-                <span class="brandName"> ОТ ${product.brand.name.toUpperCase()}</span>
+                <c:if test="${product.brand.name != null}"> <span
+                        class="brandName"> ${from} ${product.brand.name.toUpperCase()}</span>
+                </c:if>
             </div>
             <div class="bonusBox">
                 <c:if test="${product.getRealPrice() > freeDrivePrice}">
                     <div class="wrraperDriveImg" title="${freeDrive}">
                         <div class="driveImg"></div>
-                        ${freeDrive}
+                            ${freeDrive}
                     </div>
                 </c:if>
             </div>
@@ -83,10 +94,10 @@
                 <div class="avaibleProductBox">
                     <c:choose>
                         <c:when test="${product.stockAmount > '0'}">
-                            <div class="avaible">есть в наличии</div>
+                            <div class="avaible">${availibilityTrue}</div>
                         </c:when>
                         <c:otherwise>
-                            <div class="unavaible">нет в наличии</div>
+                            <div class="unavaible">${availibilityFalse}</div>
                         </c:otherwise>
                     </c:choose>
 
@@ -97,23 +108,23 @@
                     <div class="productPropertiesBox">
                         <table>
                             <tr>
-                                <td> Производитель:</td>
-                                <td>${product.brand.name}</td>
+                                <td> ${brand}:</td>
+                                <td> ${product.brand.name}</td>
                             </tr>
                             <tr>
-                                <td> Артикул:</td>
-                                <td>${product.articleNumber}</td>
+                                <td> ${article}:</td>
+                                <td> ${product.articleNumber}</td>
                             <tr>
-                                <td> Категория:</td>
+                                <td> ${category}:</td>
                                 <td> ${product.category.name}</td>
                             <tr>
-                                <td> Фасовка:</td>
-                                <td>${product.quantityInPackage}</td>
+                                <td> ${packing}:</td>
+                                <td> ${product.quantityInPackage}</td>
                             <tr>
-                                <td> Форма выпуска:</td>
+                                <td> ${formProduce}:</td>
                                 <td> ${formName}</td>
                             <tr>
-                                <td> Пол:</td>
+                                <td> ${gender}:</td>
                                 <td> ${genderName}</td>
                         </table>
                     </div>

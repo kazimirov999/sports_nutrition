@@ -25,16 +25,16 @@ import java.util.Set;
 
 })
 @Entity
-@Table(name = "Discounts")
+@Table(name = "discounts")
 public class Discount implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull(message = "${error}")
+    @NotNull(message = "${{field.not.empty.error}}")
     private String name;
-    @NotNull(message = "Input size!")
+    @NotNull(message = "{field.not.empty.error}")
     private BigDecimal size;
 
     @NotNull(message = "Input correct date!")
@@ -48,12 +48,12 @@ public class Discount implements Serializable {
     public Discount() {
     }
 
-    public Discount(BigDecimal size, DateTime expirationDate, Set<Product> productSet) {
+    public Discount(String name, BigDecimal size, DateTime expirationDate, Set<Product> productSet) {
+        this.name = name;
         this.size = size;
         this.expirationDate = expirationDate;
         this.productSet = productSet;
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -62,11 +62,20 @@ public class Discount implements Serializable {
 
         Discount discount = (Discount) o;
 
-        if (!name.equals(discount.name)) return false;
-        return size.equals(discount.size);
-
+        if (id != null ? !id.equals(discount.id) : discount.id != null) return false;
+        if (name != null ? !name.equals(discount.name) : discount.name != null) return false;
+        if (size != null ? !size.equals(discount.size) : discount.size != null) return false;
+        return !(expirationDate != null ? !expirationDate.equals(discount.expirationDate) : discount.expirationDate != null);
     }
 
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (size != null ? size.hashCode() : 0);
+        result = 31 * result + (expirationDate != null ? expirationDate.hashCode() : 0);
+        return result;
+    }
 
     @Override
     public String toString() {

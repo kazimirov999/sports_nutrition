@@ -56,7 +56,6 @@ public class ProductController extends AbstractGlobalController {
     @Autowired
     private FormSortedBean formSortedBean;
 
-
     private final String MODEL_ATTRIBUTE_PRODUCTS = "products";
     private final String MODEL_ATTRIBUTE_PAGER = "pager";
     private final String MODEL_ATTRIBUTE_FILTER_CONTENT = "formPropertyContent";
@@ -107,16 +106,14 @@ public class ProductController extends AbstractGlobalController {
 
         FormFilterContent formFilterContent = (FormFilterContent) session.getAttribute(MODEL_ATTRIBUTE_FILTER_CONTENT + categoryId);
         if (pageNumber <= 1 || formFilterContent == null) {
-            System.out.println(1);
-           formFilterContent = formService.createContentForFilterFormWithoutAmount(categoryId);
-          //  formFilterContent = formService.createContentForFilterFormWithAmount(categoryId, formFilterBean);
+            formFilterContent = formService.createContentForFilterFormWithoutAmount(categoryId);
+            //  formFilterContent = formService.createContentForFilterFormWithAmount(categoryId, formFilterBean);
             session.setAttribute(MODEL_ATTRIBUTE_FILTER_CONTENT + categoryId, formFilterContent);
         }
         uiModel.addAttribute(formFilterBean);
         uiModel.addAttribute(MODEL_ATTRIBUTE_FILTER_CONTENT, formFilterContent);
 
         PagedListHolder<Product> pagedListHolder = (PagedListHolder<Product>) session.getAttribute(SESSION_ATTRIBUTE_PRODUCT_LIST + categoryId);
-
         FormSortedBean formSortedBean = (session.getAttribute("formSortedBean") == null) ? new FormSortedBean() : (FormSortedBean) session.getAttribute("formSortedBean");
 
         if (pagedListHolder == null) {
@@ -125,7 +122,6 @@ public class ProductController extends AbstractGlobalController {
 
             pagedListHolder = new PagedListHolder<Product>(productList);
             pagedListHolder.setPageSize(PRODUCT_LIST_PAGE_SIZE);
-            pagedListHolder.setMaxLinkedPages(productList.size()); //set products Amount
         }
 
         final int goToPage = pageNumber - 1;
@@ -137,11 +133,10 @@ public class ProductController extends AbstractGlobalController {
 
         final String BASE_URL = "/products/" + categoryId + "/page/";
 
-        uiModel.addAttribute(MODEL_ATTRIBUTE_PAGER, Pager.currentPage(pagedListHolder, BASE_URL, PRODUCT_LIST_PAGE_SIZE));
+        uiModel.addAttribute(MODEL_ATTRIBUTE_PAGER, Pager.currentPage(pagedListHolder, BASE_URL));
         uiModel.addAttribute(MODEL_ATTRIBUTE_PRODUCTS, pagedListHolder);
 
-
-        log.info("Time work method: " + (System.nanoTime()-start));
+        log.info("Time work method: " + (System.nanoTime() - start));
 
         return ConstantsView.PRODUCT_SHOW_ALL;
     }
@@ -149,10 +144,10 @@ public class ProductController extends AbstractGlobalController {
 
     @RequestMapping(value = ConstantsUri.PRODUCT_SHOW, method = RequestMethod.GET)
     public String productShow(@PathVariable("productId") Long productId, Model model) {
-
         Product product = productService.getProductById(productId);
         log.info("Show product: " + product);
         model.addAttribute("product", product);
+
         return ConstantsView.PRODUCT_SHOW;
     }
 
@@ -166,9 +161,9 @@ public class ProductController extends AbstractGlobalController {
     @RequestMapping(value = ConstantsUri.PRODUCT_ADD, method = RequestMethod.POST)
     public String addProduct(@Valid @ModelAttribute("formProductBean") FormProductBean productBean,
                              BindingResult result, Model uiModel, RedirectAttributes redirect) {
-        if (result.hasErrors())
+        if (result.hasErrors()) {
             return ConstantsView.PRODUCT_ADD;
-
+        }
         Product product = productBean.getProduct();
         try {
             if (productService.productIsExist(product) == true) {
@@ -177,7 +172,7 @@ public class ProductController extends AbstractGlobalController {
             }
             productService.saveProductWithImage(product, productBean.getFile());
         } catch (DataIntegrityViolationException | IOException e) {
-            log.error("Add product " + e);
+            log.error("Add product", e);
             ServiceMessage.write(uiModel, "product.failure.put");
             return ConstantsView.PRODUCT_ADD;
         }
@@ -189,10 +184,11 @@ public class ProductController extends AbstractGlobalController {
     }
 
     @RequestMapping(value = ConstantsUri.PRODUCT_EDIT_FORM, method = RequestMethod.GET)
-    public String showEditProductForm(@PathVariable Long idProduct, Model uiModel, HttpSession session) {
-        Product product = productService.getProductById(idProduct);
-        if (product.getImageByte() != null)
+    public String showEditProductForm(@PathVariable Long productId, Model uiModel, HttpSession session) {
+        Product product = productService.getProductById(productId);
+        if (product.getImageByte() != null) {
             session.setAttribute(product.getId().toString(), product.getImageByte());
+        }
         uiModel.addAttribute("formProductBean", new FormProductBean(product));
 
         return ConstantsView.PRODUCT_EDIT;
@@ -202,23 +198,27 @@ public class ProductController extends AbstractGlobalController {
     public String editProduct(@Valid @ModelAttribute("formProductBean") FormProductBean productBean,
                               BindingResult result, RedirectAttributes redirect, HttpSession session, Model uiModel) {
         String serviceMessage = null;
-        if (result.hasErrors())
+        if (result.hasErrors()) {
             return ConstantsView.PRODUCT_EDIT;
+        }
         Product product = productBean.getProduct();
         if (!productService.checkBeforeUpdateProduct(product)) {
             ServiceMessage.write(uiModel, "product.failure.put.is_exist");
             return ConstantsView.PRODUCT_EDIT;
         }
         try {
-            if (productBean.getFile().getSize() == 0 && session.getAttribute(product.getId().toString()) != null) {
-                product.setImageByte((byte[]) session.getAttribute(product.getId().toString()));
+            if (productBean.getFile() == null || productBean.getFile().getSize() == 0 && session.getAttribute(product.getId().toString()) != null) {
+                if (product != null) {
+                    product.setImageByte((byte[]) session.getAttribute(product.getId().toString()));
+                }
             } else {
                 product.setImageByte(productBean.getFile().getBytes());
             }
             productService.updateProduct(product);
             serviceMessage = "product.success.edit";
         } catch (Exception e) {
-            log.error("Edit product " + e);
+            e.printStackTrace();
+            log.error("Edit product", e);
             serviceMessage = "product.failure.edit";
         }
         ServiceRedirectMessage.write(redirect, serviceMessage);
@@ -227,13 +227,13 @@ public class ProductController extends AbstractGlobalController {
     }
 
     @RequestMapping(value = ConstantsUri.PRODUCT_DELETE, method = RequestMethod.GET)
-    public String deleteProduct(@PathVariable Long idProduct, Model uiModel, RedirectAttributes redirect) {
+    public String deleteProduct(@PathVariable Long productId, Model uiModel, RedirectAttributes redirect) {
         String serviceMessage = null;
         try {
-            serviceMessage = (productService.deleteProductById(idProduct) == 0) ? "brand.not.delete" : "product.success.delete";
+            serviceMessage = (productService.deleteProductById(productId) == 0) ? "product.not.delete" : "product.success.delete";
         } catch (Exception e) {
-            log.error("Delete product " + e);
-            serviceMessage = "brand.not.delete";
+            log.error("Delete product", e);
+            serviceMessage = "product.not.delete";
         }
         ServiceRedirectMessage.write(redirect, serviceMessage);
 
@@ -243,23 +243,26 @@ public class ProductController extends AbstractGlobalController {
 
     @ExceptionHandler(ProductNotFoundException.class)
     public ModelAndView handleProductNotFoundException(ProductNotFoundException e) {
-        log.error("Product not found " + e);
+        log.error("Product not found", e);
         return new ModelAndView("redirect:" + ConstantsUri.MESSAGE_SHOW, "message", e.getMessage());
     }
 
 
     @ModelAttribute(MODEL_ATTRIBUTE_FILTER_CONTENT)
     public FormPropertyContent getPropertyContent() {
+
         return formService.createContentForProductForm();
     }
 
     @ModelAttribute("formSortedBean")
     public FormSortedBean getFormSortedBean() {
+
         return this.formSortedBean;
     }
 
     @ModelAttribute("formBuyBean")
     public FormBuyBean getBuyBean() {
+
         return new FormBuyBean();
     }
 

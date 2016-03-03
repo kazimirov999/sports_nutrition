@@ -29,14 +29,4 @@ public class CartRepositoryImpl extends GenericRepositoryImpl<Cart, Long> implem
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
     }
-
-    @Override
-    public Integer deleteCartById(Long cartId) {
-
-        return getSession()
-                .getNamedQuery("Cart.deleteById")
-                .setLong("id", cartId)
-                .executeUpdate();
-    }
-
 }

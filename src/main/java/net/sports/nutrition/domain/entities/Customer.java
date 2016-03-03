@@ -12,7 +12,7 @@ import java.io.Serializable;
  *
  */
 @Entity
-@Table(name = "Customers")
+@Table(name = "customers")
 public class Customer implements Serializable {
 
     @Id
@@ -52,6 +52,38 @@ public class Customer implements Serializable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Customer)) return false;
+
+        Customer customer = (Customer) o;
+
+        if (id != null ? !id.equals(customer.id) : customer.id != null) return false;
+        if (firstName != null ? !firstName.equals(customer.firstName) : customer.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(customer.lastName) : customer.lastName != null) return false;
+        if (email != null ? !email.equals(customer.email) : customer.email != null) return false;
+        if (phoneNumber != null ? !phoneNumber.equals(customer.phoneNumber) : customer.phoneNumber != null)
+            return false;
+        if (country != null ? !country.equals(customer.country) : customer.country != null) return false;
+        if (address != null ? !address.equals(customer.address) : customer.address != null) return false;
+        return !(isUser != null ? !isUser.equals(customer.isUser) : customer.isUser != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
+        result = 31 * result + (country != null ? country.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (isUser != null ? isUser.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Customer{" +
                 "id=" + id +
@@ -63,28 +95,6 @@ public class Customer implements Serializable {
                 ", address='" + address + '\'' +
                 ", isUser=" + isUser +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Customer)) return false;
-
-        Customer customer = (Customer) o;
-
-        if (!firstName.equals(customer.firstName)) return false;
-        if (!lastName.equals(customer.lastName)) return false;
-        if (!email.equals(customer.email)) return false;
-        return phoneNumber.equals(customer.phoneNumber);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = firstName.hashCode();
-        result = 31 * result + lastName.hashCode();
-        result = 31 * result + email.hashCode();
-        result = 31 * result + phoneNumber.hashCode();
-        return result;
     }
 
     public Long getId() {

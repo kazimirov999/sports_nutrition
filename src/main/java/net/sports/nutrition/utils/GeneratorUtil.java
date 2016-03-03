@@ -1,12 +1,17 @@
 package net.sports.nutrition.utils;
 
+import java.util.Random;
+
 /**
  * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  * Date: 08.02.2016 15:15
  */
+
 public class GeneratorUtil {
 
     public static String generateId(){
-        return (EncodeUtil.md5Encryption(String.valueOf(System.currentTimeMillis()))).substring(0,8);
+        Random rand = new Random();
+
+        return String.valueOf(rand.nextInt(80000000)+10000000);
     }
 }

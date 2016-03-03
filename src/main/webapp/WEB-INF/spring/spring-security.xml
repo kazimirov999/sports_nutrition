@@ -1,33 +1,48 @@
 <beans:beans xmlns="http://www.springframework.org/schema/security"
              xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:context="http://www.springframework.org/schema/context"
              xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
-    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd
+    http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <http auto-config="true" >
+
+    <http auto-config="true">
         <csrf disabled="true"/>
-        <intercept-url pattern="/" access="permitAll" />
-        <intercept-url pattern="/home" access="permitAll" />
-        <intercept-url pattern="/add/**" access="hasRole('ADMIN')" />
+        <intercept-url pattern="/" access="permitAll"/>
+        <intercept-url pattern="/home" access="permitAll"/>
+        <intercept-url pattern="/add/**" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/edit/**" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/delete/**" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/show/users" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/activate/**" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/delete/**" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/deactivate/**" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/do_admin/**" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/save/**" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/place_send/**" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/place_delete/**" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/all/orders/**" access="hasRole('ADMIN')"/>
 
         <form-login login-processing-url="/j_spring_security_check"
                     login-page="/login" default-target-url="/"
                     authentication-failure-url="/login?error"
                     username-parameter="username"
-                    password-parameter="password" />
+                    password-parameter="password"/>
     </http>
 
-    <authentication-manager >
+    <authentication-manager>
 
         <authentication-provider user-service-ref="userDetailsServiceImpl">
             <password-encoder hash="md5"/>
         </authentication-provider>
         <!--<authentication-provider>-->
-            <!--<user-services>-->
-                <!--<user name="bill"  password="abc123"  authorities="ROLE_USER" />-->
-                <!--<user name="admin" password="root123" authorities="ROLE_ADMIN" />-->
-                <!--<user name="dba"   password="root123" authorities="ROLE_ADMIN,ROLE_DBA" />-->
-            <!--</user-services>-->
+        <!--<user-services>-->
+        <!--<user name="bill"  password="abc123"  authorities="ROLE_USER" />-->
+        <!--<user name="admin" password="root123" authorities="ROLE_ADMIN" />-->
+        <!--<user name="dba"   password="root123" authorities="ROLE_ADMIN,ROLE_DBA" />-->
+        <!--</user-services>-->
         <!--</authentication-provider>-->
     </authentication-manager>
 

@@ -23,6 +23,7 @@ public class FormCategoryBean implements Serializable {
     private MultipartFile file;
 
     public FormCategoryBean() {
+        category = new Category();
     }
 
     public FormCategoryBean(Category category, MultipartFile file) {
@@ -49,6 +50,25 @@ public class FormCategoryBean implements Serializable {
 
     public void setFile(MultipartFile file) {
         this.file = file;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FormCategoryBean)) return false;
+
+        FormCategoryBean that = (FormCategoryBean) o;
+
+        if (category != null ? !category.equals(that.category) : that.category != null) return false;
+        return !(file != null ? !file.equals(that.file) : that.file != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = category != null ? category.hashCode() : 0;
+        result = 31 * result + (file != null ? file.hashCode() : 0);
+        return result;
     }
 
     @Override

@@ -32,8 +32,6 @@ public interface IProductService {
 
     List<Product> getProductsByCriteria(Long categoryId, FormFilterBean filterParams, SortType sortType,Boolean isExistInStorage);
 
-    Long getProductsAmountByCriteria(Long categoryId, FormFilterBean filterParams);
-
     Integer deleteAllProductByCategoryId(Long categoryId);
 
     Integer deleteProductById(Long productId);

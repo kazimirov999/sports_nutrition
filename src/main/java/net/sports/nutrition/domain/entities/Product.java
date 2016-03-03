@@ -36,14 +36,13 @@ import java.util.List;
 
 })
 @Entity
-@Table(name = "Products",
+@Table(name = "products",
         uniqueConstraints={@UniqueConstraint(columnNames={"articleNumber"})})
 public class Product implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
-
 
     @NotNull(message = "{error.select.not.be.empty}}")
     @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})//CascadeType.PERSIST, CascadeType.MERGE})
@@ -84,12 +83,10 @@ public class Product implements Serializable {
     @JoinColumn(name = "discount_id", nullable = true, insertable = true, updatable = true)
     private Discount discount;
 
-
     @Lob
     @Basic(fetch = FetchType.EAGER)
     @Column(columnDefinition = "MEDIUMBLOB")
     private byte[] imageByte;
-
 
     @ManyToOne(cascade = {CascadeType.DETACH},fetch = FetchType.EAGER)
     @JoinColumn(name = "brand_id", nullable = true)
@@ -104,8 +101,8 @@ public class Product implements Serializable {
     private List<Video> videoList = new ArrayList<Video>();
 
     @NotNull(message = "{error.select.not.be.empty}")
-    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.EAGER)
-    @JoinTable(name = "PRODUCT_TASTE_JOIN",
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.EAGER)
+    @JoinTable(name = "product_taste_join",
             joinColumns = {@JoinColumn(name = "product_id")},
             inverseJoinColumns = {@JoinColumn(name = "teste_id")})
     private List<Taste> tasteList = new ArrayList<>();
@@ -114,14 +111,11 @@ public class Product implements Serializable {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    public Product() {
-    }
+    public Product() {}
 
     public BigDecimal getRealPrice(){
         return (discount == null || discount.getSize() == new BigDecimal(0.00))? price :
-                (price.subtract((price.multiply(discount.getSize()).divide(new BigDecimal(100)))))
-                        .setScale(2, BigDecimal.ROUND_HALF_EVEN);
-
+                (price.subtract((price.multiply(discount.getSize()).divide(new BigDecimal(100))))).setScale(2, BigDecimal.ROUND_HALF_EVEN);
     }
 
     @Override
@@ -131,13 +125,41 @@ public class Product implements Serializable {
 
         Product product = (Product) o;
 
-        return articleNumber.equals(product.articleNumber);
+        if (id != null ? !id.equals(product.id) : product.id != null) return false;
+        if (category != null ? !category.equals(product.category) : product.category != null) return false;
+        if (articleNumber != null ? !articleNumber.equals(product.articleNumber) : product.articleNumber != null)
+            return false;
+        if (name != null ? !name.equals(product.name) : product.name != null) return false;
+        if (price != null ? !price.equals(product.price) : product.price != null) return false;
+        if (stockAmount != null ? !stockAmount.equals(product.stockAmount) : product.stockAmount != null) return false;
+        if (description != null ? !description.equals(product.description) : product.description != null) return false;
+        if (fullDescription != null ? !fullDescription.equals(product.fullDescription) : product.fullDescription != null)
+            return false;
+        if (composition != null ? !composition.equals(product.composition) : product.composition != null) return false;
+        if (quantityInPackage != null ? !quantityInPackage.equals(product.quantityInPackage) : product.quantityInPackage != null)
+            return false;
+        if (discount != null ? !discount.equals(product.discount) : product.discount != null) return false;
+        if (form != product.form) return false;
+        return gender == product.gender;
 
     }
 
     @Override
     public int hashCode() {
-        return (articleNumber != null)?articleNumber.hashCode():0;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (category != null ? category.hashCode() : 0);
+        result = 31 * result + (articleNumber != null ? articleNumber.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (stockAmount != null ? stockAmount.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (fullDescription != null ? fullDescription.hashCode() : 0);
+        result = 31 * result + (composition != null ? composition.hashCode() : 0);
+        result = 31 * result + (quantityInPackage != null ? quantityInPackage.hashCode() : 0);
+        result = 31 * result + (discount != null ? discount.hashCode() : 0);
+        result = 31 * result + (form != null ? form.hashCode() : 0);
+        result = 31 * result + (gender != null ? gender.hashCode() : 0);
+        return result;
     }
 
     @Override

@@ -23,7 +23,7 @@
 <div class="topNavigationProduct">
     <div class="resultSelect">
         <span class="category">${categories.get(categoryId-1).getName().toUpperCase()}, </span>
-        <span class="totalProduct">${totalProducts} <span class="amount">${products.getMaxLinkedPages()}</span></span>
+        <span class="totalProduct">${totalProducts} <span class="amount">${products.getNrOfElements()}</span></span>
     </div>
     <jsp:include page="../forms/sort_filter_form.jsp"/>
 </div>

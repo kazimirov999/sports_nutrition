@@ -76,19 +76,15 @@ public class CategoryServiceImpl implements ICategoryService {
     @Transactional(readOnly = true)
     @Override
     public Boolean checkBeforeUpdateCategory(Category category) {
-        if (category == null && category.getId() == null) return false;
+        if (category == null && category.getId() == null) {
+            return false;
+        }
         Boolean check = true;
         Category cat = getCategoryByName(category.getName());
-        if (cat != null && !cat.getId().equals(category.getId()))
+        if (cat != null && !cat.getId().equals(category.getId())) {
             check = false;
+        }
 
         return check;
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<Category> getRandomCategories(int amountCategory) {
-
-        return categoryRepository.getRandomCategories(amountCategory);
     }
 }

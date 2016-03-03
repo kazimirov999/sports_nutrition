@@ -1,14 +1,14 @@
 package net.sports.nutrition.controllers;
 
+import net.sports.nutrition.constants.ConstantsUri;
+import net.sports.nutrition.constants.ConstantsView;
 import net.sports.nutrition.domain.entities.*;
 import net.sports.nutrition.form.beans.FormBuyBean;
 import net.sports.nutrition.services.ICartService;
-import net.sports.nutrition.utils.converters.ProductEditor;
-import net.sports.nutrition.utils.converters.TasteEditor;
-import net.sports.nutrition.constants.ConstantsUri;
-import net.sports.nutrition.constants.ConstantsView;
 import net.sports.nutrition.utils.converters.CountryEditor;
 import net.sports.nutrition.utils.converters.DateTimeEditor;
+import net.sports.nutrition.utils.converters.ProductEditor;
+import net.sports.nutrition.utils.converters.TasteEditor;
 import org.jboss.logging.Logger;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,12 +41,13 @@ public class CartController extends AbstractGlobalController {
         binder.registerCustomEditor(DateTime.class, new DateTimeEditor());
     }
 
-
     @RequestMapping(value = ConstantsUri.CART_BUY, method = RequestMethod.GET)
     public String addToCart(@ModelAttribute("formBuyBean") FormBuyBean formBuyBean, HttpSession session) {
         log.info("Add to cart product: " + formBuyBean.toString());
 
-        if (formBuyBean != null) cart.addCartItem(new CartItem(formBuyBean.getProduct(), formBuyBean.getTaste()));
+        if (formBuyBean != null) {
+            cart.addCartItem(new CartItem(formBuyBean.getProduct(), formBuyBean.getTaste()));
+        }
 
         return "redirect:" + (String) session.getAttribute("lastUri");
     }
@@ -75,12 +76,11 @@ public class CartController extends AbstractGlobalController {
     }
 
     @RequestMapping(value = ConstantsUri.CART_CLEAN, method = RequestMethod.GET)
-    public String cleanCart(@ModelAttribute("formBuyBean") FormBuyBean formBuyBean, HttpSession session) {
+    public String cleanCart(HttpSession session) {
         cart.cleanCart();
 
-        return "redirect:" + (String)session.getAttribute("lastUri");
+        return "redirect:" + (String) session.getAttribute("lastUri");
     }
-
 
     @RequestMapping(value = ConstantsUri.CART_SHOW, method = RequestMethod.GET)
     public String showCart() {

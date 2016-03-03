@@ -5,6 +5,7 @@ package net.sports.nutrition.domain.enumx;
  * Date: 23.01.2016 11:25
  */
 public enum SortType {
-    NAME_DESC,NAME_ASC,PRICE_ASC,PRICE_DESC,NONE
+
+    NAME_DESC, NAME_ASC, PRICE_ASC, PRICE_DESC, NONE
 }
 

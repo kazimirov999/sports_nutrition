@@ -23,7 +23,7 @@ public class CountryServiceImpl implements ICountryService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Country> getAllCountries() {
+    public List<Country> findAllCountries() {
 
         return countryRepository.findAll();
     }

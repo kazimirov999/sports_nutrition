@@ -24,14 +24,14 @@ public class CategoryEditor extends PropertyEditorSupport {
     public void setAsText(String id) throws IllegalArgumentException {
 
         Category category = null;
-        if (id != null && !id.isEmpty())
+        if (id != null && !id.isEmpty()) {
             try {
                 category = categoryService.getCategoryById(Long.parseLong(id));
             } catch (Exception e) {
-                log.info("Error convert Long to String!!!" + e.getLocalizedMessage());
+                log.error("Error convert Long to String", e);
             }
-
-            this.setValue(category);
+        }
+        this.setValue(category);
 
 
     }

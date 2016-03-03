@@ -52,7 +52,9 @@ public class BrandServiceImpl implements IBrandService {
     @Override
     public Boolean brandIsExist(Brand brand) {
         Boolean isExist = false;
-        if (getBrandByName(brand.getName()) != null) isExist = true;
+        if (getBrandByName(brand.getName()) != null) {
+            isExist = true;
+        }
 
         return isExist;
     }
@@ -73,9 +75,13 @@ public class BrandServiceImpl implements IBrandService {
     public Boolean checkBeforeUpdateBrand(Brand brand) {
         Boolean check = true;
         Brand b = getBrandByName(brand.getName());
-        if (b != null && !b.getId().equals(brand.getId()))
+        if (b != null && !b.getId().equals(brand.getId())) {
             check = false;
-
+        }
         return check;
+    }
+
+    public void setBrandRepository(IBrandRepository brandRepository) {
+        this.brandRepository = brandRepository;
     }
 }

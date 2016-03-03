@@ -14,15 +14,14 @@
 <spring:message code="order.id" var="orderId"/>
 <spring:message code="order.data" var="orderDate"/>
 <spring:message code="customer" var="customer"/>
-<spring:message code="customer.phone" var="phone"/>
+<spring:message code="phone" var="phone"/>
 <spring:message code="order.send" var="orderButton"/>
-<spring:message code="customer.email" var="email"/>
+<spring:message code="user.email" var="email"/>
 <spring:message code="customer.address" var="address"/>
 <spring:message code="customer.address" var="address"/>
 <spring:message code="customer.user" var="customerIsUser"/>
 <spring:message code="yes" var="yes"/>
 <spring:message code="no" var="no"/>
-
 <spring:message code="taste" var="taste"/>
 <spring:message code="price" var="price"/>
 <spring:message code="discount" var="discount"/>
@@ -100,6 +99,6 @@
         </c:forEach>
     </div>
     <c:if test="${pager.totalPageCount > 1}">
-        <jsp:include page="fragments/paginator.jsp"/>
+        <jsp:include page="../fragments/paginator.jsp"/>
     </c:if>
 </c:if>

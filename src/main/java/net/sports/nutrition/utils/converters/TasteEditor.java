@@ -23,12 +23,13 @@ public class TasteEditor extends PropertyEditorSupport {
     @Override
     public void setAsText(String id) throws IllegalArgumentException {
         Taste taste = null;
-        if (id != null && !id.isEmpty())
+        if (id != null && !id.isEmpty()) {
             try {
                 taste = tasteService.getTasteById(Long.parseLong(id));
             } catch (Exception e) {
-                log.info("Error convert Long to String!!!" + e.getLocalizedMessage());
+                log.error("Error convert Long to String", e);
             }
+        }
         this.setValue(taste);
     }
 

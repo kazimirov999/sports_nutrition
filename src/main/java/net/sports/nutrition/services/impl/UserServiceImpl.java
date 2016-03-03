@@ -1,8 +1,9 @@
 package net.sports.nutrition.services.impl;
 
-import net.sports.nutrition.domain.enumx.Role;
 import net.sports.nutrition.domain.entities.User;
+import net.sports.nutrition.domain.enumx.Role;
 import net.sports.nutrition.domain.repositories.IUserRepository;
+import net.sports.nutrition.exceptions.UserNotFoundException;
 import net.sports.nutrition.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,32 +50,39 @@ public class UserServiceImpl implements IUserService {
         return userRepository.getAllUsers();
     }
 
+    @Transactional(readOnly = false)
     @Override
     public void activateUser(Long userId) {
-        String serviceMessage = "activate.success";
         User user = userRepository.getUserById(userId);
-        if (user == null) new Exception("user not exist");
+        if (user == null) {
+            throw new UserNotFoundException("user is not exist");
+        }
         user.setEnabled(true);
         userRepository.edit(user);
     }
 
+    @Transactional(readOnly = false)
     @Override
     public void deactivateUser(Long userId) {
         User user = userRepository.getUserById(userId);
-        if (user == null) new Exception("user not exist");
+        if (user == null) {
+            throw new UserNotFoundException("user is not exist");
+        }
         user.setEnabled(false);
         userRepository.edit(user);
     }
 
-    @Transactional
+    @Transactional(readOnly = false)
     @Override
     public void setUserRoleAdmin(Long userId) {
         User user = userRepository.getUserById(userId);
-        if (user == null) new Exception("user not exist");
+        if (user == null) {
+            throw new UserNotFoundException("user is not exist");
+        }
         user.setRole(Role.ROLE_ADMIN);
     }
 
-    @Transactional
+    @Transactional(readOnly = false)
     @Override
     public Boolean deleteUserById(Long userId) {
 

@@ -47,9 +47,9 @@ public class FormServiceImpl implements IFormService {
     public FormPropertyContent createContentForFilterForm(Long categoryId) {
         FormPropertyContent content = new FormPropertyContent();
 
-        content.setBrandList(brandRepository.getBrandByCategoryId(categoryId));
+        content.setBrandList(brandRepository.getBrandsByCategoryId(categoryId));
         content.setDiscountList(discountRepository.getDiscountsByCategoryId(categoryId));
-        content.setTasteList(tasteRepository.getAllTasteByCategoryId(categoryId));
+        content.setTasteList(tasteRepository.getAllTastesByCategoryId(categoryId));
 
         return content;
     }

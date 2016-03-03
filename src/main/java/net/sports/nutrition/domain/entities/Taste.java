@@ -18,7 +18,7 @@ import java.io.Serializable;
                 query = "SELECT taste FROM Product p INNER JOIN p.tasteList taste WHERE p.category.id = :id ORDER BY taste.name ASC")
 })
 @Entity
-@Table(name = "Tastes",
+@Table(name = "tastes",
         uniqueConstraints=@UniqueConstraint(columnNames={"name"})
 )
 public class Taste implements Serializable {
@@ -44,13 +44,16 @@ public class Taste implements Serializable {
 
         Taste taste = (Taste) o;
 
-        return name.equals(taste.name);
+        if (id != null ? !id.equals(taste.id) : taste.id != null) return false;
+        return !(name != null ? !name.equals(taste.name) : taste.name != null);
 
     }
 
     @Override
     public int hashCode() {
-        return name.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
     }
 
     @Override

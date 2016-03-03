@@ -3,6 +3,7 @@ package net.sports.nutrition.domain.entities;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,14 +17,22 @@ import java.util.Set;
         @NamedQuery(name="Category.deleteById",query = "delete from Category where id= :id"),
 })
 @Entity
-@Table(name = "Categories",
+@Table(name = "categories",
         uniqueConstraints=@UniqueConstraint(columnNames={"name"}))
 public class Category implements Serializable {
+
+    public Category() {}
+
+    public Category(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
     @NotEmpty(message = "{error.field.not.empty}")
     private String name;
 
@@ -46,13 +55,17 @@ public class Category implements Serializable {
 
         Category category = (Category) o;
 
-        return name.equals(category.name);
-
+        if (id != null ? !id.equals(category.id) : category.id != null) return false;
+        if (name != null ? !name.equals(category.name) : category.name != null) return false;
+        return !(description != null ? !description.equals(category.description) : category.description != null);
     }
 
     @Override
     public int hashCode() {
-        return name.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -63,10 +76,6 @@ public class Category implements Serializable {
                 ", name='" + name + '\'' +
                 ", id=" + id +
                 '}';
-    }
-
-
-    public Category() {
     }
 
     public Long getId() {

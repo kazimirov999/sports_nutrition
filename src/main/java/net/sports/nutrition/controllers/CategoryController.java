@@ -2,10 +2,10 @@ package net.sports.nutrition.controllers;
 
 import net.sports.nutrition.constants.ConstantsUri;
 import net.sports.nutrition.constants.ConstantsView;
-import net.sports.nutrition.form.beans.FormCategoryBean;
-import net.sports.nutrition.utils.ServiceRedirectMessage;
 import net.sports.nutrition.domain.entities.Category;
+import net.sports.nutrition.form.beans.FormCategoryBean;
 import net.sports.nutrition.utils.ServiceMessage;
+import net.sports.nutrition.utils.ServiceRedirectMessage;
 import org.jboss.logging.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,18 +41,18 @@ public class CategoryController extends AbstractGlobalController {
     @RequestMapping(value = ConstantsUri.CATEGORY_ADD, method = RequestMethod.POST)
     public String addCategory(@Valid @ModelAttribute(MODEL_CATEGORY_FORM_BEAN) FormCategoryBean categoryBean,
                               BindingResult result, Model uiModel, RedirectAttributes redirect) {
-
         String serviceMessage = null;
-        if (result.hasErrors())
+        if (result.hasErrors()) {
             return ConstantsView.CATEGORY_ADD;
+        }
         try {
-            if(categoryService.categoryIsExist(categoryBean.getCategory()) == true){
+            if (categoryService.categoryIsExist(categoryBean.getCategory()) == true) {
                 ServiceMessage.write(uiModel, "category.failure.put.is_exist");
                 return ConstantsView.CATEGORY_ADD;
             }
             categoryService.saveCategoryWithImage(categoryBean.getCategory(), categoryBean.getFile());
         } catch (Exception e) {
-            log.error("Add category:" + categoryBean, e);
+            log.error("Add category", e);
             ServiceMessage.write(uiModel, "category.failure.add");
             return ConstantsView.CATEGORY_ADD;
         }
@@ -68,8 +68,7 @@ public class CategoryController extends AbstractGlobalController {
         try {
             serviceMessage = (categoryService.deleteCategoryById(id) == 0) ? "category.not.delete" : "category.success.delete";
         } catch (Exception e) {
-            log.error("Delete category: id="+id);
-
+            log.error("Delete category", e);
             ServiceRedirectMessage.write(redirect, "failureMessage", "category.failure.delete");
             redirect.addFlashAttribute("category", categoryService.getCategoryById(id));
             return "redirect:" + ConstantsUri.CATEGORY_DELETE_RESULT;
@@ -81,7 +80,7 @@ public class CategoryController extends AbstractGlobalController {
     }
 
     @RequestMapping(value = ConstantsUri.CATEGORY_DELETE_RESULT, method = RequestMethod.GET)
-    public String deleteCategory(Model uiModel) {
+    public String deleteCategoryResult(Model uiModel) {
 
         return ConstantsView.CATEGORY_DELETE;
     }
@@ -103,35 +102,38 @@ public class CategoryController extends AbstractGlobalController {
     @RequestMapping(value = ConstantsUri.CATEGORY_SHOW_EDIT_FORM, method = RequestMethod.GET)
     public String showEditCategory(@PathVariable Long categoryId, Model uiModel, HttpSession session) {
         Category category = categoryService.getCategoryById(categoryId);
-        if (category.getImageByte() != null)
+        if (category.getImageByte() != null) {
             session.setAttribute(category.getId().toString(), category.getImageByte());
-
+        }
         uiModel.addAttribute(MODEL_CATEGORY_FORM_BEAN, new FormCategoryBean(category));
-        return  ConstantsView.CATEGORY_EDIT;
+
+        return ConstantsView.CATEGORY_EDIT;
     }
 
     @RequestMapping(value = ConstantsUri.CATEGORY_EDIT, method = RequestMethod.POST)
     public String editCategory(@Valid FormCategoryBean categoryBean, BindingResult result,
                                RedirectAttributes redirect, HttpSession session, Model uiModel) {
         String serviceMessage = null;
-        if (result.hasErrors())
-            return ConstantsView.CATEGORY_EDIT;
-        Category category = categoryBean.getCategory();
-        if(!categoryService.checkBeforeUpdateCategory(category)){
-            ServiceMessage.write(uiModel, "category.failure.put.is_exist");
+        if (result.hasErrors()) {
             return ConstantsView.CATEGORY_EDIT;
         }
         try {
-            if (categoryBean.getFile().getSize() == 0 && session.getAttribute(category.getId().toString()) != null) {
+            Category category = categoryBean.getCategory();
+            if (!categoryService.checkBeforeUpdateCategory(category)) {
+                ServiceMessage.write(uiModel, "category.failure.put.is_exist");
+                return ConstantsView.CATEGORY_EDIT;
+            }
+
+            if (categoryBean.getFile() == null || categoryBean.getFile().getSize() == 0
+                    && session.getAttribute(category.getId().toString()) != null) {
                 category.setImageByte((byte[]) session.getAttribute(category.getId().toString()));
             } else {
-
                 category.setImageByte(categoryBean.getFile().getBytes());
             }
             categoryService.updateCategory(category);
             serviceMessage = "category.success.edit";
         } catch (Exception e) {
-            log.error("Edit category: "+categoryBean);
+            log.error("Edit category", e);
             serviceMessage = "category.edit.failure";
         }
         ServiceRedirectMessage.write(redirect, serviceMessage);

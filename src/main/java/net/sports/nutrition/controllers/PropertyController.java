@@ -56,9 +56,13 @@ public class PropertyController extends AbstractGlobalController {
     @RequestMapping(value = ConstantsUri.PROPERTY_MENU_DISPATCHER, method = RequestMethod.GET)
     public String propertyMenuDispatcher(@PathVariable("propertyName") String propertyName, Model uiModel) {
         String page = "property_page";
-        if ("brand".equalsIgnoreCase(propertyName)) page = "brand_page";
-        if ("taste".equalsIgnoreCase(propertyName)) page = "taste_page";
-        if ("discount".equalsIgnoreCase(propertyName)) page = "discount_page";
+        if ("brand".equalsIgnoreCase(propertyName)) {
+            page = ConstantsView.PROPERTY_BRAND;
+        } else if ("taste".equalsIgnoreCase(propertyName)) {
+            page = ConstantsView.PROPERTY_TASTE;
+        } else if ("discount".equalsIgnoreCase(propertyName)) {
+            page = ConstantsView.PROPERTY_DISCOUNT;
+        }
 
         return page;
     }
@@ -69,12 +73,10 @@ public class PropertyController extends AbstractGlobalController {
         if ("brand".equalsIgnoreCase(propertyName)) {
             uiModel.addAttribute("brandToAddBean", new Brand());
             page = ConstantsView.PROPERTY_BRAND;
-        }
-        if ("taste".equalsIgnoreCase(propertyName)) {
+        } else if ("taste".equalsIgnoreCase(propertyName)) {
             uiModel.addAttribute("tasteToAddBean", new Taste());
             page = ConstantsView.PROPERTY_TASTE;
-        }
-        if ("discount".equalsIgnoreCase(propertyName)) {
+        } else if ("discount".equalsIgnoreCase(propertyName)) {
             uiModel.addAttribute("discountToAddBean", new Discount());
             page = ConstantsView.PROPERTY_DISCOUNT;
         }
@@ -89,12 +91,10 @@ public class PropertyController extends AbstractGlobalController {
         if ("brand".equalsIgnoreCase(propertyName)) {
             uiModel.addAttribute("brandToEditBean", brandService.getBrandById(propertyId));
             page = ConstantsView.PROPERTY_BRAND;
-        }
-        if ("taste".equalsIgnoreCase(propertyName)) {
-            uiModel.addAttribute("tasteToEditBean", tasteService.getTasteById(propertyId));
+        } else if ("taste".equalsIgnoreCase(propertyName)) {
+            uiModel.addAttribute("brandToEditBean", tasteService.getTasteById(propertyId));
             page = ConstantsView.PROPERTY_TASTE;
-        }
-        if ("discount".equalsIgnoreCase(propertyName)) {
+        } else if ("discount".equalsIgnoreCase(propertyName)) {
             uiModel.addAttribute("discountToEditBean", discountService.getDiscountById(propertyId));
             page = ConstantsView.PROPERTY_DISCOUNT;
         }
@@ -104,9 +104,9 @@ public class PropertyController extends AbstractGlobalController {
 
     @RequestMapping(value = ConstantsUri.PROPERTY_BRAND_ADD, method = RequestMethod.POST)
     public String addBrand(@Valid @ModelAttribute("brandToAddBean") Brand brand, BindingResult result, RedirectAttributes redirect, Model uiModel) {
-        if (result.hasErrors())
+        if (result.hasErrors()) {
             return ConstantsView.PROPERTY_BRAND;
-        ;
+        }
         try {
             if (brandService.brandIsExist(brand) == true) {
                 ServiceMessage.write(uiModel, "brand.failure.put.is_exist");
@@ -114,7 +114,7 @@ public class PropertyController extends AbstractGlobalController {
             }
             brandService.saveBrand(brand);
         } catch (Exception e) {
-            log.error("Add brand" + e);
+            log.error("Add brand", e);
             ServiceMessage.write(uiModel, "brand.failure.put");
             return ConstantsView.PROPERTY_BRAND;
         }
@@ -126,17 +126,19 @@ public class PropertyController extends AbstractGlobalController {
     @RequestMapping(value = ConstantsUri.PROPERTY_TASTE_ADD, method = RequestMethod.POST)
     public String addTaste(@Valid @ModelAttribute("tasteToAddBean") Taste taste, BindingResult result,
                            RedirectAttributes redirect, Model uiModel) {
-        if (result.hasErrors())
+        if (result.hasErrors()) {
             return ConstantsView.PROPERTY_TASTE;
+        }
         try {
-            if (tasteService.brandIsExist(taste)) {
+            if (tasteService.tasteIsExist(taste)) {
                 ServiceMessage.write(uiModel, "taste.failure.put.is_exist");
                 return ConstantsView.PROPERTY_TASTE;
             }
             tasteService.saveTaste(taste);
         } catch (Exception e) {
-            log.error("Add taste" + e);
+            log.error("Add taste", e);
             ServiceMessage.write(uiModel, "taste.failure.put");
+            return ConstantsView.PROPERTY_TASTE;
         }
         ServiceRedirectMessage.write(redirect, "taste.add.success");
 
@@ -145,8 +147,9 @@ public class PropertyController extends AbstractGlobalController {
 
     @RequestMapping(value = ConstantsUri.PROPERTY_DISCOUNT_ADD, method = RequestMethod.POST)
     public String addDiscount(@Valid @ModelAttribute("discountToAddBean") Discount discount, BindingResult result, RedirectAttributes redirect, Model uiModel) {
-        if (result.hasErrors())
+        if (result.hasErrors()) {
             return ConstantsView.PROPERTY_DISCOUNT;
+        }
         try {
             if (discountService.discountIsExist(discount) == true) {
                 ServiceMessage.write(uiModel, "discount.failure.put.is_exist");
@@ -154,9 +157,8 @@ public class PropertyController extends AbstractGlobalController {
             }
             discountService.saveDiscount(discount);
         } catch (Exception e) {
-            log.error("Add Discount" + e);
+            log.error("Add Discount", e);
             ServiceMessage.write(uiModel, "discount.failure.put");
-
             return ConstantsView.PROPERTY_DISCOUNT;
         }
         ServiceRedirectMessage.write(redirect, "discount.add.success");
@@ -166,9 +168,10 @@ public class PropertyController extends AbstractGlobalController {
 
     @RequestMapping(value = ConstantsUri.PROPERTY_BRAND_EDIT, method = RequestMethod.POST)
     public String editBrand(@Valid @ModelAttribute("brandToEditBean") Brand brand,
-                            BindingResult result, RedirectAttributes redirect, HttpSession session, Model uiModel) {
-        if (result.hasErrors())
+                            BindingResult result, RedirectAttributes redirect, Model uiModel) {
+        if (result.hasErrors()) {
             return ConstantsView.PROPERTY_BRAND;
+        }
         String serviceMessage = null;
         try {
             if (!brandService.checkBeforeUpdateBrand(brand)) {
@@ -178,7 +181,7 @@ public class PropertyController extends AbstractGlobalController {
             brandService.updateBrand(brand);
             serviceMessage = "brand.success.edit";
         } catch (Exception e) {
-            log.error("Edit brand" + e);
+            log.error("Edit brand", e);
             serviceMessage = "brand.failure.edit";
         }
         ServiceRedirectMessage.write(redirect, serviceMessage);
@@ -188,9 +191,10 @@ public class PropertyController extends AbstractGlobalController {
 
     @RequestMapping(value = ConstantsUri.PROPERTY_TASTE_EDIT, method = RequestMethod.POST)
     public String editTaste(@Valid @ModelAttribute("tasteToEditBean") Taste taste,
-                            BindingResult result, RedirectAttributes redirect, HttpSession session, Model uiModel) {
-        if (result.hasErrors())
+                            BindingResult result, RedirectAttributes redirect, Model uiModel) {
+        if (result.hasErrors()) {
             return ConstantsView.PROPERTY_TASTE;
+        }
         String serviceMessage = null;
         try {
             if (!tasteService.checkBeforeUpdateTaste(taste)) {
@@ -200,7 +204,7 @@ public class PropertyController extends AbstractGlobalController {
             tasteService.saveTaste(taste);
             serviceMessage = "taste.success.edit";
         } catch (Exception e) {
-            log.error("Edit taste" + e);
+            log.error("Edit taste", e);
             serviceMessage = "taste.failure.edit";
         }
         ServiceRedirectMessage.write(redirect, serviceMessage);
@@ -210,8 +214,9 @@ public class PropertyController extends AbstractGlobalController {
 
     @RequestMapping(value = ConstantsUri.PROPERTY_DISCOUNT_EDIT, method = RequestMethod.POST)
     public String editDiscount(@Valid @ModelAttribute("discountToEditBean") Discount discount, BindingResult result, RedirectAttributes redirect, HttpSession session, Model uiModel) {
-        if (result.hasErrors())
+        if (result.hasErrors()) {
             return ConstantsView.PROPERTY_DISCOUNT;
+        }
         String serviceMessage = null;
         try {
             if (!discountService.checkBeforeUpdateDiscount(discount)) {
@@ -221,7 +226,7 @@ public class PropertyController extends AbstractGlobalController {
             discountService.updateDiscount(discount);
             serviceMessage = "discount.success.edit";
         } catch (Exception e) {
-            log.error("Edit discount" + e);
+            log.error("Edit discount", e);
             serviceMessage = "discount.failure.edit";
         }
         ServiceRedirectMessage.write(redirect, serviceMessage);
@@ -229,16 +234,16 @@ public class PropertyController extends AbstractGlobalController {
         return "redirect:" + ConstantsUri.PROPERTY + "discount";
     }
 
-
     @RequestMapping(value = ConstantsUri.PROPERTY_BRAND_DELETE, method = RequestMethod.GET)
     public String deleteBrand(@PathVariable Long brandId, Model uiModel, RedirectAttributes redirect) {
         String serviceMessage = null;
         try {
             serviceMessage = (brandService.deleteById(brandId) == 0) ? "brand.delete.failure" : "brand.success.delete";
         } catch (ConstraintViolationException e) {
+            log.error("Delete brand", e);
             serviceMessage = "brand.delete.failure.is_exist.product";
         } catch (Exception e) {
-            log.error("Delete brand" + e);
+            log.error("Delete brand", e);
             serviceMessage = "brand.delete.failure";
         }
         ServiceRedirectMessage.write(redirect, serviceMessage);
@@ -253,9 +258,10 @@ public class PropertyController extends AbstractGlobalController {
         try {
             serviceMessage = (tasteService.deleteTasteById(tasteId) == 0) ? "taste.delete.failure" : "taste.success.delete";
         } catch (ConstraintViolationException e) {
+            log.error("Delete brand", e);
             serviceMessage = "taste.delete.failure.is_exist.product";
         } catch (Exception e) {
-            log.error("Delete taste" + e);
+            log.error("Delete taste", e);
             serviceMessage = "taste.delete.failure";
         }
         ServiceRedirectMessage.write(redirect, serviceMessage);
@@ -270,8 +276,8 @@ public class PropertyController extends AbstractGlobalController {
         try {
             serviceMessage = (discountService.deleteDiscountById(discountId) != true) ? "discount.delete.failure" : "discount.success.delete";
         } catch (Exception e) {
-            log.error("Delete discount" + e);
-            serviceMessage = "taste.delete.failure";
+            log.error("Delete discount", e);
+            serviceMessage = "discount.delete.failure";
         }
         ServiceRedirectMessage.write(redirect, serviceMessage);
 
@@ -288,7 +294,7 @@ public class PropertyController extends AbstractGlobalController {
     @ModelAttribute("tasteList")
     public List<Taste> getAllTastes() {
 
-        return tasteService.getAllTastes();
+        return tasteService.findAllTastes();
     }
 
     @ModelAttribute("discountList")
@@ -300,6 +306,6 @@ public class PropertyController extends AbstractGlobalController {
     @ModelAttribute("countryList")
     public List<Country> getAllCountries() {
 
-        return countryService.getAllCountries();
+        return countryService.findAllCountries();
     }
 }

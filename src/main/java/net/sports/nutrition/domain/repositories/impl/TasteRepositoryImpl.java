@@ -19,7 +19,7 @@ public class TasteRepositoryImpl extends GenericRepositoryImpl<Taste, Long> impl
     }
 
     @Override
-    public List<Taste> getAllTasteByCategoryId(Long categoryId) {
+    public List<Taste> getAllTastesByCategoryId(Long categoryId) {
 
         return (List<Taste>) getHibernateTemplate()
                 .findByNamedQueryAndNamedParam("Taste.getAllByCategoryId", "id", categoryId);

@@ -25,7 +25,7 @@ import java.util.Set;
                 query = "SELECT b FROM Brand b WHERE b.country.id = :id ORDER BY b.name ASC")
 })
 @Entity
-@Table(name = "Brands",
+@Table(name = "brands",
         uniqueConstraints=@UniqueConstraint(columnNames={"name"})
 )
 public class Brand implements Comparable, Serializable {
@@ -37,7 +37,6 @@ public class Brand implements Comparable, Serializable {
     @NotEmpty(message = "{field.not.empty.error}")
     private String name;
     private String description;
-
 
     @NotNull(message = "{field.not.empty.error}")
     @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.EAGER)
@@ -56,7 +55,6 @@ public class Brand implements Comparable, Serializable {
         this.description = description;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -64,13 +62,20 @@ public class Brand implements Comparable, Serializable {
 
         Brand brand = (Brand) o;
 
-        return name.equals(brand.name);
+        if (id != null ? !id.equals(brand.id) : brand.id != null) return false;
+        if (name != null ? !name.equals(brand.name) : brand.name != null) return false;
+        if (description != null ? !description.equals(brand.description) : brand.description != null) return false;
+        return !(country != null ? !country.equals(brand.country) : brand.country != null);
 
     }
 
     @Override
     public int hashCode() {
-        return name.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (country != null ? country.hashCode() : 0);
+        return result;
     }
 
     @Override

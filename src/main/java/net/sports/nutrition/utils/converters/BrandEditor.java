@@ -22,12 +22,13 @@ public class BrandEditor extends PropertyEditorSupport {
 
     @Override
     public void setAsText(String id) throws IllegalArgumentException {
-        if (id != null && !id.isEmpty())
+        if (id != null && !id.isEmpty()) {
             try {
                 this.setValue(brandService.getBrandById(Long.parseLong(id)));
             } catch (Exception e) {
-                log.info("Error convert Long to String!!!" + e.getLocalizedMessage());
+                log.error("Error convert Long to String", e);
             }
+        }
 
     }
 

@@ -78,19 +78,11 @@ public class ProductServiceImpl implements IProductService {
         return productRepository.getProductsByCriteria(categoryId, filterParams, sortType, isExistInStorage);
     }
 
-    @Transactional(readOnly = true)
-    @Override
-    public Long getProductsAmountByCriteria(Long categoryId, FormFilterBean filterParams) {
-
-        return productRepository.getProductsAmountByCriteria(categoryId, filterParams);
-    }
-
     @Override
     public Integer deleteAllProductByCategoryId(Long categoryId) {
 
         return productRepository.deleteAllProductByCategoryId(categoryId);
     }
-
 
     @Override
     public Integer deleteProductById(Long productId) {
@@ -102,10 +94,9 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public Boolean productIsExist(Product product) {
         Boolean isExist = false;
-        if (getProductByName(product.getName()) != null ||
-                getProductByArticleNumber(product.getArticleNumber()) != null)
+        if (getProductByArticleNumber(product.getArticleNumber()) != null) {
             isExist = true;
-
+        }
         return isExist;
     }
 
@@ -113,10 +104,13 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public Boolean checkBeforeUpdateProduct(Product product) {
         Boolean check = true;
-        if (product == null && product.getId() == null) return false;
-
+        if (product == null && product.getId() == null) {
+            return false;
+        }
         Product p = getProductByArticleNumber(product.getArticleNumber());
-        if (p != null && !p.getId().equals(product.getId())) check = false;
+        if (p != null && !p.getId().equals(product.getId())) {
+            check = false;
+        }
 
         return check;
     }

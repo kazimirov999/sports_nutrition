@@ -25,10 +25,10 @@ public class FileTypeConstraintValidator implements ConstraintValidator<File, Mu
 
     @Override
     public boolean isValid( MultipartFile file , ConstraintValidatorContext cxt) {
-        log.info("File name: "+ file.getName() +"file type: "+file.getContentType());
         if(file == null || file.isEmpty()) return true;
         for(Type t: type)
         if(file.getContentType().equalsIgnoreCase(t.getType())) return true;
+        log.info("File name: "+ file.getName() +"file type: "+file.getContentType());
         return false;
     }
 

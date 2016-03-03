@@ -21,7 +21,7 @@ import java.util.Set;
 @Component
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
 @Entity
-@Table(name = "Carts")
+@Table(name = "carts")
 public class Cart implements Serializable {
 
     @Id
@@ -32,42 +32,51 @@ public class Cart implements Serializable {
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime date;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name="cart_id")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "cart_id")
     private Set<CartItem> cartItems;
 
     private BigDecimal grandTotalPrice;
 
     public Cart() {
+        this.orderId = GeneratorUtil.generateId();
         setCartItems(new HashSet<CartItem>());
         setGrandTotalPrice(new BigDecimal(0));
     }
 
-    public Cart buildByProxy(Cart proxyCart){
+    public Cart(Set<CartItem> cartItems, Customer customer) {
+        this.orderId = GeneratorUtil.generateId();
+        this.cartItems = cartItems;
+        this.customer = customer;
+    }
+
+    public Cart buildByProxy(Cart proxyCart) {
         this.setCustomer(proxyCart.getCustomer());
         this.setCartItems(proxyCart.getCartItems());
         this.setGrandTotalPrice(proxyCart.getGrandTotalPrice());
-        this.orderId = GeneratorUtil.generateId();
         this.date = DateTime.now();
         return this;
+    }
+
+    public CartItem findCartItem(CartItem cartItemSearch) {
+        if (cartItems.contains(cartItemSearch))
+            for (CartItem cartItem : cartItems)
+                if (cartItem.equals(cartItemSearch)) return cartItem;
+
+        return null;
     }
 
     public void addCartItem(CartItem item) {
 
         if (cartItems.contains(item)) {
-            for (CartItem cartItem : cartItems)
-                if (cartItem.equals(item)) {
-                    cartItem.setQuantity(cartItem.getQuantity() + item.getQuantity());
-                    break;
-                }
+            increaseQuantity(item);
         } else {
             cartItems.add(item);
         }
-
         updateGrandTotal();
     }
 
@@ -77,25 +86,21 @@ public class Cart implements Serializable {
     }
 
     public void increaseQuantity(CartItem item) {
-        if (cartItems.contains(item))
-            for (CartItem cartItem : cartItems)
-                if (cartItem.equals(item)) {
-                    cartItem.increaseQuantity();
-                    updateGrandTotal();
-                    break;
-                }
+        CartItem cartItem = findCartItem(item);
+        if (cartItem != null) {
+            cartItem.increaseQuantity();
+            updateGrandTotal();
+        }
     }
 
     public void decreaseQuantity(CartItem item) {
-        if (cartItems.contains(item))
-            for (CartItem cartItem : cartItems)
-                if (cartItem.equals(item)) {
-                    if (cartItem.getQuantity() > 1) {
-                        cartItem.decreaseQuantity();
-                        updateGrandTotal();
-                        break;
-                    }
-                }
+        CartItem cartItem = findCartItem(item);
+        if (cartItem != null) {
+            if (cartItem.getQuantity() > 1) {
+                cartItem.decreaseQuantity();
+                updateGrandTotal();
+            }
+        }
     }
 
     public void cleanCart() {
@@ -103,9 +108,9 @@ public class Cart implements Serializable {
         setCartItems(new HashSet<CartItem>());
     }
 
-    public int size(){
+    public int size() {
         int count = 0;
-        for (CartItem cartItem:cartItems)
+        for (CartItem cartItem : cartItems)
             count += cartItem.getQuantity();
         return count;
     }
@@ -114,6 +119,29 @@ public class Cart implements Serializable {
         grandTotalPrice = new BigDecimal(0);
         for (CartItem item : cartItems)
             grandTotalPrice = grandTotalPrice.add(item.getTotalPrice());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Cart)) return false;
+
+        Cart cart = (Cart) o;
+
+        if (id != null ? !id.equals(cart.id) : cart.id != null) return false;
+        if (orderId != null ? !orderId.equals(cart.orderId) : cart.orderId != null) return false;
+        if (date != null ? !date.equals(cart.date) : cart.date != null) return false;
+        return !(customer != null ? !customer.equals(cart.customer) : cart.customer != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (orderId != null ? orderId.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (customer != null ? customer.hashCode() : 0);
+        return result;
     }
 
     @Override

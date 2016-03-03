@@ -16,8 +16,6 @@ public interface ICartService {
 
     Cart getCartById(Long cartId);
 
-    Integer deleteCartById(Long cartId);
-
     Boolean deleteCart(Cart cart);
 
     String generateBodyTextForSuccessPlaceOrderEmail(String pattern, Cart cart);

@@ -15,7 +15,7 @@ import java.util.List;
  * Date: 08.02.2016 13:13
  */
 
-public abstract class  AbstractGlobalController {
+public abstract class AbstractGlobalController {
 
     @Autowired
     protected IProductService productService;
@@ -25,7 +25,6 @@ public abstract class  AbstractGlobalController {
     protected ICategoryService categoryService;
     @Autowired
     protected ITasteService tasteService;
-
 
     @ModelAttribute("categories")
     public List<Category> getCategories() {

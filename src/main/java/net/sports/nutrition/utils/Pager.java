@@ -7,7 +7,6 @@ import org.springframework.beans.support.PagedListHolder;
  * Date: 25.01.2016 15:43
  */
 
-
 public class Pager implements java.io.Serializable {
 
     public Pager() {
@@ -16,13 +15,13 @@ public class Pager implements java.io.Serializable {
     private int beginIndex;
     private int endIndex;
     private int currentIndex;
-    private  int totalPageCount;
-    private  String baseUrl;
-    private  int totalItems;
+    private int totalPageCount;
+    private String baseUrl;
+    private int totalItems;
 
-    public static Pager currentPage(PagedListHolder<?> pagedListHolder, String BASE_URL, int pageSize) {
+    public static Pager currentPage(PagedListHolder<?> pagedListHolder, String BASE_URL) {
         int currentIndex = pagedListHolder.getPage() + 1;
-        int beginIndex = Math.max(1, currentIndex - 2 );
+        int beginIndex = Math.max(1, currentIndex - 2);
         int endIndex = Math.min(beginIndex + 4, pagedListHolder.getPageCount());
         int totalPageCount = pagedListHolder.getPageCount();
         int totalItems = pagedListHolder.getNrOfElements();
@@ -41,6 +40,7 @@ public class Pager implements java.io.Serializable {
     public int getBeginIndex() {
         return beginIndex;
     }
+
     public void setBeginIndex(int beginIndex) {
         this.beginIndex = beginIndex;
     }
@@ -48,6 +48,7 @@ public class Pager implements java.io.Serializable {
     public int getEndIndex() {
         return endIndex;
     }
+
     public void setEndIndex(int endIndex) {
         this.endIndex = endIndex;
     }
@@ -55,6 +56,7 @@ public class Pager implements java.io.Serializable {
     public int getCurrentIndex() {
         return currentIndex;
     }
+
     public void setCurrentIndex(int currentIndex) {
         this.currentIndex = currentIndex;
     }
@@ -62,6 +64,7 @@ public class Pager implements java.io.Serializable {
     public String getBaseUrl() {
         return baseUrl;
     }
+
     public void setBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
     }
@@ -69,6 +72,7 @@ public class Pager implements java.io.Serializable {
     public int getTotalItems() {
         return totalItems;
     }
+
     public void setTotalItems(int totalItems) {
         this.totalItems = totalItems;
     }
@@ -76,6 +80,7 @@ public class Pager implements java.io.Serializable {
     public int getTotalPageCount() {
         return totalPageCount;
     }
+
     public void setTotalPageCount(int totalPageCount) {
         this.totalPageCount = totalPageCount;
     }

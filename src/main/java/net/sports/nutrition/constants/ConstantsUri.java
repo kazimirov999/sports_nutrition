@@ -24,12 +24,12 @@ public final class ConstantsUri {
     static final public String PRODUCT_SHOW_ALL_WITH_PAGE = "/products/{categoryId}/page/{pageNumber}";
     static final public String PRODUCT_SHOW_ALL_FIRST_PAGE = "/products/{categoryId}/page/1";
     static final public String PRODUCT_SORT = "/sort/{categoryId}";
-    static final public String PRODUCT_SHOW = "show/product/{productId}";
+    static final public String PRODUCT_SHOW = "/show/product/{productId}";
     static final public String PRODUCT_ADD_FORM = "/add/product";
     static final public String PRODUCT_ADD = "/add/product";
-    static final public String PRODUCT_EDIT_FORM = "/edit/product/{idProduct}";
+    static final public String PRODUCT_EDIT_FORM = "/edit/product/{productId}";
     static final public String PRODUCT_EDIT = "/edit/product";
-    static final public String PRODUCT_DELETE = "delete/product/{idProduct}";
+    static final public String PRODUCT_DELETE = "/delete/product/{productId}";
 
     static final public String USER_REGISTER = "/register";
     static final public String USER_SHOW_ALL = "/show/users";

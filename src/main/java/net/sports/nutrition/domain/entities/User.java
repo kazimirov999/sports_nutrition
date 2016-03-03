@@ -17,7 +17,7 @@ import java.io.Serializable;
  * Date: 08.01.2016 15:02
  */
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 public class User implements Serializable {
 
     @Id
@@ -35,9 +35,6 @@ public class User implements Serializable {
 
     private boolean enabled;
 
-
-
-
     @Enumerated(EnumType.STRING)
     private Role role = Role.ROLE_USER;
 
@@ -52,6 +49,43 @@ public class User implements Serializable {
 
     public User() {
         this.dateRegister = DateTime.now();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+
+        User user = (User) o;
+
+        if (enabled != user.enabled) return false;
+        if (id != null ? !id.equals(user.id) : user.id != null) return false;
+        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
+        if (loginEmail != null ? !loginEmail.equals(user.loginEmail) : user.loginEmail != null) return false;
+        if (phoneNumber != null ? !phoneNumber.equals(user.phoneNumber) : user.phoneNumber != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+        if (role != user.role) return false;
+        if (country != null ? !country.equals(user.country) : user.country != null) return false;
+        if (address != null ? !address.equals(user.address) : user.address != null) return false;
+        return !(dateRegister != null ? !dateRegister.equals(user.dateRegister) : user.dateRegister != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (loginEmail != null ? loginEmail.hashCode() : 0);
+        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (enabled ? 1 : 0);
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (country != null ? country.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (dateRegister != null ? dateRegister.hashCode() : 0);
+        return result;
     }
 
     @Override

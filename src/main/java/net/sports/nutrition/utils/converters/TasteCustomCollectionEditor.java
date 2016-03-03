@@ -29,7 +29,7 @@ public class TasteCustomCollectionEditor extends CustomCollectionEditor {
         try{
             taste = tasteService.getTasteById(Long.parseLong((String) id));
         }catch (Exception e){
-            log.info("Error convert Long to String!!!" + e.getLocalizedMessage());
+            log.error("Error convert Long to String", e);
         }
 
         return taste;

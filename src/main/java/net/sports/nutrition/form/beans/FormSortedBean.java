@@ -20,6 +20,32 @@ public class FormSortedBean implements Serializable {
     public FormSortedBean() {
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FormSortedBean)) return false;
+
+        FormSortedBean that = (FormSortedBean) o;
+
+        if (sortType != that.sortType) return false;
+        return !(productAvailability != null ? !productAvailability.equals(that.productAvailability) : that.productAvailability != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = sortType != null ? sortType.hashCode() : 0;
+        result = 31 * result + (productAvailability != null ? productAvailability.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "FormSortedBean{" +
+                "sortType=" + sortType +
+                ", productAvailability=" + productAvailability +
+                '}';
+    }
 
     public SortType getSortType() {
         return sortType;
@@ -37,11 +63,4 @@ public class FormSortedBean implements Serializable {
         this.productAvailability = productAvailability;
     }
 
-    @Override
-    public String toString() {
-        return "FormSortedBean{" +
-                "sortType=" + sortType +
-                ", productAvailability=" + productAvailability +
-                '}';
-    }
 }

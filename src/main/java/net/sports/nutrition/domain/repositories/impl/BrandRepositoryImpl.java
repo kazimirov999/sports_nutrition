@@ -27,14 +27,14 @@ public class BrandRepositoryImpl extends GenericRepositoryImpl<Brand, Long> impl
     }
 
     @Override
-    public List<Brand> getBrandByCategoryId(Long categoryId) {
+    public List<Brand> getBrandsByCategoryId(Long categoryId) {
 
         return (List<Brand>) getHibernateTemplate()
                 .findByNamedQueryAndNamedParam("Brand.getAllByCategoryIdSortByName", "id", categoryId);
     }
 
     @Override
-    public Map<Brand, Long> getAmountProductByBrand() {
+    public Map<Brand, Long> getAmountProductsByBrand() {
         List<Object[]> resultList = (List<Object[]>) getHibernateTemplate().findByNamedQuery("Brand.getCountProducts");
         Map<Brand, Long> result = new HashMap<>();
         for (Object[] aRow : resultList)
@@ -44,7 +44,7 @@ public class BrandRepositoryImpl extends GenericRepositoryImpl<Brand, Long> impl
     }
 
     @Override
-    public List<Brand> getBrandByCountryId(Long countryId) {
+    public List<Brand> getBrandsByCountryId(Long countryId) {
 
         return (List<Brand>) getHibernateTemplate()
                 .findByNamedQueryAndNamedParam("Brand.getByCountry", "id", countryId);

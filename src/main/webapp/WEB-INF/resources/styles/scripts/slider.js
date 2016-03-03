@@ -1,3 +1,9 @@
+/**
+ * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
+ * Date: 21.02.2016 19:35
+ *
+ */
+
 $(function() {
     var width=$('.slider-box').width();                     // Ширина слайдера.
     interval = 4000;                                    // Интервал смены слайдов.
@@ -20,8 +26,4 @@ function animation(){
         margin=-width*2;
     }
     $('.slider').animate({marginLeft:margin},1000);          // Блок .slider смещается влево на 1 слайд.
-};/**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 21.02.2016 19:35
- *
- */
+};

@@ -1,18 +1,17 @@
 package net.sports.nutrition.utils;
 
 import net.sports.nutrition.domain.entities.Brand;
+import net.sports.nutrition.domain.entities.Category;
 import net.sports.nutrition.domain.entities.Product;
 import net.sports.nutrition.domain.entities.Taste;
 import net.sports.nutrition.domain.enumx.Form;
 import net.sports.nutrition.domain.enumx.Gender;
 import net.sports.nutrition.services.*;
-import net.sports.nutrition.domain.entities.Category;
+import org.jboss.logging.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -36,7 +35,9 @@ public class ParserUtil {
     private ICategoryService categoryService;
     private IProductService productService;
 
-    Map<String, Long> categories = new HashMap<>();
+    public static Map<String, Long> categories = new HashMap<>();
+
+    private static final Logger log = Logger.getLogger(ParserUtil.class);
 
     public ParserUtil() {
         categories.put("Аминокислоты", new Long(1));
@@ -54,27 +55,22 @@ public class ParserUtil {
         categories.put("Повышения тестостерона", new Long(13));
     }
 
-    @RequestMapping(value = "/parse", method = RequestMethod.GET)
-    public void parse() throws IOException {
-        // productBuildAndSaveToDbByCategoryName("povyishenie-testosterona",categories.get("Повышения тестостерона"),2);
-    }
-
 
     public void productBuildAndSaveToDbByCategoryName(String categoryName, Long categoryId, Integer pageAmount) {
         for (int i = 0; i < pageAmount; i++) {
             if (i == 0) {
-                productBuildAndSaveToDb("http://shop.bodybuilding.ua/katalog/" + categoryName + "/", categoryId);
+                productBuildByParseProduct("http://shop.bodybuilding.ua/katalog/" + categoryName + "/", categoryId);
             } else {
-                productBuildAndSaveToDb("http://shop.bodybuilding.ua/katalog/" + categoryName + "/?page=" + i + 1, categoryId);
+                productBuildByParseProduct("http://shop.bodybuilding.ua/katalog/" + categoryName + "/?page=" + i + 1, categoryId);
             }
         }
     }
 
-    List<Product> productBuildAndSaveToDb(String prUrl, Long categoryId) {
+    public List<Product> productBuildByParseProduct(String prUrl, Long categoryId) {
         Random rand = new Random();
         List<Map<String, String>> productList = null;
 
-            productList = parseProduct(prUrl);
+        productList = parseProduct(prUrl);
 
         List<Product> prodList = new ArrayList<>();
 
@@ -93,16 +89,14 @@ public class ParserUtil {
                 Brand brand = null;
                 try {
                     brand = brandService.getBrandByName(map.get("brand").trim());
-                } catch (Exception exx) {
-                    System.out.println("Error brand" + map.get("brand").trim());
+                } catch (Exception e) {
+                    log.error("Error get brand from db", e);
                 }
                 byte[] img = null;
-                try {
-                    String imgUrl = "http://shop.bodybuilding.ua" + map.get("img");
-                    img = downloadImageByUrl(imgUrl);
-                } catch (Exception e) {
-                    System.out.println("Error img");
-                }
+
+                String imgUrl = "http://shop.bodybuilding.ua" + map.get("img");
+                img = downloadImageByUrl(imgUrl);
+
                 List<Taste> tasteList = new ArrayList<>();
                 try {
                     for (String tasteName : stTaste) {
@@ -110,8 +104,8 @@ public class ParserUtil {
                         if (taste != null)
                             tasteList.add(taste);
                     }
-                } catch (Exception exe) {
-                    System.out.println("Eror tasteGet " + exe);
+                } catch (Exception e) {
+                    log.error("Error get taste from db", e);
                 }
                 if (tasteList.size() == 0) tasteList.add(tasteService.getTasteByName("Нет"));
 
@@ -124,8 +118,8 @@ public class ParserUtil {
                     form = Form.TABLETS;
                 } else if (quantityInPackage.contains("капс")) {
                     form = Form.CAPSULE;
-                } else if (quantityInPackage.contains("мл")||quantityInPackage.contains(" л")) {
-                   form = form.FLUIDE;
+                } else if (quantityInPackage.contains("мл") || quantityInPackage.contains(" л")) {
+                    form = form.FLUIDE;
                 } else {
                     form = Form.POWDER;
                 }
@@ -147,8 +141,8 @@ public class ParserUtil {
                 product.setTasteList(tasteList);
 
                 prodList.add(product);
-            } catch (Throwable eth) {
-                System.out.println("Error in built product->" + eth.getMessage());
+            } catch (Throwable e) {
+                log.error("Error get some property from parse product", e);
             }
         }
 
@@ -156,7 +150,7 @@ public class ParserUtil {
             try {
                 productService.saveProduct(product);
             } catch (Exception e) {
-                System.out.println("Error save product" + product + " message-> " + e.getMessage());
+                log.error("Error save product to db", e);
             }
         }
 
@@ -169,7 +163,7 @@ public class ParserUtil {
         URLConnection conn;
         byte[] b = null;
         try {
-            url = new URL(urlName); //Формирование url-адреса файла
+            url = new URL(urlName);
             conn = url.openConnection();
             conn.setDoOutput(true);
             conn.setDoInput(true);
@@ -188,21 +182,21 @@ public class ParserUtil {
             f.close();
 
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            log.error("Error download img by url", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Error download img by url", e);
         }
 
         return b;
     }
 
-    private List<Map<String, String>> parseProduct(String url){
+    public List<Map<String, String>> parseProduct(String url) {
         List<Map<String, String>> productList = new ArrayList<>();
         Document doc = null;
         try {
             doc = Jsoup.connect(url).get();
         } catch (IOException e) {
-            System.out.println("Error connection to url" + url);
+            log.error("Error connect to url", e);
         }
 
         Elements productsTitleElements = doc.getElementsByClass("product-tile");
@@ -236,7 +230,6 @@ public class ParserUtil {
                 String description = null;
                 try {
                     docDetail = Jsoup.connect(productDetailUrl).get();
-                    System.out.println(productDetailUrl + "------");
                     docDetail.getElementsByClass("product-tabs-content").first().select("a").remove();
                     docDetail.getElementsByClass("product-tabs-content").first().select("img").remove();
 
@@ -249,14 +242,14 @@ public class ParserUtil {
 
                     productMap.put("description", description);
                 } catch (Exception e) {
-                    System.out.println("error parse inner url" + productDetailUrl + e.getMessage());
+                    log.error("Error parse inner url", e);
                 }
 
                 productList.add(new HashMap<String, String>(productMap));
                 productMap.clear();
                 tmpList.clear();
-            } catch (Throwable th) {
-                System.out.println("Error get information of product" + th.getMessage() + " " + th.getLocalizedMessage());
+            } catch (Throwable e) {
+                log.error("Error get information of product", e);
             }
 
         }
@@ -270,7 +263,7 @@ public class ParserUtil {
             try {
                 tasteService.saveTaste(new Taste(name));
             } catch (Exception e) {
-                System.out.println("Error save taste to data base" + name);
+                log.error("Error save taste to db", e);
             }
         }
     }
@@ -281,7 +274,7 @@ public class ParserUtil {
         try {
             doc = Jsoup.connect(url).get();
         } catch (IOException e) {
-            System.out.println("Error connection to url:"+ url + e.getMessage());
+            log.error("Error connect to url", e);
         }
         Elements e = doc.select("input[id^=mse2_msoption|color_");
 
@@ -300,25 +293,10 @@ public class ParserUtil {
             Number numb = rand.nextInt(230);
             brands.add(new Brand(brandName, countryService.getCountryById(numb.longValue()), ""));
         }
-        System.out.println("List brands" + brands);
         for (Brand brand : brands)
             brandService.saveBrand(brand);
 
     }
-
-    /*
-    List<String> urls = new ArrayList<>();
-    urls.add("http://shop.bodybuilding.ua/katalog/creatine/");
-    urls.add("http://shop.bodybuilding.ua/katalog/vitaminyi-i-mineralyi/");
-    urls.add("http://shop.bodybuilding.ua/katalog/predtrenirovochnyie-kompleksyi/");
-    urls.add("http://shop.bodybuilding.ua/katalog/spetsialnyie-dobavki/");
-    urls.add("http://shop.bodybuilding.ua/katalog/aminokislotyi/");
-    urls.add("http://shop.bodybuilding.ua/katalog/snijenie-vesa/");
-    for(String url: urls)
-    tasteBuildAndSaveToDb(url);
-    */
-
-    // buildAndSaveToDbBrands("http://shop.bodybuilding.ua/brendyi/");
 
     private List<String> brandParse(String url) {
         List<String> brandList = new ArrayList<>();
@@ -336,13 +314,13 @@ public class ParserUtil {
         return brandList;
     }
 
-    public   static String deleteToChar(String str, String ch) {
+    public static String deleteToChar(String str, String ch) {
 
         int i = str.indexOf(ch);
         return str.substring(i + 1, str.length());
     }
 
-   public static byte[] trimByteArray(byte[] bytes) {
+    public static byte[] trimByteArray(byte[] bytes) {
         int i = bytes.length - 1;
         while (i >= 0 && bytes[i] == 0)
             --i;
@@ -350,16 +328,16 @@ public class ParserUtil {
         return Arrays.copyOf(bytes, i + 1);
     }
 
-    public static File getFileFromBytes(byte[] bytes,String filePath) {
+    public static File getFileFromBytes(byte[] bytes, String filePath) {
 
         File file = new File(filePath);
 
-        try(FileOutputStream os = new FileOutputStream(file)) {
+        try (FileOutputStream os = new FileOutputStream(file)) {
 
             os.write(bytes);
             os.close();
         } catch (Exception e) {
-            System.out.print("Error write file" + e.getMessage());
+            log.error("Error write file", e);
         }
 
         return file;

@@ -1,6 +1,6 @@
 package net.sports.nutrition.domain.repositories.impl;
 
-import net.sports.nutrition.criteria_filter.IMainCriteriaFilter;
+import net.sports.nutrition.criteria.filter.IMainCriteriaFilter;
 import net.sports.nutrition.domain.entities.Product;
 import net.sports.nutrition.domain.entities.Taste;
 import net.sports.nutrition.domain.enumx.SortType;
@@ -52,7 +52,7 @@ public class ProductRepositoryImpl extends GenericRepositoryImpl<Product, Long> 
     @Override
     public Integer deleteProductById(Long id) {
 
-        return getHibernateTemplate().getSessionFactory().getCurrentSession()
+        return getSession()
                 .getNamedQuery("Product.deleteById")
                 .setLong("id", id).executeUpdate();
 
@@ -95,15 +95,6 @@ public class ProductRepositoryImpl extends GenericRepositoryImpl<Product, Long> 
     }
 
     @Override
-    public Long getProductsAmountByCriteria(Long categoryId, FormFilterBean filterParams) {
-
-        return (Long) mainCriteriaFilter.mainFilter(categoryId, getSession(), filterParams)
-                .setProjection(Projections.rowCount())
-                .uniqueResult();
-
-    }
-
-    @Override
     public Long getProductsAmountByCategoryId(Long categoryId) {
 
         return (Long) getHibernateTemplate()
@@ -126,7 +117,7 @@ public class ProductRepositoryImpl extends GenericRepositoryImpl<Product, Long> 
     }
 
     @Override
-    public List<Product> getProductByCategoryId(Long categoryId) {
+    public List<Product> getProductsByCategoryId(Long categoryId) {
 
         return (List<Product>) getHibernateTemplate()
                 .findByNamedQueryAndNamedParam("Product.getAllByCategory", "id", categoryId);

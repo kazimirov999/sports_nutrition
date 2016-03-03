@@ -43,12 +43,6 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
-    public Integer deleteCartById(Long cartId) {
-
-        return cartRepository.deleteCartById(cartId);
-    }
-
-    @Override
     public Boolean deleteCart(Cart cart) {
 
         return cartRepository.delete(cart);
@@ -57,7 +51,6 @@ public class CartServiceImpl implements ICartService {
     @Override
     public String generateBodyTextForSuccessPlaceOrderEmail(String patternStr, Cart cart) {
         StringBuilder str = new StringBuilder(patternStr);
-        System.out.println(str.toString());
         StringUtil.replaceString(str, "name", cart.getCustomer().getFirstName() + " " + cart.getCustomer().getLastName());
         StringUtil.replaceString(str, "orderId", cart.getOrderId());
         StringUtil.replaceString(str, "totalPrice", cart.getGrandTotalPrice().toString());
@@ -68,7 +61,6 @@ public class CartServiceImpl implements ICartService {
     @Override
     public String generateBodyTextForFailurePlaceOrderEmail(String patternStr, Cart cart) {
         StringBuilder str = new StringBuilder(patternStr);
-        System.out.println(str.toString());
         StringUtil.replaceString(str, "name", cart.getCustomer().getFirstName() + " " + cart.getCustomer().getLastName());
         StringUtil.replaceString(str, "orderId", cart.getOrderId());
 

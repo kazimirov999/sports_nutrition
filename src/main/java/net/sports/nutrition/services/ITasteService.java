@@ -14,13 +14,13 @@ public interface ITasteService {
 
     Taste getTasteById(Long id);
 
-    List<Taste> getAllTastes();
+    List<Taste> findAllTastes();
 
     Taste getTasteByName(String tasteName);
 
     Integer deleteTasteById(Long tasteId);
 
-    Boolean brandIsExist(Taste taste);
+    Boolean tasteIsExist(Taste taste);
 
     Boolean checkBeforeUpdateTaste(Taste taste);
 }

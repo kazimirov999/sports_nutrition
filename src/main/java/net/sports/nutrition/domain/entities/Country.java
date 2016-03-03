@@ -14,26 +14,25 @@ import java.util.TreeSet;
                 query = "SELECT p.brand.country, COUNT(p) FROM Product p GROUP BY p.brand.country.name")
 })
 @Entity
-@Table(name = "Countries")
+@Table(name = "countries")
 public class Country implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Id;
+    private Long id;
     private String name;
     private String iso;
 
 
-    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "country", cascade = CascadeType.DETACH)
     private Set<Brand> brandSet = new TreeSet<Brand>();
 
     public Country() {
     }
 
-    public Country(String name, String iso, Set<Brand> brandSet) {
+    public Country(String name, String iso) {
         this.name = name;
         this.iso = iso;
-        this.brandSet = brandSet;
     }
 
     @Override
@@ -43,22 +42,24 @@ public class Country implements Serializable {
 
         Country country = (Country) o;
 
-        if (!name.equals(country.name)) return false;
-        return iso.equals(country.iso);
+        if (id != null ? !id.equals(country.id) : country.id != null) return false;
+        if (name != null ? !name.equals(country.name) : country.name != null) return false;
+        return !(iso != null ? !iso.equals(country.iso) : country.iso != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + iso.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (iso != null ? iso.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return "Country{" +
-                "Id=" + Id +
+                "Id=" + id +
                 ", name='" + name + '\'' +
                 ", iso='" + iso + '\'' +
                // ", brandSet=" + brandSet +
@@ -66,11 +67,11 @@ public class Country implements Serializable {
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        id = id;
     }
 
     public String getName() {

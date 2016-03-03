@@ -7,13 +7,13 @@ http://www.springframework.org/schema/beans/spring-beans.xsd
 http://www.springframework.org/schema/context
 http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:property-placeholder location="classpath:app/config/properties/transaction_datasource.properties" order="1" ignore-unresolvable="true"/>
-    <context:property-placeholder location="classpath:app/config/properties/mail_sender_cf.properties" order="1" ignore-unresolvable="true"/>
+<context:property-placeholder location="classpath:app/config/properties/transaction_datasource.properties" order="1" ignore-unresolvable="true"/>
+<context:property-placeholder location="classpath:app/config/properties/mail_sender_cf.properties" order="1" ignore-unresolvable="true"/>
 
-    <import resource="datasource-tx-config.xml" />
-    <import resource="bean-config.xml"/>
-    <import resource="spring-security.xml"/>
+<import resource="datasource-tx-config.xml" />
+<import resource="bean-config.xml"/>
+<import resource="spring-security.xml"/>
 
-    <context:component-scan base-package="net.sports.nutrition" />
+<context:component-scan base-package="net.sports.nutrition" />
 
 </beans>

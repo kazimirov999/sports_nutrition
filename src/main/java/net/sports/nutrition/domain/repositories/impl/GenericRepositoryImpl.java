@@ -53,7 +53,8 @@ public abstract class GenericRepositoryImpl<T, PK extends Serializable> implemen
     @Transactional(readOnly = false)
     public Boolean delete(T entity) {
         try {
-            getHibernateTemplate().delete(entity);
+            getSession().delete(entity);
+            getSession().flush();
         } catch (Exception ex) {
             return false;
         }

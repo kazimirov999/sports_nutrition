@@ -21,6 +21,25 @@ public class FormBuyBean {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FormBuyBean)) return false;
+
+        FormBuyBean that = (FormBuyBean) o;
+
+        if (product != null ? !product.equals(that.product) : that.product != null) return false;
+        return !(taste != null ? !taste.equals(that.taste) : that.taste != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = product != null ? product.hashCode() : 0;
+        result = 31 * result + (taste != null ? taste.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "FormBuyBean{" +
                 "product=" + product +

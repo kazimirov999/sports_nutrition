@@ -17,8 +17,10 @@
         <joda-time.version>2.9.1</joda-time.version>
         <testng.version>6.9.4</testng.version>
         <mockito.version>1.10.19</mockito.version>
+        <junit.version>4.12</junit.version>
         <h2.version>1.4.190</h2.version>
-        <dbunit.version>2.2</dbunit.version>
+        <hamcrest.version>1.3</hamcrest.version>
+        <greenmail.version>1.3.1b</greenmail.version>
         <slf4j.version>1.7.5</slf4j.version>
         <jdk.version>1.7</jdk.version>
         <tiles.version>3.0.5</tiles.version>
@@ -210,15 +212,15 @@
 
         <!-- Testing dependencies -->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${springframework.version}</version>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>${hamcrest.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>${testng.version}</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${springframework.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -226,17 +228,34 @@
             <artifactId>mockito-all</artifactId>
             <version>${mockito.version}</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>hamcrest-core</artifactId>
+                    <groupId>org.hamcrest</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>hamcrest-core</artifactId>
+                    <groupId>org.hamcrest</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.icegreen</groupId>
+            <artifactId>greenmail</artifactId>
+            <version>${greenmail.version}</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>${h2.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>dbunit</groupId>
-            <artifactId>dbunit</artifactId>
-            <version>${dbunit.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -296,16 +315,23 @@
                 <directory>src/main/resources</directory>
             </resource>
             <resource>
+                <directory>src/main/webapp/WEB-INF/spring</directory>
+            </resource>
+            <resource>
                 <directory>src/main/webapp/WEB-INF/resources</directory>
             </resource>
         </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+            </testResource>
+        </testResources>
 
         <plugins>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.3</version>
             </plugin>
-
 
             <!-- Set JDK Compiler Level -->
             <plugin>

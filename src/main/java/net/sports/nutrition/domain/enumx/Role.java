@@ -6,10 +6,11 @@ package net.sports.nutrition.domain.enumx;
  */
 public enum Role {
 
-    ROLE_ADMIN("ADMIN"),ROLE_USER("USER");
+    ROLE_ADMIN("ADMIN"), ROLE_USER("USER");
 
     private String name;
-    Role(String name){
+
+    Role(String name) {
         this.name = name;
     }
 

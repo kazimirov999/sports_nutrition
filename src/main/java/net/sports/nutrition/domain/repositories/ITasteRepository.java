@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface ITasteRepository extends IGenericRepository<Taste,Long> {
 
-    List<Taste> getAllTasteByCategoryId(Long categoryId);
+    List<Taste> getAllTastesByCategoryId(Long categoryId);
 
     Taste getTasteByName(String tasteName);
 

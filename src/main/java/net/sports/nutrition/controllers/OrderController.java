@@ -1,14 +1,14 @@
 package net.sports.nutrition.controllers;
 
-import net.sports.nutrition.domain.entities.Cart;
-import net.sports.nutrition.domain.entities.Country;
-import net.sports.nutrition.services.ICartService;
-import net.sports.nutrition.utils.ServiceRedirectMessage;
 import net.sports.nutrition.constants.ConstantsUri;
 import net.sports.nutrition.constants.ConstantsView;
+import net.sports.nutrition.domain.entities.Cart;
+import net.sports.nutrition.domain.entities.Country;
 import net.sports.nutrition.domain.entities.Customer;
+import net.sports.nutrition.services.ICartService;
 import net.sports.nutrition.services.IMailService;
 import net.sports.nutrition.utils.Pager;
+import net.sports.nutrition.utils.ServiceRedirectMessage;
 import net.sports.nutrition.utils.converters.CountryEditor;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,8 +60,9 @@ public class OrderController extends AbstractGlobalController {
     @RequestMapping(value = ConstantsUri.ORDER_SAVE, method = RequestMethod.POST)
     public String saveOrder(@Valid @ModelAttribute("formCustomerBean") Customer customer, BindingResult result,
                             RedirectAttributes redirect, HttpSession session) {
-        if (result.hasErrors())
+        if (result.hasErrors()) {
             return ConstantsView.ORDER_PLACE;
+        }
         Cart cart = (Cart) session.getAttribute("cart");
         cart.setCustomer(customer);
         Cart originalCart = new Cart().buildByProxy(cart);
@@ -89,7 +90,7 @@ public class OrderController extends AbstractGlobalController {
             totalPrice = totalPrice.add(cart.getGrandTotalPrice());
 
         session.setAttribute("holderCarts", pagedListHolder);
-        uiModel.addAttribute("pager", Pager.currentPage(pagedListHolder, ConstantsUri.ORDER_BASE_URL, ORDER_LIST_PAGE_SIZE));
+        uiModel.addAttribute("pager", Pager.currentPage(pagedListHolder, ConstantsUri.ORDER_BASE_URL));
         uiModel.addAttribute("holderCarts", pagedListHolder);
         uiModel.addAttribute("totalPrice", totalPrice);
         uiModel.addAttribute("totalProducts", pagedListHolder.getSource().size());
@@ -106,21 +107,20 @@ public class OrderController extends AbstractGlobalController {
         String serviceMessage = "order.success.delete.order";
         try {
             Cart cart = cartService.getCartById(orderId);
-            System.out.println(emailSubject + " " + emailTextPattern);
             String emailText = cartService.generateBodyTextForFailurePlaceOrderEmail(emailTextPattern, cart);
             mailService.sendMail(cart.getCustomer().getEmail(), emailSubject, emailText);
             cartService.deleteCart(cart);
         } catch (MailException e) {
-            log.error("Mail send before delete order",e);
+            log.error("Mail send before delete order", e);
             serviceMessage = "order.failure.delete.mail.error";
         } catch (Exception e) {
-            log.error("Delete order",e);
+            log.error("Delete order", e);
             serviceMessage = "order.failure.delete";
         }
 
         ServiceRedirectMessage.write(redirect, serviceMessage);
 
-        return "redirect:" + (String)session.getAttribute("lastUri");
+        return "redirect:" + (String) session.getAttribute("lastUri");
     }
 
     @RequestMapping(value = ConstantsUri.ORDER_PLACE_SEND, method = RequestMethod.GET)
@@ -137,20 +137,20 @@ public class OrderController extends AbstractGlobalController {
             mailService.sendMail(cart.getCustomer().getEmail(), emailSubject, emailText);
             cartService.deleteCart(cart);
         } catch (MailException e) {
-            log.error("Male send before place order "+e);
+            log.error("Male send before place order ", e);
             serviceMessage = "order.failure.place.mail.error";
         } catch (Exception e) {
-            log.error("Place order"+e);
+            log.error("Place order", e);
             serviceMessage = "order.failure.place";
         }
 
         ServiceRedirectMessage.write(redirect, serviceMessage);
 
-        return "redirect:" + (String)session.getAttribute("lastUri");
+        return "redirect:" + (String) session.getAttribute("lastUri");
     }
 
     @ModelAttribute("countryList")
     public List<Country> getAllCountries() {
-        return countryService.getAllCountries();
+        return countryService.findAllCountries();
     }
 }

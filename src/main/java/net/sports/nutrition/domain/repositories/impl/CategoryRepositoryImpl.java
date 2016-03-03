@@ -41,13 +41,4 @@ public class CategoryRepositoryImpl extends GenericRepositoryImpl<Category, Long
                 .add(Restrictions.eq("name", name))
                 .uniqueResult();
     }
-
-    @Override
-    public List<Category> getRandomCategories(int amountCategory) {
-
-        return (List<Category>) getSession()
-                .createCriteria(getType())
-                .add(Restrictions.sqlRestriction("1=1 order by rand()"))
-                .setMaxResults(amountCategory).list();
-    }
 }

@@ -15,6 +15,4 @@ public interface ICategoryRepository extends IGenericRepository<Category,Long> {
     Integer deleteById(Long id);
 
     Category getCategoryByName(String name);
-
-    List<Category> getRandomCategories(int amountCategory);
 }

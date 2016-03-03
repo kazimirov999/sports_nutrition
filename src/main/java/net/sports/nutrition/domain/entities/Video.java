@@ -9,7 +9,7 @@ import java.io.Serializable;
  *
  */
 @Entity
-@Table(name = "Videos")
+@Table(name = "videos")
 public class Video implements Serializable {
 
     @Id
@@ -27,8 +27,7 @@ public class Video implements Serializable {
         this.playerCode = playerCode;
     }
 
-    public Video() {
-    }
+    public Video() {}
 
     @Override
     public boolean equals(Object o) {
@@ -37,15 +36,19 @@ public class Video implements Serializable {
 
         Video video = (Video) o;
 
-        if (!name.equals(video.name)) return false;
-        return description.equals(video.description);
+        if (id != null ? !id.equals(video.id) : video.id != null) return false;
+        if (name != null ? !name.equals(video.name) : video.name != null) return false;
+        if (description != null ? !description.equals(video.description) : video.description != null) return false;
+        return !(playerCode != null ? !playerCode.equals(video.playerCode) : video.playerCode != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + description.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (playerCode != null ? playerCode.hashCode() : 0);
         return result;
     }
 

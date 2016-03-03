@@ -27,6 +27,30 @@ public class FormProductBean{
         this.file = file;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FormProductBean)) return false;
+
+        FormProductBean that = (FormProductBean) o;
+
+        return !(product != null ? !product.equals(that.product) : that.product != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return product != null ? product.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "FormProductBean{" +
+                "producty=" + product +
+                ", file=" + file +
+                '}';
+    }
+
     public FormProductBean(Product product) {
         this.product = product;
     }
@@ -50,11 +74,5 @@ public class FormProductBean{
         this.file = file;
     }
 
-    @Override
-    public String toString() {
-        return "FormProductBean{" +
-                "producty=" + product +
-                ", file=" + file +
-                '}';
-    }
+
 }

@@ -25,9 +25,9 @@ public class FileSizeConstraintValidator implements ConstraintValidator<Size, Mu
 
     @Override
     public boolean isValid( MultipartFile file , ConstraintValidatorContext cxt) {
-        log.info("File name: "+ file.getName() +"file size: "+file.getSize());
         if(file == null || file.isEmpty()) return true;
         if(file.getSize() < min || max < file.getSize())return false;
+        log.info("File name: "+ file.getName() +"file size: "+file.getSize());
         return true;
     }
 
