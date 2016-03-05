@@ -28,9 +28,9 @@ public interface IProductService {
 
     Product getProductByArticleNumber(Long articleNumber);
 
-    List<Product> getProductsByCriteria(Long categoryId, FormFilterBean filter, SortType sortType,Boolean isExistInStorage, Integer firstResult, Integer maxFetchSise);
+    List<Product> getProductsByCriteria(Long categoryId, FormFilterBean filter, SortType sortType, Integer firstResult, Integer maxFetchSise);
 
-    List<Product> getProductsByCriteria(Long categoryId, FormFilterBean filterParams, SortType sortType,Boolean isExistInStorage);
+    List<Product> getProductsByCriteria(Long categoryId, FormFilterBean filterParams, SortType sortType);
 
     Integer deleteAllProductByCategoryId(Long categoryId);
 

@@ -52,7 +52,7 @@ public class UserServiceImpl implements IUserService {
 
     @Transactional(readOnly = false)
     @Override
-    public void activateUser(Long userId) {
+    public void activateUser(Long userId) throws UserNotFoundException {
         User user = userRepository.getUserById(userId);
         if (user == null) {
             throw new UserNotFoundException("user is not exist");
@@ -63,7 +63,7 @@ public class UserServiceImpl implements IUserService {
 
     @Transactional(readOnly = false)
     @Override
-    public void deactivateUser(Long userId) {
+    public void deactivateUser(Long userId) throws UserNotFoundException {
         User user = userRepository.getUserById(userId);
         if (user == null) {
             throw new UserNotFoundException("user is not exist");
@@ -74,7 +74,7 @@ public class UserServiceImpl implements IUserService {
 
     @Transactional(readOnly = false)
     @Override
-    public void setUserRoleAdmin(Long userId) {
+    public void setUserRoleAdmin(Long userId) throws UserNotFoundException {
         User user = userRepository.getUserById(userId);
         if (user == null) {
             throw new UserNotFoundException("user is not exist");

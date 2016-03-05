@@ -59,13 +59,13 @@ public class ProductRepositoryImpl extends GenericRepositoryImpl<Product, Long> 
     }
 
     @Override
-    public List<Product> getProductsByCriteria(Long categoryId, FormFilterBean filterParams, SortType sortType, Boolean isExistInStorage) {
+    public List<Product> getProductsByCriteria(Long categoryId, FormFilterBean filterParams, SortType sortType) {
 
-        return getProductsByCriteria(categoryId, filterParams, sortType, isExistInStorage, null, null);
+        return getProductsByCriteria(categoryId, filterParams, sortType, null, null);
     }
 
     @Override
-    public List<Product> getProductsByCriteria(Long categoryId, FormFilterBean filterParams, SortType sortType, Boolean isExistInStorage, Integer firstResult, Integer maxFetchSize) {
+    public List<Product> getProductsByCriteria(Long categoryId, FormFilterBean filterParams, SortType sortType, Integer firstResult, Integer maxFetchSize) {
 
         Session session = getSession();
         Criteria criteria = mainCriteriaFilter.mainFilter(categoryId, session, filterParams);
@@ -84,7 +84,6 @@ public class ProductRepositoryImpl extends GenericRepositoryImpl<Product, Long> 
                 criteria.addOrder(Order.desc("name"));
                 break;
         }
-        if (isExistInStorage == true) criteria.add(Restrictions.ge("stockAmount", 1));
 
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         if (maxFetchSize != null) criteria.setMaxResults(maxFetchSize);

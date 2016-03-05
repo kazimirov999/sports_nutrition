@@ -1,6 +1,7 @@
 package net.sports.nutrition.services;
 
 import net.sports.nutrition.domain.entities.User;
+import net.sports.nutrition.exceptions.UserNotFoundException;
 
 import java.util.List;
 
@@ -18,11 +19,11 @@ public interface IUserService {
 
     List<User> getAllUsers();
 
-    void activateUser(Long userId);
+    void activateUser(Long userId) throws UserNotFoundException;
 
-    void deactivateUser(Long userId);
+    void deactivateUser(Long userId) throws UserNotFoundException;
 
-    void setUserRoleAdmin(Long userId);
+    void setUserRoleAdmin(Long userId) throws UserNotFoundException;
 
     Boolean deleteUserById(Long userId);
 }

@@ -252,7 +252,7 @@ public class ProductRepositoryImplTest {
         filterBean.setGenderList(genderList);
 
         List<Product> products = productRepository
-                .getProductsByCriteria(new Long(3), filterBean, SortType.NAME_ASC, true, null, null);
+                .getProductsByCriteria(new Long(3), filterBean, SortType.NAME_ASC, null, null);
         assertNotNull(products);
         assertEquals(2, products.size());
         assertEquals("Super Geiner", products.get(0).getName());
@@ -262,7 +262,7 @@ public class ProductRepositoryImplTest {
         brandIdList.add(new Long(2));
         brandIdList.add(new Long(3));
         products = productRepository
-                .getProductsByCriteria(new Long(3), filterBean, SortType.NAME_ASC, true, null, null);
+                .getProductsByCriteria(new Long(3), filterBean, SortType.NAME_ASC, null, null);
         assertNotNull(products);
         assertEquals(2, products.size());
         assertEquals("Super Geiner", products.get(0).getName());
@@ -272,7 +272,7 @@ public class ProductRepositoryImplTest {
         brandIdList.clear();
         tastesId.add(new Long(2));
         products = productRepository
-                .getProductsByCriteria(new Long(3), filterBean, SortType.NAME_DESC, true, null, null);
+                .getProductsByCriteria(new Long(3), filterBean, SortType.NAME_DESC, null, null);
         assertNotNull(products);
         assertEquals(1, products.size());
         assertEquals("Super Geiner", products.get(0).getName());
@@ -281,7 +281,7 @@ public class ProductRepositoryImplTest {
         tastesId.clear();
         discountIdList.add(new Long(1));
         products = productRepository
-                .getProductsByCriteria(new Long(3), filterBean, SortType.NAME_DESC, true, null, null);
+                .getProductsByCriteria(new Long(3), filterBean, SortType.NAME_DESC, null, null);
         assertNotNull(products);
         assertEquals(1, products.size());
         assertEquals("Super Geiner", products.get(0).getName());
@@ -290,7 +290,7 @@ public class ProductRepositoryImplTest {
         discountIdList.add(new Long(1));
         discountIdList.add(new Long(2));
         products = productRepository
-                .getProductsByCriteria(new Long(3), filterBean, SortType.PRICE_ASC, true, null, null);
+                .getProductsByCriteria(new Long(3), filterBean, SortType.PRICE_ASC, null, null);
         assertNotNull(products);
         assertEquals(2, products.size());
         assertEquals("Super Geiner", products.get(0).getName());
@@ -301,7 +301,7 @@ public class ProductRepositoryImplTest {
         discountIdList.add(new Long(1));
         discountIdList.add(new Long(2));
         products = productRepository
-                .getProductsByCriteria(new Long(3), filterBean, SortType.PRICE_DESC, true, null, null);
+                .getProductsByCriteria(new Long(3), filterBean, SortType.PRICE_DESC, null, null);
         assertNotNull(products);
         assertEquals(2, products.size());
         assertEquals("Super MEGAgeiner", products.get(0).getName());
@@ -313,7 +313,7 @@ public class ProductRepositoryImplTest {
         discountIdList.add(new Long(1));
         discountIdList.add(new Long(2));
         products = productRepository
-                .getProductsByCriteria(new Long(3), filterBean, SortType.PRICE_DESC, true, null, null);
+                .getProductsByCriteria(new Long(3), filterBean, SortType.PRICE_DESC, null, null);
         assertNotNull(products);
         assertEquals(1, products.size());
         assertEquals("Super MEGAgeiner", products.get(0).getName());
@@ -324,20 +324,20 @@ public class ProductRepositoryImplTest {
         genderList.clear();
         discountIdList.clear();
         products = productRepository
-                .getProductsByCriteria(new Long(3), filterBean, SortType.PRICE_ASC, true, 0, 2);
+                .getProductsByCriteria(new Long(3), filterBean, SortType.PRICE_ASC, 0, 2);
         assertNotNull(products);
         assertEquals(2, products.size());
         assertEquals("Super Geiner", products.get(0).getName());
         assertEquals("Super MEGAgeiner", products.get(1).getName());
 
         products = productRepository
-                .getProductsByCriteria(new Long(3), filterBean, SortType.PRICE_ASC, true, 0, 1);
+                .getProductsByCriteria(new Long(3), filterBean, SortType.PRICE_ASC, 0, 1);
         assertNotNull(products);
         assertEquals(1, products.size());
         assertEquals("Super Geiner", products.get(0).getName());
 
         products = productRepository
-                .getProductsByCriteria(new Long(1), filterBean, SortType.PRICE_ASC, false, 0, 10);
+                .getProductsByCriteria(new Long(1), filterBean, SortType.PRICE_ASC, 0, 10);
         assertNotNull(products);
         assertEquals(1, products.size());
         assertEquals("Super Amino", products.get(0).getName());
@@ -345,7 +345,7 @@ public class ProductRepositoryImplTest {
         filterBean.setLowPrice(new BigDecimal(500));
         filterBean.setHighPrice(new BigDecimal(700));
         products = productRepository
-                .getProductsByCriteria(new Long(3), filterBean, SortType.PRICE_ASC, false, 0, 10);
+                .getProductsByCriteria(new Long(3), filterBean, SortType.PRICE_ASC, 0, 10);
         assertNotNull(products);
         assertEquals(2, products.size());
         assertEquals("Super Geiner", products.get(0).getName());

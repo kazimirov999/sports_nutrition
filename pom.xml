@@ -14,6 +14,7 @@
         <spring-securety.version>4.0.3.RELEASE</spring-securety.version>
         <hibernate.version>4.3.5.Final</hibernate.version>
         <mysql.connector.version>5.1.38</mysql.connector.version>
+        <c3p0.version>0.9.1.2</c3p0.version>
         <joda-time.version>2.9.1</joda-time.version>
         <testng.version>6.9.4</testng.version>
         <mockito.version>1.10.19</mockito.version>
@@ -146,13 +147,23 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>4.3.5.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.1-api</artifactId>
             <version>1.0.0.Final</version>
         </dependency>
+
+        <!--c3pO connection pool-->
+        <dependency>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>${c3p0.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+
 
         <!-- jsr303 validation -->
         <dependency>

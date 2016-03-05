@@ -66,16 +66,16 @@ public class ProductServiceImpl implements IProductService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Product> getProductsByCriteria(Long categoryId, FormFilterBean filterParams, SortType sortType, Boolean isExistInStorage, Integer firstResult, Integer maxFetchSise) {
+    public List<Product> getProductsByCriteria(Long categoryId, FormFilterBean filterParams, SortType sortType, Integer firstResult, Integer maxFetchSise) {
 
-        return productRepository.getProductsByCriteria(categoryId, filterParams, sortType, isExistInStorage, firstResult, maxFetchSise);
+        return productRepository.getProductsByCriteria(categoryId, filterParams, sortType, firstResult, maxFetchSise);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Product> getProductsByCriteria(Long categoryId, FormFilterBean filterParams, SortType sortType, Boolean isExistInStorage) {
+    public List<Product> getProductsByCriteria(Long categoryId, FormFilterBean filterParams, SortType sortType) {
 
-        return productRepository.getProductsByCriteria(categoryId, filterParams, sortType, isExistInStorage);
+        return productRepository.getProductsByCriteria(categoryId, filterParams, sortType);
     }
 
     @Override

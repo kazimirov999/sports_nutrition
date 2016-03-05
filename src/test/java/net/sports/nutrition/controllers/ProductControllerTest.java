@@ -30,7 +30,6 @@ import java.util.Arrays;
 
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
-import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
@@ -111,7 +110,7 @@ public class ProductControllerTest {
 
     @Test
     public void testPagedProductsPage() throws Exception {
-        when(productService.getProductsByCriteria(anyLong(), any(FormFilterBean.class), any(SortType.class), anyBoolean()))
+        when(productService.getProductsByCriteria(anyLong(), any(FormFilterBean.class), any(SortType.class)))
                 .thenReturn(Arrays.asList(this.product));
         mockMvc.perform(get(ConstantsUri.PRODUCT_SHOW_ALL_WITH_PAGE.replace("{pageNumber}", "1").replace("{categoryId}", "1")))
                 .andExpect(status().isOk())

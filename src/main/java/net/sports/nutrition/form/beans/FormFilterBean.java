@@ -33,6 +33,8 @@ public class FormFilterBean implements Serializable{
     private Set<Form> formList;
     private Set<Gender> genderList;
 
+    private Boolean productAvailability = false;
+
     public FormFilterBean() {
 
     }
@@ -127,7 +129,13 @@ public class FormFilterBean implements Serializable{
         this.discountIdList = discountIdList;
     }
 
+    public Boolean isProductAvailability() {
+        return productAvailability;
+    }
 
+    public void setProductAvailability(Boolean productAvailability) {
+        this.productAvailability = productAvailability;
+    }
 
     @Override
     public String toString() {

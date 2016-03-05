@@ -11,7 +11,7 @@
 <spring:message code="product.isExistInStorage" var="productIsExist"/>
 <spring:message code="sort.filter.name_asc" var="nameASC"/>
 <spring:message code="sort.filter.name_desc" var="nameDESC"/>
-<spring:message code="sort.filter.price_asc" var="priceASC" />
+<spring:message code="sort.filter.price_asc" var="priceASC"/>
 <spring:message code="sort.filter.price_desc" var="priceDESC"/>
 <spring:message code="sort.label" var="sortLabel"/>
 

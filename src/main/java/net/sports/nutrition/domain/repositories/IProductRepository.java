@@ -20,9 +20,9 @@ public interface IProductRepository extends IGenericRepository<Product,Long> {
 
     Integer deleteProductById(Long id);
 
-    List<Product> getProductsByCriteria(Long categoryId, FormFilterBean filterParams, SortType sortType, Boolean isExistInStorage);
+    List<Product> getProductsByCriteria(Long categoryId, FormFilterBean filterParams, SortType sortType);
 
-    List<Product> getProductsByCriteria(Long categoryId, FormFilterBean filterParams, SortType sortType,Boolean isExistInStorage, Integer firstResult, Integer maxFetchSize);
+    List<Product> getProductsByCriteria(Long categoryId, FormFilterBean filterParams, SortType sortType, Integer firstResult, Integer maxFetchSize);
 
     Long getProductsAmountByCategoryId(Long categoryId);
 

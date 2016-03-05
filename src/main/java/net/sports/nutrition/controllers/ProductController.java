@@ -99,25 +99,27 @@ public class ProductController extends AbstractGlobalController {
     public String pagedProductsPage(HttpSession session, @PathVariable Long categoryId, @PathVariable Integer pageNumber, Model uiModel) throws ProductNotFoundException {
         Long start = System.nanoTime();
         FormFilterBean formFilterBean = (FormFilterBean) session.getAttribute(MODEL_ATTRIBUTE_FILTER + categoryId);
+        FormSortedBean formSortedBean = (session.getAttribute("formSortedBean") == null) ? new FormSortedBean() : (FormSortedBean) session.getAttribute("formSortedBean");
+
         if (formFilterBean == null) {
             formFilterBean = new FormFilterBean();
             session.setAttribute(MODEL_ATTRIBUTE_FILTER + categoryId, formFilterBean);
         }
+        formFilterBean.setProductAvailability(formSortedBean.getProductAvailability());
 
         FormFilterContent formFilterContent = (FormFilterContent) session.getAttribute(MODEL_ATTRIBUTE_FILTER_CONTENT + categoryId);
         if (pageNumber <= 1 || formFilterContent == null) {
-            formFilterContent = formService.createContentForFilterFormWithoutAmount(categoryId);
-            //  formFilterContent = formService.createContentForFilterFormWithAmount(categoryId, formFilterBean);
+            //formFilterContent = formService.createContentForFilterFormWithoutAmount(categoryId);
+            formFilterContent = formService.createContentForFilterFormWithAmount(categoryId, formFilterBean);
             session.setAttribute(MODEL_ATTRIBUTE_FILTER_CONTENT + categoryId, formFilterContent);
         }
         uiModel.addAttribute(formFilterBean);
         uiModel.addAttribute(MODEL_ATTRIBUTE_FILTER_CONTENT, formFilterContent);
 
         PagedListHolder<Product> pagedListHolder = (PagedListHolder<Product>) session.getAttribute(SESSION_ATTRIBUTE_PRODUCT_LIST + categoryId);
-        FormSortedBean formSortedBean = (session.getAttribute("formSortedBean") == null) ? new FormSortedBean() : (FormSortedBean) session.getAttribute("formSortedBean");
 
         if (pagedListHolder == null) {
-            List<Product> productList = productService.getProductsByCriteria(categoryId, formFilterBean, formSortedBean.getSortType(), formSortedBean.getProductAvailability());
+            List<Product> productList = productService.getProductsByCriteria(categoryId, formFilterBean, formSortedBean.getSortType());
             if (productList == null || productList.isEmpty()) throw new ProductNotFoundException("products.not.found");
 
             pagedListHolder = new PagedListHolder<Product>(productList);

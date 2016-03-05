@@ -63,10 +63,12 @@ public class Cart implements Serializable {
     }
 
     public CartItem findCartItem(CartItem cartItemSearch) {
-        if (cartItems.contains(cartItemSearch))
+        if (cartItems.contains(cartItemSearch)) {
             for (CartItem cartItem : cartItems)
-                if (cartItem.equals(cartItemSearch)) return cartItem;
-
+                if (cartItem.equals(cartItemSearch)) {
+                    return cartItem;
+                }
+        }
         return null;
     }
 

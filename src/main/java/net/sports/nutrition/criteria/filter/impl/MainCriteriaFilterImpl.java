@@ -17,7 +17,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class MainCriteriaFilterImpl implements IMainCriteriaFilter {
 
-    public MainCriteriaFilterImpl() {}
+    public MainCriteriaFilterImpl() {
+    }
 
     @Override
     public Criteria mainFilter(Long categoryId, Session session, FormFilterBean filterParams) {
@@ -26,23 +27,32 @@ public class MainCriteriaFilterImpl implements IMainCriteriaFilter {
         criteria.add(Restrictions.eq("category.id", categoryId));
         if (filterParams == null) return criteria;
 
-        if (filterParams.getBrandIdList() != null)
+        if (filterParams.getBrandIdList() != null) {
             criteria.add(FinderByRestriction.disjunction("brand.id", filterParams.getBrandIdList()));
-        if (filterParams.getDiscountIdList() != null)
+        }
+        if (filterParams.getDiscountIdList() != null) {
             criteria.add(FinderByRestriction.disjunction("discount.id", filterParams.getDiscountIdList()));
-        if (filterParams.getGenderList() != null)
+        }
+        if (filterParams.getGenderList() != null) {
             criteria.add(FinderByRestriction.disjunction("gender", filterParams.getGenderList()));
-        if (filterParams.getFormList() != null)
+        }
+        if (filterParams.getFormList() != null) {
             criteria.add(FinderByRestriction.disjunction("form", filterParams.getFormList()));
-        if (filterParams.getHighPrice() != null)
+        }
+        if (filterParams.getHighPrice() != null) {
             criteria.add(Restrictions.le("price", filterParams.getHighPrice()));
-        if (filterParams.getLowPrice() != null)
+        }
+        if (filterParams.getLowPrice() != null) {
             criteria.add(Restrictions.ge("price", filterParams.getLowPrice()));
+        }
+        if (filterParams.isProductAvailability() == true) {
+            criteria.add(Restrictions.ge("stockAmount", 1));
+        }
 
         if (filterParams.getTasteIdList() != null) {
             Query query = session.getNamedQuery("Product.getProductsIdsByTasteIds")
                     .setParameterList("tasteIds", filterParams.getTasteIdList())
-                    .setParameter("id",categoryId);
+                    .setParameter("id", categoryId);
             criteria.add(FinderByRestriction.disjunction("id", query.list()));
         }
 

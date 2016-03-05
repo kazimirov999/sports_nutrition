@@ -21,8 +21,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="keywords" content="${metaKeysGen} ${metaKeysSuf}" >
-    <meta name="description" content="${metaKeysGen} ${metaDescSuf}" >
+    <meta name="keywords" content="${metaKeysGen} ${metaKeysSuf}">
+    <meta name="description" content="${metaKeysGen} ${metaDescSuf}">
 
     <link rel="stylesheet" type="text/css" href="/resources/styles/css/menu.css">
     <link rel="stylesheet" type="text/css" href="/resources/styles/css/main.css"/>
@@ -34,9 +34,8 @@
     <link rel="stylesheet" type="text/css" href="/resources/styles/css/slider.css"/>
 
     <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-    <script src="/resources/styles/scripts/slider.js"></script>
-    <script src="/resources/styles/scripts/menu.js"></script>
-
+    <script src="/resources/styles/scripts/slider.js" type="text/javascript"></script>
+    <script src="/resources/styles/scripts/menu.js" type="text/javascript"></script>
 
     <c:choose>
         <c:when test="${not empty titleName}">
@@ -46,7 +45,6 @@
             <title><tiles:insertAttribute name="title" ignore="true"/></title>
         </c:otherwise>
     </c:choose>
-
 
 </head>
 <body>

@@ -8,6 +8,7 @@
   Time: 20:09
   To change this template use File | Settings | File Templates.
 --%>
+<spring:message code="cart.title" var="cartTitle"/>
 <spring:message code="currency" var="currency"/>
 <spring:message code="total.products" var="productsAmount"/>
 <spring:message code="total.price" var="totalPrice"/>
@@ -23,7 +24,7 @@
 <div class="generalTableStyle cartTable">
     <table>
         <tr>
-            <td colspan="3">Корзина покупок</td>
+            <td colspan="3">${cartTitle}</td>
             <td colspan="3"> ${productsAmount} ${cart.size()}</td>
             <td colspan="3">${totalPrice} ${cart.grandTotalPrice} ${currency}</td>
         </tr>
@@ -41,7 +42,8 @@
                 <td>
                     <div class="img">
                         <a href="<c:url value="/show/product/${item.product.id}" />">
-                        <img src="/product/photo/${item.product.id}" alt="${item.product.name}" width="80" height="105"/></a>
+                            <img src="/product/photo/${item.product.id}" alt="${item.product.name}" width="80"
+                                 height="105"/></a>
                     </div>
                 </td>
                 <td colspan="2">

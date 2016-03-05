@@ -15,35 +15,35 @@
 
 <c:url value="/j_spring_security_check" var="loginUrl"/>
 
-    <form class="form-container " method="post" action="${loginUrl}">
+<form class="form-container " method="post" action="${loginUrl}">
 
-        <div class="form-title"><h2><spring:message code="authentication.user"/></h2></div>
+    <div class="form-title"><h2><spring:message code="authentication.user"/></h2></div>
 
-        <c:if test="${not empty errorAuth}">
-            <div  id="service_message">
-                <p class="error"><spring:message code="${errorAuth}" /></p>
-            </div>
-        </c:if>
-
-        <div class="form-title">
-            <spring:message code="login.email"/>
+    <c:if test="${not empty errorAuth}">
+        <div id="service_message">
+            <p class="error"><spring:message code="${errorAuth}"/></p>
         </div>
-        <input class="form-field" type='text' name='username'/>
+    </c:if>
 
-        <div class="form-title">
-            <spring:message code="password.user"/>
-        </div>
-        <input class="form-field" type='password' name='password'>
+    <div class="form-title">
+        <spring:message code="login.email"/>
+    </div>
+    <input class="form-field" type='text' name='username'/>
 
-        <div class="submit-container submit">
-            <input class="submit-button" name="submit" type="submit"
-                   value="${authButton}">
+    <div class="form-title">
+        <spring:message code="password.user"/>
+    </div>
+    <input class="form-field" type='password' name='password'>
 
-            <input class="submit-button"  type=button
-                   onClick="location.href='/register'"
-                   value='${registerButton}'>
-        </div>
-    </form>
+    <div class="submit-container submit">
+        <input class="submit-button" name="submit" type="submit"
+               value="${authButton}">
+
+        <input class="submit-button" type=button
+               onClick="location.href='/register'"
+               value='${registerButton}'>
+    </div>
+</form>
 
 
 
