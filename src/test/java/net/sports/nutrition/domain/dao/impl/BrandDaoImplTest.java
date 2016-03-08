@@ -1,7 +1,7 @@
-package net.sports.nutrition.domain.repositories.impl;
+package net.sports.nutrition.domain.dao.impl;
 
 import net.sports.nutrition.domain.entities.Brand;
-import net.sports.nutrition.domain.repositories.IBrandRepository;
+import net.sports.nutrition.domain.dao.IBrandDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +22,15 @@ import static org.junit.Assert.*;
 @Transactional
 @ContextConfiguration({"classpath:/test-root-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class BrandRepositoryImplTest {
+public class BrandDaoImplTest {
 
     @Autowired
-    private IBrandRepository brandRepository;
+    private IBrandDao brandDao;
 
     @Test
     @Rollback(true)
     public void testGetBrandByName() throws Exception {
-        Brand brand = brandRepository.getBrandByName("ActivLab");
+        Brand brand = brandDao.getBrandByName("ActivLab");
         assertNotNull(brand);
         assertEquals("ActivLab", brand.getName());
     }
@@ -38,7 +38,7 @@ public class BrandRepositoryImplTest {
     @Test
     @Rollback(true)
     public void testFindAll() throws Exception {
-        List<Brand> brands = brandRepository.findAll();
+        List<Brand> brands = brandDao.findAll();
         assertNotNull(brands);
         assertEquals(6, brands.size());
     }
@@ -46,7 +46,7 @@ public class BrandRepositoryImplTest {
     @Test
     @Rollback(true)
     public void testGetBrandsByCategoryId() throws Exception {
-        List<Brand> brands = brandRepository.getBrandsByCategoryId(new Long(3));
+        List<Brand> brands = brandDao.getBrandsByCategoryId(new Long(3));
         assertNotNull(brands);
         assertEquals(2, brands.size());
     }
@@ -54,7 +54,7 @@ public class BrandRepositoryImplTest {
     @Test
     @Rollback(true)
     public void testGetAmountProductByBrand() throws Exception {
-        Map<Brand, Long> result = brandRepository.getAmountProductsByBrand();
+        Map<Brand, Long> result = brandDao.getAmountProductsByBrand();
         assertNotNull(result);
         int i = 0;
         for (Map.Entry<Brand, Long> item : result.entrySet()) {
@@ -75,7 +75,7 @@ public class BrandRepositoryImplTest {
     @Test
     @Rollback(true)
     public void testGetBrandsByCountryId() throws Exception {
-        List<Brand> brands = brandRepository.getBrandsByCountryId(new Long(1));
+        List<Brand> brands = brandDao.getBrandsByCountryId(new Long(1));
         assertNotNull(brands);
         assertEquals(3, brands.size());
         assertEquals("ActivLab", brands.get(0).getName());
@@ -86,50 +86,50 @@ public class BrandRepositoryImplTest {
     @Test
     @Rollback(true)
     public void testDeleteById() throws Exception {
-        Integer result = brandRepository.deleteById(new Long(25));
+        Integer result = brandDao.deleteById(new Long(25));
         assertEquals(1, result.intValue());
-        assertNull(brandRepository.findById(new Long(25)));
+        assertNull(brandDao.findById(new Long(25)));
     }
 
     @Test(expected = org.hibernate.exception.ConstraintViolationException.class)
     @Rollback(true)
     public void testDeleteByIdWidthConstraint() throws Exception {
-        Integer result = brandRepository.deleteById(new Long(1));
+        Integer result = brandDao.deleteById(new Long(1));
     }
 
     @Test
     @Rollback(true)
     public void testDelete() {
-        Brand brand = brandRepository.findById(new Long(25));
-        Boolean result = brandRepository.delete(brand);
+        Brand brand = brandDao.findById(new Long(25));
+        Boolean result = brandDao.delete(brand);
         assertTrue(result);
-        assertNull(brandRepository.findById(new Long(25)));
+        assertNull(brandDao.findById(new Long(25)));
     }
 
     @Test
     @Rollback(true)
     public void testDeleteWidthConstraint() {
-        Brand brand = brandRepository.findById(new Long(1));
-        Boolean result = brandRepository.delete(brand);
+        Brand brand = brandDao.findById(new Long(1));
+        Boolean result = brandDao.delete(brand);
         assertNotNull(result);
         assertFalse(result);
-        assertNull(brandRepository.findById(new Long(1)));
+        assertNull(brandDao.findById(new Long(1)));
     }
 
     @Test
     @Rollback(true)
     public void testFindById() {
-        Brand brand = brandRepository.findById(new Long(1));
+        Brand brand = brandDao.findById(new Long(1));
         assertNotNull(brand);
         assertEquals("ActivLab", brand.getName());
-        assertNull(brandRepository.findById(new Long(100)));
+        assertNull(brandDao.findById(new Long(100)));
     }
 
     @Test
     @Rollback(true)
     public void testEdit() {
-        Brand brand = brandRepository.getBrandByName("ActivLab");
+        Brand brand = brandDao.getBrandByName("ActivLab");
         brand.setName("Test name");
-        assertEquals("Test name", brandRepository.edit(brand).getName());
+        assertEquals("Test name", brandDao.edit(brand).getName());
     }
 }

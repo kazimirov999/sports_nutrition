@@ -1,8 +1,9 @@
 package net.sports.nutrition.constants;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 19.02.2016 19:44
+ * Class contains the constants for URI;
+ *
+ * @author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 public final class ConstantsUri {
 

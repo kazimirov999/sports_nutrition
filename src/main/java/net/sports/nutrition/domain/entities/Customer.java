@@ -7,9 +7,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 07.01.2016 13:20
+ * Represents Customer.
+ * <p>
+ * It's marked as an entity class, and  provides the ability to store
+ * Customer objects in the database and retrieve Customer objects from the database.
+ * </p>
  *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 @Entity
 @Table(name = "customers")
@@ -40,9 +44,24 @@ public class Customer implements Serializable {
     private String address;
     private Boolean isUser = false;
 
+    /**
+     * Creates new empty instance of the Customer.
+     *
+     * @see Customer#Customer()
+     */
     public Customer() {
     }
 
+    /**
+     * Creates a new instance of the Customer with the specified values.
+     *
+     * @param firstName   - firsts name of the customer
+     * @param lastName    - last name of the customer
+     * @param email       - email address of the customer
+     * @param phoneNumber - phone number of the customer
+     * @param address     - address of residence
+     * @see Customer#Customer()
+     */
     public Customer(String firstName, String lastName, String email, String phoneNumber, String address) {
         this.firstName = firstName;
         this.lastName = lastName;

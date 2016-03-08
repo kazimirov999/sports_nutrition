@@ -1,7 +1,7 @@
-package net.sports.nutrition.domain.repositories.impl;
+package net.sports.nutrition.domain.dao.impl;
 
 import net.sports.nutrition.domain.entities.Brand;
-import net.sports.nutrition.domain.repositories.IBrandRepository;
+import net.sports.nutrition.domain.dao.IBrandDao;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -10,13 +10,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 20.01.2016 12:27
+ * The Brand Data Access Object is the class providing
+ * access to brand and brand type related data.
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 @Repository
-public class BrandRepositoryImpl extends GenericRepositoryImpl<Brand, Long> implements IBrandRepository {
+public class BrandDaoImpl extends GenericDaoImpl<Brand, Long> implements IBrandDao {
 
-    public BrandRepositoryImpl() {
+    public BrandDaoImpl() {
         super(Brand.class);
     }
 
@@ -66,6 +68,4 @@ public class BrandRepositoryImpl extends GenericRepositoryImpl<Brand, Long> impl
                 .setLong("id", brandId)
                 .executeUpdate();
     }
-
-
 }

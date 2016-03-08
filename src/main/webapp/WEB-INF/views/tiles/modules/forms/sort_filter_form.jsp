@@ -2,11 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%--
-  Created by IntelliJ IDEA.
-  User: Sasha
-  Date: 05.02.2016
-  Time: 0:45
-  To change this template use File | Settings | File Templates.
+ Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
 --%>
 <spring:message code="product.isExistInStorage" var="productIsExist"/>
 <spring:message code="sort.filter.name_asc" var="nameASC"/>

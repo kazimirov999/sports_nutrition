@@ -1,20 +1,25 @@
-package net.sports.nutrition.domain.repositories.impl;
+package net.sports.nutrition.domain.dao.impl;
 
+import net.sports.nutrition.domain.dao.IUserDao;
 import net.sports.nutrition.domain.entities.User;
-import net.sports.nutrition.domain.repositories.IUserRepository;
 import org.hibernate.criterion.Restrictions;
+import org.jboss.logging.Logger;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 10.02.2016 15:03
+ * The User Data Access Object is the class providing
+ * access to user and user type related data.
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 @Repository
-public class UserRepositoryImpl extends GenericRepositoryImpl<User, Long> implements IUserRepository {
+public class UserDaoImpl extends GenericDaoImpl<User, Long> implements IUserDao {
 
-    public UserRepositoryImpl() {
+    private static final Logger log = Logger.getLogger(UserDaoImpl.class);
+
+    public UserDaoImpl() {
         super(User.class);
     }
 
@@ -29,14 +34,14 @@ public class UserRepositoryImpl extends GenericRepositoryImpl<User, Long> implem
                     .add(Restrictions.eq("loginEmail", login))
                     .uniqueResult();
         } catch (Exception e) {
-            System.out.println("Error getUserByLogin" + e.getMessage());
+            log.error("Find user error", e);
         }
 
         return user;
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<User> findAllUsers() {
 
         return getSession().createCriteria(getType()).list();
     }

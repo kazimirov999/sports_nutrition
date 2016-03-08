@@ -10,8 +10,12 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 24.01.2016 20:25
+ * Class for storage content of filter to find products.
+ * <p>
+ * Each property has a number of products
+ * </p>
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 public class FormFilterContent implements Serializable {
 

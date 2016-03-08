@@ -1,20 +1,22 @@
-package net.sports.nutrition.domain.repositories.impl;
+package net.sports.nutrition.domain.dao.impl;
 
         import net.sports.nutrition.domain.entities.Taste;
-        import net.sports.nutrition.domain.repositories.ITasteRepository;
+        import net.sports.nutrition.domain.dao.ITasteDao;
         import org.hibernate.criterion.Restrictions;
         import org.springframework.stereotype.Repository;
 
         import java.util.List;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 21.01.2016 16:45
+ * The Taste Data Access Object is the class providing
+ * access to taste and taste type related data.
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 @Repository
-public class TasteRepositoryImpl extends GenericRepositoryImpl<Taste, Long> implements ITasteRepository {
+public class TasteDaoImpl extends GenericDaoImpl<Taste, Long> implements ITasteDao {
 
-    public TasteRepositoryImpl() {
+    public TasteDaoImpl() {
         super(Taste.class);
     }
 

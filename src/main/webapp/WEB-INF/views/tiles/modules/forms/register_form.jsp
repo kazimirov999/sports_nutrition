@@ -1,11 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
-  Created by IntelliJ IDEA.
-  User: Sasha
-  Date: 08.02.2016
-  Time: 12:02
-  To change this template use File | Settings | File Templates.
+ Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="order">

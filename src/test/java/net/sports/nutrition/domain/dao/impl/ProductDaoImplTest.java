@@ -1,10 +1,10 @@
-package net.sports.nutrition.domain.repositories.impl;
+package net.sports.nutrition.domain.dao.impl;
 
 import net.sports.nutrition.domain.entities.*;
 import net.sports.nutrition.domain.enumx.Form;
 import net.sports.nutrition.domain.enumx.Gender;
 import net.sports.nutrition.domain.enumx.SortType;
-import net.sports.nutrition.domain.repositories.*;
+import net.sports.nutrition.domain.dao.*;
 import net.sports.nutrition.form.beans.FormFilterBean;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Test;
@@ -27,23 +27,23 @@ import static org.junit.Assert.*;
 @Transactional
 @ContextConfiguration({"classpath:/test-root-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class ProductRepositoryImplTest {
+public class ProductDaoImplTest {
 
     @Autowired
-    private IProductRepository productRepository;
+    private IProductDao productDao;
     @Autowired
-    private ICartRepository cartRepository;
+    private ICartDao cartDao;
     @Autowired
-    private ITasteRepository tasteRepository;
+    private ITasteDao tasteDao;
     @Autowired
-    private ICategoryRepository categoryRepository;
+    private ICategoryDao categoryDao;
     @Autowired
-    private IBrandRepository brandRepository;
+    private IBrandDao brandDao;
 
     @Test
     @Rollback(true)
     public void testGetProductByName() throws Exception {
-        Product product = productRepository.getProductByName("Super Amino");
+        Product product = productDao.getProductByName("Super Amino");
         assertNotNull(product);
         assertEquals("Super Amino", product.getName());
     }
@@ -51,7 +51,7 @@ public class ProductRepositoryImplTest {
     @Test
     @Rollback(true)
     public void testFindById() throws Exception {
-        Product product = productRepository.findById(new Long(1));
+        Product product = productDao.findById(new Long(1));
         assertNotNull(product);
         assertEquals("Super Amino", product.getName());
     }
@@ -60,7 +60,7 @@ public class ProductRepositoryImplTest {
     @Rollback(true)
     public void testSave() throws Exception {
         Product product = new Product();
-        Taste taste = tasteRepository.getTasteByName("Malina");
+        Taste taste = tasteDao.getTasteByName("Malina");
         List<Taste> tastes = new ArrayList<>();
         tastes.add(taste);
         product.setName("Test name");
@@ -71,10 +71,10 @@ public class ProductRepositoryImplTest {
         product.setStockAmount(30);
         product.setGender(Gender.MAN);
         product.setForm(Form.CAPSULE);
-        product.setCategory(categoryRepository.getCategoryByName("Amino"));
-        product.setBrand(brandRepository.getBrandByName("ActivLab"));
+        product.setCategory(categoryDao.getCategoryByName("Amino"));
+        product.setBrand(brandDao.getBrandByName("ActivLab"));
 
-        Product productSave = productRepository.save(product);
+        Product productSave = productDao.save(product);
         assertNotNull(productSave);
         assertNotNull(productSave.getBrand());
         assertNotNull(productSave.getCategory());
@@ -87,17 +87,17 @@ public class ProductRepositoryImplTest {
     @Test
     @Rollback(true)
     public void testEdit() throws Exception {
-        Product product = productRepository.getProductByName("Super Amino");
-        Taste taste = tasteRepository.getTasteByName("Malina");
-        Brand brand = brandRepository.getBrandByName("NotLabs");
-        Category category = categoryRepository.getCategoryByName("Geiners");
+        Product product = productDao.getProductByName("Super Amino");
+        Taste taste = tasteDao.getTasteByName("Malina");
+        Brand brand = brandDao.getBrandByName("NotLabs");
+        Category category = categoryDao.getCategoryByName("Geiners");
         product.setName("Test name");
         product.setCategory(category);
         product.setBrand(brand);
         product.getTasteList().clear();
         product.getTasteList().add(taste);
 
-        Product productEdit = productRepository.edit(product);
+        Product productEdit = productDao.edit(product);
         assertNotNull(productEdit);
         assertNotNull(productEdit.getTasteList());
         assertNotNull(productEdit.getBrand());
@@ -110,7 +110,7 @@ public class ProductRepositoryImplTest {
     @Test
     @Rollback(true)
     public void testGetProductByArticleNumber() throws Exception {
-        Product product = productRepository.getProductByArticleNumber(new Long(5520193));
+        Product product = productDao.getProductByArticleNumber(new Long(5520193));
         assertNotNull(product);
         assertEquals(new Long(5520193), product.getArticleNumber());
     }
@@ -118,42 +118,42 @@ public class ProductRepositoryImplTest {
     @Test(expected = ConstraintViolationException.class)
     @Rollback(true)//product can not delete, CART_ITEMS FOREIGN KEY(PRODUCT_ID) REFERENCES PUBLIC.PRODUCTS(ID)
     public void testDeleteProductByIdWidthConstraint() throws Exception {
-        Integer result = productRepository.deleteProductById(new Long(1));
+        Integer result = productDao.deleteProductById(new Long(1));
     }
 
     @Test
     @Rollback(true)
     public void testDeleteProductById() throws Exception {
-        Integer result = productRepository.deleteProductById(new Long(4));
+        Integer result = productDao.deleteProductById(new Long(4));
         assertNotNull(result);
         assertEquals(1, result.intValue());
-        assertNull(productRepository.findById(new Long(4)));
+        assertNull(productDao.findById(new Long(4)));
     }
 
     @Test
     @Rollback(true)
     public void testDeleteWithConstraint() throws Exception {
-        Product product = productRepository.findById(new Long(3));
-        Boolean result = productRepository.delete(product);
+        Product product = productDao.findById(new Long(3));
+        Boolean result = productDao.delete(product);
         assertNotNull(result);
         assertFalse(result);
-        assertNull(productRepository.findById(new Long(3)));
+        assertNull(productDao.findById(new Long(3)));
     }
 
     @Test
     @Rollback(true)
     public void testDelete() throws Exception {
-        Product product = productRepository.findById(new Long(4));
-        Boolean result = productRepository.delete(product);
+        Product product = productDao.findById(new Long(4));
+        Boolean result = productDao.delete(product);
         assertNotNull(result);
         assertTrue(result);
-        assertNull(productRepository.findById(new Long(4)));
+        assertNull(productDao.findById(new Long(4)));
     }
 
     @Test
     @Rollback(true)//product can not delete, CART_ITEMS FOREIGN KEY(PRODUCT_ID) REFERENCES PUBLIC.PRODUCTS(ID)
     public void testGetProductsAmountByCategoryId() throws Exception {
-        Long count = productRepository.getProductsAmountByCategoryId(new Long(3));
+        Long count = productDao.getProductsAmountByCategoryId(new Long(3));
         assertNotNull(count);
         assertEquals(new Long(2), count);
     }
@@ -173,8 +173,8 @@ public class ProductRepositoryImplTest {
         filterBean.setBrandIdList(brandIdList);
         filterBean.setGenderList(genderList);
 
-        List<Brand> propertyList = brandRepository.getBrandsByCategoryId(new Long(1));
-        Map<Brand, Long> result = productRepository.countProductsByProperty("brand", new Long(1), propertyList, filterBean);
+        List<Brand> propertyList = brandDao.getBrandsByCategoryId(new Long(1));
+        Map<Brand, Long> result = productDao.countProductsByProperty("brand", new Long(1), propertyList, filterBean);
         assertNotNull(result);
         assertEquals("ActivLab", result.entrySet().iterator().next().getKey().getName());
         assertEquals(1, result.entrySet().iterator().next().getValue().intValue());
@@ -183,7 +183,7 @@ public class ProductRepositoryImplTest {
     @Test
     @Rollback(true)
     public void testGetProductByCategoryId() throws Exception {
-        List<Product> products = productRepository.getProductsByCategoryId(new Long(3));
+        List<Product> products = productDao.getProductsByCategoryId(new Long(3));
         assertNotNull(products);
         assertEquals("Super Geiner", products.get(0).getName());
         assertEquals("Super MEGAgeiner", products.get(1).getName());
@@ -192,9 +192,9 @@ public class ProductRepositoryImplTest {
     @Test(expected = ConstraintViolationException.class)
     @Rollback(true)
     public void testDeleteAllProductsByCategoryId() throws Exception {
-        Cart cart = cartRepository.findById(new Long(3));
-        cartRepository.delete(cart);
-        Integer result = productRepository.deleteProductById(new Long(1));
+        Cart cart = cartDao.findById(new Long(3));
+        cartDao.delete(cart);
+        Integer result = productDao.deleteProductById(new Long(1));
         assertNotNull(result);
         assertEquals(1, result.intValue());
     }
@@ -202,7 +202,7 @@ public class ProductRepositoryImplTest {
     @Test(expected = ConstraintViolationException.class)
     @Rollback(true)
     public void testDeleteAllProductsByCategoryIdWidthConstraint() throws Exception {
-        Integer result = productRepository.deleteProductById(new Long(1));
+        Integer result = productDao.deleteProductById(new Long(1));
     }
 
     @Test
@@ -219,8 +219,8 @@ public class ProductRepositoryImplTest {
         FormFilterBean filterBean = new FormFilterBean();
         filterBean.setBrandIdList(brandIdList);
         filterBean.setGenderList(genderList);
-        List<Taste> tasteList = tasteRepository.getAllTastesByCategoryId(new Long(1));
-        Map<Taste, Long> result = productRepository.countProductsByTasteAndCriteria(new Long(1), tasteList, filterBean);
+        List<Taste> tasteList = tasteDao.getAllTastesByCategoryId(new Long(1));
+        Map<Taste, Long> result = productDao.countProductsByTasteAndCriteria(new Long(1), tasteList, filterBean);
         assertNotNull(result);
         assertEquals("Apple", result.entrySet().iterator().next().getKey().getName());
         assertEquals(1, result.entrySet().iterator().next().getValue().intValue());
@@ -229,8 +229,8 @@ public class ProductRepositoryImplTest {
     @Test
     @Rollback(true)
     public void testGetProductIdsByTaste() throws Exception {
-        Taste taste = tasteRepository.getTasteByName("Apple");
-        List<Long> productIds = productRepository.getProductIdsByTaste(new Long(1), taste);
+        Taste taste = tasteDao.getTasteByName("Apple");
+        List<Long> productIds = productDao.getProductIdsByTaste(new Long(1), taste);
         assertNotNull(productIds);
         assertEquals(new Long(1), productIds.get(0));
     }
@@ -251,7 +251,7 @@ public class ProductRepositoryImplTest {
         filterBean.setFormList(formList);
         filterBean.setGenderList(genderList);
 
-        List<Product> products = productRepository
+        List<Product> products = productDao
                 .getProductsByCriteria(new Long(3), filterBean, SortType.NAME_ASC, null, null);
         assertNotNull(products);
         assertEquals(2, products.size());
@@ -261,7 +261,7 @@ public class ProductRepositoryImplTest {
         products = null;
         brandIdList.add(new Long(2));
         brandIdList.add(new Long(3));
-        products = productRepository
+        products = productDao
                 .getProductsByCriteria(new Long(3), filterBean, SortType.NAME_ASC, null, null);
         assertNotNull(products);
         assertEquals(2, products.size());
@@ -271,7 +271,7 @@ public class ProductRepositoryImplTest {
         products = null;
         brandIdList.clear();
         tastesId.add(new Long(2));
-        products = productRepository
+        products = productDao
                 .getProductsByCriteria(new Long(3), filterBean, SortType.NAME_DESC, null, null);
         assertNotNull(products);
         assertEquals(1, products.size());
@@ -280,7 +280,7 @@ public class ProductRepositoryImplTest {
         products = null;
         tastesId.clear();
         discountIdList.add(new Long(1));
-        products = productRepository
+        products = productDao
                 .getProductsByCriteria(new Long(3), filterBean, SortType.NAME_DESC, null, null);
         assertNotNull(products);
         assertEquals(1, products.size());
@@ -289,7 +289,7 @@ public class ProductRepositoryImplTest {
         products = null;
         discountIdList.add(new Long(1));
         discountIdList.add(new Long(2));
-        products = productRepository
+        products = productDao
                 .getProductsByCriteria(new Long(3), filterBean, SortType.PRICE_ASC, null, null);
         assertNotNull(products);
         assertEquals(2, products.size());
@@ -300,7 +300,7 @@ public class ProductRepositoryImplTest {
         genderList.add(Gender.UNISEX);
         discountIdList.add(new Long(1));
         discountIdList.add(new Long(2));
-        products = productRepository
+        products = productDao
                 .getProductsByCriteria(new Long(3), filterBean, SortType.PRICE_DESC, null, null);
         assertNotNull(products);
         assertEquals(2, products.size());
@@ -312,7 +312,7 @@ public class ProductRepositoryImplTest {
         genderList.add(Gender.UNISEX);
         discountIdList.add(new Long(1));
         discountIdList.add(new Long(2));
-        products = productRepository
+        products = productDao
                 .getProductsByCriteria(new Long(3), filterBean, SortType.PRICE_DESC, null, null);
         assertNotNull(products);
         assertEquals(1, products.size());
@@ -323,20 +323,20 @@ public class ProductRepositoryImplTest {
         genderList.clear();
         genderList.clear();
         discountIdList.clear();
-        products = productRepository
+        products = productDao
                 .getProductsByCriteria(new Long(3), filterBean, SortType.PRICE_ASC, 0, 2);
         assertNotNull(products);
         assertEquals(2, products.size());
         assertEquals("Super Geiner", products.get(0).getName());
         assertEquals("Super MEGAgeiner", products.get(1).getName());
 
-        products = productRepository
+        products = productDao
                 .getProductsByCriteria(new Long(3), filterBean, SortType.PRICE_ASC, 0, 1);
         assertNotNull(products);
         assertEquals(1, products.size());
         assertEquals("Super Geiner", products.get(0).getName());
 
-        products = productRepository
+        products = productDao
                 .getProductsByCriteria(new Long(1), filterBean, SortType.PRICE_ASC, 0, 10);
         assertNotNull(products);
         assertEquals(1, products.size());
@@ -344,7 +344,7 @@ public class ProductRepositoryImplTest {
 
         filterBean.setLowPrice(new BigDecimal(500));
         filterBean.setHighPrice(new BigDecimal(700));
-        products = productRepository
+        products = productDao
                 .getProductsByCriteria(new Long(3), filterBean, SortType.PRICE_ASC, 0, 10);
         assertNotNull(products);
         assertEquals(2, products.size());

@@ -1,6 +1,5 @@
 /**
  * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 21.02.2016 19:35
  *
  */
 ( function( $ ) {

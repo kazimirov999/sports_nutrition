@@ -16,10 +16,15 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 06.01.2016 13:04
+ * Represents Product.
+ * <p>
+ * It's marked as an entity class, and  provides the ability to store.
+ * Product objects in the database and retrieve Discount objects from the database.
+ * </p>
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
+ * @see Category
  */
-
 @NamedQueries({
         @NamedQuery(name = "Product.getAllByCategory",
                 query = "SELECT p FROM Product p WHERE p.category.id = :id"),
@@ -32,39 +37,39 @@ import java.util.List;
         @NamedQuery(name = "Product.getProductIdsByTaste",
                 query = "SELECT p.id FROM Product p INNER JOIN p.tasteList t WHERE p.category.id = :categoryId AND t.id = :tasteId "),
         @NamedQuery(name = "Product.getProductsIdsByTasteIds",
-        query = "SELECT p.id FROM Product p INNER JOIN p.tasteList t WHERE p.category.id = :id AND t.id IN(:tasteIds) ")
+                query = "SELECT p.id FROM Product p INNER JOIN p.tasteList t WHERE p.category.id = :id AND t.id IN(:tasteIds) ")
 
 })
 @Entity
 @Table(name = "products",
-        uniqueConstraints={@UniqueConstraint(columnNames={"articleNumber"})})
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"articleNumber"})})
 public class Product implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long id;
+    private Long id;
 
     @NotNull(message = "{error.select.not.be.empty}}")
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})//CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})//CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "category_id", nullable = true)
-    protected Category category;
+    private Category category;
 
     @NotNull(message = "{error.field.not.empty}")
-    @DecimalMin(value = "0",message = "Size is not correct!")
-    @DecimalMax(value = "2000000000000000",message = "Size is not correct!")
+    @DecimalMin(value = "0", message = "Size is not correct!")
+    @DecimalMax(value = "2000000000000000", message = "Size is not correct!")
     private Long articleNumber;
 
-    @Size(min = 3, max = 255 , message = "{error.name.product}")
+    @Size(min = 3, max = 255, message = "{error.name.product}")
     private String name;
 
     @NotNull(message = "{error.field.not.empty}")
-    @DecimalMin(value = "0",message = "{error.price}")
-    @DecimalMax(value = "2000000",message = "{error.price}")
+    @DecimalMin(value = "0", message = "{error.price}")
+    @DecimalMax(value = "2000000", message = "{error.price}")
     private BigDecimal price;
 
     @NotNull(message = "{error.field.not.empty}")
-    @DecimalMin(value = "0",message = "{error.size}")
-    @DecimalMax(value = "2000000",message = "{error.size}")
+    @DecimalMin(value = "0", message = "{error.size}")
+    @DecimalMax(value = "2000000", message = "{error.size}")
     private Integer stockAmount;
 
     @Column(columnDefinition = "TEXT")
@@ -79,7 +84,7 @@ public class Product implements Serializable {
     @NotEmpty(message = "{error.field.not.empty}")
     private String quantityInPackage;
 
-    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST},fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     @JoinColumn(name = "discount_id", nullable = true, insertable = true, updatable = true)
     private Discount discount;
 
@@ -88,7 +93,7 @@ public class Product implements Serializable {
     @Column(columnDefinition = "MEDIUMBLOB")
     private byte[] imageByte;
 
-    @ManyToOne(cascade = {CascadeType.DETACH},fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.DETACH}, fetch = FetchType.EAGER)
     @JoinColumn(name = "brand_id", nullable = true)
     private Brand brand;
 
@@ -101,7 +106,7 @@ public class Product implements Serializable {
     private List<Video> videoList = new ArrayList<Video>();
 
     @NotNull(message = "{error.select.not.be.empty}")
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(name = "product_taste_join",
             joinColumns = {@JoinColumn(name = "product_id")},
             inverseJoinColumns = {@JoinColumn(name = "teste_id")})
@@ -111,11 +116,22 @@ public class Product implements Serializable {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    public Product() {}
+    /**
+     * Create new empty instance of the Product.
+     */
+    public Product() {
+    }
 
-    public BigDecimal getRealPrice(){
-        return (discount == null || discount.getSize() == new BigDecimal(0.00))? price :
-                (price.subtract((price.multiply(discount.getSize()).divide(new BigDecimal(100))))).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+    /**
+     * Counts real price of product
+     *
+     * @return real price of product including discount.
+     */
+    public BigDecimal getRealPrice() {
+
+        return (discount == null || discount.getSize().equals(0)) ? price :
+                (price.subtract((price.multiply(discount.getSize()).divide(new BigDecimal(100)))))
+                        .setScale(2, BigDecimal.ROUND_HALF_EVEN);
     }
 
     @Override

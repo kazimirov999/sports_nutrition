@@ -1,8 +1,9 @@
 package net.sports.nutrition.constants;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 19.02.2016 20:37
+ * Class contains the constants for names of views;
+ *
+ * @author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 public final class ConstantsView {
 
@@ -36,4 +37,7 @@ public final class ConstantsView {
 
     static final public String USER_REGISTER = "register_page";
     static final public String USER_SHOW_ALL = "users_page";
+
+    static final public String SYSTEM_ERROR = "system_error";
+
 }

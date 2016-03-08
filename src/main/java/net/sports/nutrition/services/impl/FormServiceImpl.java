@@ -1,10 +1,10 @@
 package net.sports.nutrition.services.impl;
 
 import net.sports.nutrition.controllers.OrderController;
-import net.sports.nutrition.domain.repositories.IBrandRepository;
-import net.sports.nutrition.domain.repositories.IDiscountRepository;
-import net.sports.nutrition.domain.repositories.IProductRepository;
-import net.sports.nutrition.domain.repositories.ITasteRepository;
+import net.sports.nutrition.domain.dao.IBrandDao;
+import net.sports.nutrition.domain.dao.IDiscountDao;
+import net.sports.nutrition.domain.dao.IProductDao;
+import net.sports.nutrition.domain.dao.ITasteDao;
 import net.sports.nutrition.form.containers.FormPropertyContent;
 import net.sports.nutrition.services.IFormService;
 import net.sports.nutrition.form.beans.FormFilterBean;
@@ -20,39 +20,29 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 21.01.2016 22:16
+ * Service to work with the FormFilter.
+ * .<p>
+ * Implementations of IDiscountDao, IBrandDao, ITasteDao, IProductDao
+ * interface is annotated for automatic resource injection.
+ * Class build content of filter to find products.
+ * </p>
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
+ * @see FormFilterContent
  */
-
 @Transactional(readOnly = true)
 @Service
 public class FormServiceImpl implements IFormService {
 
     @Autowired
-    private IBrandRepository brandRepository;
+    private IBrandDao brandDao;
     @Autowired
-    private IDiscountRepository discountRepository;
+    private IDiscountDao discountDao;
     @Autowired
-    private ITasteRepository tasteRepository;
+    private ITasteDao tasteDao;
     @Autowired
-    private IProductRepository productRepository;
+    private IProductDao productDao;
 
     private static final Logger log = org.jboss.logging.Logger.getLogger(OrderController.class);
-
-
-    public FormServiceImpl() {
-    }
-
-    @Override
-    public FormPropertyContent createContentForFilterForm(Long categoryId) {
-        FormPropertyContent content = new FormPropertyContent();
-
-        content.setBrandList(brandRepository.getBrandsByCategoryId(categoryId));
-        content.setDiscountList(discountRepository.getDiscountsByCategoryId(categoryId));
-        content.setTasteList(tasteRepository.getAllTastesByCategoryId(categoryId));
-
-        return content;
-    }
 
     @Override
     public FormFilterContent createContentForFilterFormWithAmount(Long categoryId, FormFilterBean filterParams) {
@@ -60,11 +50,11 @@ public class FormServiceImpl implements IFormService {
         FormFilterContent resultContent = new FormFilterContent();
         FormPropertyContent content = createContentForFilterForm(categoryId);
 
-        resultContent.setBrandMap(productRepository.countProductsByProperty("brand", categoryId, content.getBrandList(), filterParams));
-        resultContent.setDiscountMap(productRepository.countProductsByProperty("discount", categoryId, content.getDiscountList(), filterParams));
-        resultContent.setFormMap(productRepository.countProductsByProperty("form", categoryId, Arrays.asList(content.getForm()), filterParams));
-        resultContent.setGenderMap(productRepository.countProductsByProperty("gender", categoryId, Arrays.asList(content.getGender()), filterParams));
-        resultContent.setTasteMap(productRepository.countProductsByTasteAndCriteria(categoryId, content.getTasteList(), filterParams));
+        resultContent.setBrandMap(productDao.countProductsByProperty("brand", categoryId, content.getBrandList(), filterParams));
+        resultContent.setDiscountMap(productDao.countProductsByProperty("discount", categoryId, content.getDiscountList(), filterParams));
+        resultContent.setFormMap(productDao.countProductsByProperty("form", categoryId, Arrays.asList(content.getForm()), filterParams));
+        resultContent.setGenderMap(productDao.countProductsByProperty("gender", categoryId, Arrays.asList(content.getGender()), filterParams));
+        resultContent.setTasteMap(productDao.countProductsByTasteAndCriteria(categoryId, content.getTasteList(), filterParams));
 
         log.info("Time counted products by properties: " + (System.nanoTime()-start));
 
@@ -86,16 +76,14 @@ public class FormServiceImpl implements IFormService {
         return resultContent;
     }
 
+    private FormPropertyContent createContentForFilterForm(Long categoryId) {
+        FormPropertyContent content = new FormPropertyContent();
 
-    @Override
-    public FormPropertyContent createContentForProductForm() {
-        FormPropertyContent formPropertyContent = new FormPropertyContent();
+        content.setBrandList(brandDao.getBrandsByCategoryId(categoryId));
+        content.setDiscountList(discountDao.getDiscountsByCategoryId(categoryId));
+        content.setTasteList(tasteDao.getAllTastesByCategoryId(categoryId));
 
-        formPropertyContent.setTasteList(tasteRepository.findAll());
-        formPropertyContent.setBrandList(brandRepository.findAll());
-        formPropertyContent.setDiscountList(discountRepository.findAll());
-
-        return formPropertyContent;
+        return content;
     }
 
     private <T> Map<T,Long> convertListProductToMap(List<T> elemList){

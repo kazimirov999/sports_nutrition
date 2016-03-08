@@ -2,11 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
-  Created by IntelliJ IDEA.
-  User: Sasha
-  Date: 08.02.2016
-  Time: 20:09
-  To change this template use File | Settings | File Templates.
+ Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
 --%>
 <spring:message code="cart.title" var="cartTitle"/>
 <spring:message code="currency" var="currency"/>
@@ -34,7 +30,7 @@
             <td>${price} (${currency})</td>
             <td>${discount}</td>
             <td class="quantity">${quantity}</td>
-            <td>${sum}: (${currency})</td>
+            <td>${sum} (${currency})</td>
             <td></td>
         </tr>
         <c:forEach var="item" items="${cart.cartItems}">

@@ -2,11 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
-  Created by IntelliJ IDEA.
-  User: Sasha
-  Date: 28.01.2016
-  Time: 11:45
-  To change this template use File | Settings | File Templates.
+ Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
 --%>
 <div class="product_form">
     <form:form method="post" action="/edit/product" commandName="formProductBean" enctype="multipart/form-data">

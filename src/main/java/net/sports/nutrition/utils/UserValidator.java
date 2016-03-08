@@ -13,6 +13,12 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+
+/**
+ * Validator for User.
+ *
+ * @author : Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
+ */
 @Component
 public class UserValidator implements Validator {
 
@@ -40,8 +46,5 @@ public class UserValidator implements Validator {
         if (user.getLoginEmail() != null && userService.loginIsExist(user.getLoginEmail())) {
             errors.rejectValue("loginEmail", "error.login.is_exist", "Login is exist.");
         }
-
-
     }
-
 }

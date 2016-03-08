@@ -2,15 +2,19 @@ package net.sports.nutrition.domain.entities;
 
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 05.02.2016 20:18
+ * Represents the product and its taste and number. It's part of shopping cart.
+ * <p>
+ * It's marked as an entity class, and  provides the ability to store CartItem
+ * objects in the database and retrieve CartItem objects from the database.
+ * </p>
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
+ * @see Cart
  */
-
 @Entity
 @Table(name = "cart_items")
 public class CartItem implements Serializable {
@@ -30,9 +34,21 @@ public class CartItem implements Serializable {
     private int quantity;
     private BigDecimal totalPrice;
 
+    /**
+     * Creates new instance of the CartItem.
+     *
+     * @see CartItem#CartItem(Product, Taste)
+     */
     public CartItem() {
     }
 
+    /**
+     * Creates a new instance of the CartItem, with the specified values.
+     *
+     * @param product - product is purchased
+     * @param taste   - taste of product
+     * @see CartItem#CartItem()
+     */
     public CartItem(Product product, Taste taste) {
         this.setProduct(product);
         this.taste = taste;
@@ -40,21 +56,37 @@ public class CartItem implements Serializable {
         this.setTotalPrice(product.getRealPrice());
     }
 
+    /**
+     * Sets product and updates totalPrice of CartItem
+     *
+     * @param product - product is purchased
+     */
     public void setProduct(Product product) {
         this.product = product;
         this.updateTotalPrice();
     }
 
+    /**
+     * Sets quantity and updates totalPrice of CartItem
+     *
+     * @param quantity - number of product
+     */
     public void setQuantity(int quantity) {
         this.quantity = quantity;
         this.updateTotalPrice();
     }
 
+    /**
+     * Increases quantity of product and updates totalPrice of CartItem
+     */
     public void increaseQuantity() {
         this.quantity++;
         this.updateTotalPrice();
     }
 
+    /**
+     * Decreases quantity of product and updates totalPrice of CartItem
+     */
     public void decreaseQuantity() {
         this.quantity--;
         this.updateTotalPrice();

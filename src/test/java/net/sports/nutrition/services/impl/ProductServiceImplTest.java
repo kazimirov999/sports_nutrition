@@ -1,7 +1,7 @@
 package net.sports.nutrition.services.impl;
 
 import net.sports.nutrition.domain.entities.Product;
-import net.sports.nutrition.domain.repositories.impl.ProductRepositoryImpl;
+import net.sports.nutrition.domain.dao.IProductDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 public class ProductServiceImplTest {
 
     @Mock
-    private ProductRepositoryImpl productRepository;
+    private IProductDao productDao;
     @InjectMocks
     private ProductServiceImpl productService;
     @Mock
@@ -32,7 +32,7 @@ public class ProductServiceImplTest {
         when(product.getId()).thenReturn(new Long(1));
         when(productToCheck.getId()).thenReturn(new Long(1));
         when(productToCheck.getArticleNumber()).thenReturn(new Long(5555));
-        when(productRepository.getProductByArticleNumber(new Long(5555))).thenReturn(product);
+        when(productDao.getProductByArticleNumber(new Long(5555))).thenReturn(product);
 
         Boolean resultTrue = productService.checkBeforeUpdateProduct(productToCheck);
         assertNotNull(resultTrue);
@@ -46,13 +46,13 @@ public class ProductServiceImplTest {
 
     @Test
     public void testProductIsExist() throws Exception {
-        when(productRepository.getProductByArticleNumber(new Long(5555))).thenReturn(product);
+        when(productDao.getProductByArticleNumber(new Long(5555))).thenReturn(product);
         when(product.getArticleNumber()).thenReturn(new Long(5555));
         Boolean resultTrue = productService.productIsExist(product);
         assertNotNull(resultTrue);
         assertTrue(resultTrue);
 
-        when(productRepository.getProductByArticleNumber(new Long(5555))).thenReturn(null);
+        when(productDao.getProductByArticleNumber(new Long(5555))).thenReturn(null);
         Boolean resultFalse = productService.productIsExist(product);
         assertNotNull(resultFalse);
         assertFalse(resultFalse);

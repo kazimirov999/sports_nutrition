@@ -1,10 +1,10 @@
-package net.sports.nutrition.domain.repositories.impl;
+package net.sports.nutrition.domain.dao.impl;
 
 import net.sports.nutrition.criteria.filter.IMainCriteriaFilter;
 import net.sports.nutrition.domain.entities.Product;
 import net.sports.nutrition.domain.entities.Taste;
 import net.sports.nutrition.domain.enumx.SortType;
-import net.sports.nutrition.domain.repositories.IProductRepository;
+import net.sports.nutrition.domain.dao.IProductDao;
 import net.sports.nutrition.form.beans.FormFilterBean;
 import net.sports.nutrition.utils.FinderByRestriction;
 import org.hibernate.Criteria;
@@ -20,17 +20,18 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 11.01.2016 18:21
+ * The Product Data Access Object is the class providing
+ * access to product and product type related data.
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
-
 @Repository
-public class ProductRepositoryImpl extends GenericRepositoryImpl<Product, Long> implements IProductRepository {
+public class ProductDaoImpl extends GenericDaoImpl<Product, Long> implements IProductDao {
 
     @Autowired
     IMainCriteriaFilter mainCriteriaFilter;
 
-    public ProductRepositoryImpl() {
+    public ProductDaoImpl() {
         super(Product.class);
     }
 

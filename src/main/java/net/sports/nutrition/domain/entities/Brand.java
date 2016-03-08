@@ -9,8 +9,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 07.01.2016 13:03
+ * Represents brand of products.
+ * <p>
+ * It's marked as an entity class, and  provides the ability to store
+ * Brand objects in the database and retrieve Brand objects from the database.
+ * </p>
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
+ * @see CartItem
  */
 @NamedQueries({
         @NamedQuery(name = "Brand.getAll",
@@ -26,29 +32,42 @@ import java.util.Set;
 })
 @Entity
 @Table(name = "brands",
-        uniqueConstraints=@UniqueConstraint(columnNames={"name"})
+        uniqueConstraints = @UniqueConstraint(columnNames = {"name"})
 )
-public class Brand implements Comparable, Serializable {
+public class Brand implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     @NotEmpty(message = "{field.not.empty.error}")
     private String name;
     private String description;
 
     @NotNull(message = "{field.not.empty.error}")
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinColumn(name = "country_id", nullable = true)
     private Country country;
 
     @OneToMany(mappedBy = "brand", cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private Set<Product> productSet = new HashSet<Product>();
 
+    /**
+     * Creates new empty instance of the Brand
+     *
+     * @see Brand#Brand(String, Country, String)
+     */
     public Brand() {
     }
 
+    /**
+     * Creates a new instance of the Brand with the specified values
+     *
+     * @param name        - name
+     * @param country     - producing country
+     * @param description - description
+     * @see Brand#Brand()
+     * @see Country
+     */
     public Brand(String name, Country country, String description) {
         this.name = name;
         this.country = country;
@@ -129,7 +148,4 @@ public class Brand implements Comparable, Serializable {
         this.productSet = productSet;
     }
 
-    public int compareTo(Object o) {
-        return 0;
-    }
 }

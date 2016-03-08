@@ -7,13 +7,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 10.02.2016 17:25
+ * The Controller is responsible for processing  requests
+ * related to image.
+ *
+ * @author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
-
 @Controller
 public class ImageController extends AbstractGlobalController {
 
+    /**
+     * Writes image of category to the response stream.
+     *
+     * @param categoryId - category id
+     * @return byte array
+     */
     @ResponseBody
     @RequestMapping(value = ConstantsUri.CATEGORY_IMG)
     public byte[] downloadCategoryPhoto(@PathVariable("categoryId") Long categoryId) {
@@ -21,6 +28,12 @@ public class ImageController extends AbstractGlobalController {
         return categoryService.getCategoryById(categoryId).getImageByte();
     }
 
+    /**
+     * Writes image of product to the response stream.
+     *
+     * @param productId - product id
+     * @return byte array
+     */
     @ResponseBody
     @RequestMapping(value = ConstantsUri.PRODUCT_IMG)
     public byte[] downloadProductPhoto(@PathVariable("productId") Long productId) {

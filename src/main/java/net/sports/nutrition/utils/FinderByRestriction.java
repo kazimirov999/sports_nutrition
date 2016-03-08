@@ -7,14 +7,22 @@ import org.hibernate.criterion.Restrictions;
 import java.util.Collection;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 24.01.2016 14:16
+ * This class builds Disjunction object for Hibernate criteria object.
+ *
+ * @author : Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 public class FinderByRestriction {
 
     private FinderByRestriction() {
     }
 
+    /**
+     * Builds Disjunction object from collection of element.
+     *
+     * @param field       - property of restriction
+     * @param elementList - elements for disjunction
+     * @return <tt>Disjunction object</tt>
+     */
     public static <T> Disjunction disjunction(String field, Collection<T> elementList) {
         Property property = Property.forName(field);
         Disjunction disjunction = Restrictions.disjunction();

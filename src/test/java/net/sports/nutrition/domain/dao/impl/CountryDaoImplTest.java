@@ -1,8 +1,8 @@
-package net.sports.nutrition.domain.repositories.impl;
+package net.sports.nutrition.domain.dao.impl;
 
 import net.sports.nutrition.domain.entities.Country;
-import net.sports.nutrition.domain.repositories.ICategoryRepository;
-import net.sports.nutrition.domain.repositories.ICountryRepository;
+import net.sports.nutrition.domain.dao.ICategoryDao;
+import net.sports.nutrition.domain.dao.ICountryDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,17 +24,17 @@ import static org.junit.Assert.assertNotNull;
 @Transactional
 @ContextConfiguration({"classpath:/test-root-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class CountryRepositoryImplTest {
+public class CountryDaoImplTest {
 
     @Autowired
-    private ICountryRepository countryRepository;
+    private ICountryDao countryDao;
     @Autowired
-    private ICategoryRepository categoryRepository;
+    private ICategoryDao categoryDao;
 
     @Test
     @Rollback(true)
     public void testFindAll() throws Exception {
-        List<Country> countries = countryRepository.findAll();
+        List<Country> countries = countryDao.findAll();
         assertNotNull(countries);
         assertEquals(3, countries.size());
     }
@@ -42,7 +42,7 @@ public class CountryRepositoryImplTest {
     @Test
     @Rollback(true)
     public void testGetAmountProductsByCategory() throws Exception {
-        Map<Country, Long> result = countryRepository.getAmountProductsByCategory();
+        Map<Country, Long> result = countryDao.getAmountProductsByCategory();
 
         assertNotNull(result);
         int i = 0;

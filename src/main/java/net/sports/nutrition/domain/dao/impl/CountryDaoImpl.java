@@ -1,7 +1,7 @@
-package net.sports.nutrition.domain.repositories.impl;
+package net.sports.nutrition.domain.dao.impl;
 
 import net.sports.nutrition.domain.entities.Country;
-import net.sports.nutrition.domain.repositories.ICountryRepository;
+import net.sports.nutrition.domain.dao.ICountryDao;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -9,13 +9,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 20.01.2016 23:03
+ * The Country Data Access Object is the class providing
+ * access to country and country type related data.
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 @Repository
-public class CountryRepositoryImpl extends GenericRepositoryImpl<Country, Long> implements ICountryRepository {
+public class CountryDaoImpl extends GenericDaoImpl<Country, Long> implements ICountryDao {
 
-    public CountryRepositoryImpl() {
+    public CountryDaoImpl() {
         super(Country.class);
     }
 

@@ -11,13 +11,25 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 
+
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 12.02.2016 18:24
+ * The Controller is responsible for processing user requests
+ * related to security and building appropriate model and
+ * passes it to the view for rendering.
+ *
+ * @author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 @Controller
 public class SecurityController extends AbstractGlobalController {
 
+    /**
+     * Authorizes user.
+     *
+     * @param error    - unsuccessful authorization
+     * @param logout   - out from the site
+     * @param session  - session between an HTTP client and an HTTP server.
+     * @param redirect - redirect attributes
+     */
     @RequestMapping(value = ConstantsUri.SECURITY_USER_LOGIN, method = RequestMethod.GET)
     public String login(@RequestParam(value = "error", required = false) String error,
                         @RequestParam(value = "logout", required = false) String logout,

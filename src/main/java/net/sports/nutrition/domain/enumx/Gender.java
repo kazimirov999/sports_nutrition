@@ -1,13 +1,13 @@
 package net.sports.nutrition.domain.enumx;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 19.01.2016 21:55
+ * Enum contains types of genders for which the product is allowed.
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
+ * @created 07.01.2016 19:04
  */
 public enum Gender {
 
     MAN, WOMAN, UNISEX;
 
-    Gender() {
-    }
 }

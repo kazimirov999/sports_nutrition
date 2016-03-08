@@ -5,10 +5,20 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 24.01.2016 12:13
+ * This interface provides  construction Hibernate criteria object,
+ * for access to a group of products.  .
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 public interface IMainCriteriaFilter {
 
+    /**
+     * Builds Hibernate criteria object by filter parameters
+     *
+     * @param categoryId   -  identifier of the category
+     * @param session      - session is used to get a physical connection with a database
+     * @param filterParams - the search options
+     * @return <tt>Criteria</tt>
+     */
     Criteria mainFilter(Long categoryId, Session session, FormFilterBean filterParams);
 }

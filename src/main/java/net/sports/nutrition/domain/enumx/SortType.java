@@ -1,8 +1,12 @@
 package net.sports.nutrition.domain.enumx;
 
+
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 23.01.2016 11:25
+ * Enum contains product sorting type.
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
+ * @created 23.01.2016 11:25
+ * @
  */
 public enum SortType {
 

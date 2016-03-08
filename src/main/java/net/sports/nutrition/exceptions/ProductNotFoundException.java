@@ -1,11 +1,13 @@
 package net.sports.nutrition.exceptions;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 19.02.2016 14:03
+ * @author  Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 public class ProductNotFoundException extends Exception {
 
+    /**
+     * Constructs a new ProductNotFoundException with the specified detail message.
+     */
     public ProductNotFoundException(String message) {
         super(message);
     }

@@ -4,11 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%--
-  Created by IntelliJ IDEA.
-  User: Sasha
-  Date: 08.02.2016
-  Time: 21:03
-  To change this template use File | Settings | File Templates.
+ Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
 --%>
 <spring:message code="order.amount" var="orderAmount"/>
 <spring:message code="order.id" var="orderId"/>

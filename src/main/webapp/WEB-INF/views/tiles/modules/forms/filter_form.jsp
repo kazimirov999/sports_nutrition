@@ -1,9 +1,5 @@
 <%--
-  Created by IntelliJ IDEA.
-  User: Sasha
-  Date: 20.01.2016
-  Time: 12:12
-  To change this template use File | Settings | File Templates.
+ Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
 --%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

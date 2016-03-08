@@ -10,10 +10,10 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 21.01.2016 21:19
+ * Class for storage content of filter to find products.
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
-
 public class FormPropertyContent implements Serializable {
 
     private Form form;

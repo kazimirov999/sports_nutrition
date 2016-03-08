@@ -1,7 +1,9 @@
 <%@ page import="net.sports.nutrition.domain.entities.Cart" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-
+<%--
+ Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
+--%>
 <c:set var="cartSize"
        value='<%=(((request.getSession().getAttribute("cart")) != null)?((Cart)request.getSession().getAttribute("cart")).size():0)%>'/>
 

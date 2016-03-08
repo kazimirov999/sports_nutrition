@@ -21,11 +21,10 @@ import java.net.URLConnection;
 import java.util.*;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 22.02.2016 11:12
+ * Class parse content from site(http://shop.bodybuilding.ua/)
+ *
+ * @author : Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
-
-
 public class ParserUtil {
 
     private IBrandService brandService;
@@ -59,7 +58,7 @@ public class ParserUtil {
     public void productBuildAndSaveToDbByCategoryName(String categoryName, Long categoryId, Integer pageAmount) {
         for (int i = 0; i < pageAmount; i++) {
             if (i == 0) {
-                productBuildByParseProduct("http://shop.bodybuilding.ua/katalog/" + categoryName + "/", categoryId);
+                productBuildByParseProduct("ckatalog/" + categoryName + "/", categoryId);
             } else {
                 productBuildByParseProduct("http://shop.bodybuilding.ua/katalog/" + categoryName + "/?page=" + i + 1, categoryId);
             }

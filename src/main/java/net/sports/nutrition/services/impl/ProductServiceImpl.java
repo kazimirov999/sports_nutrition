@@ -1,7 +1,7 @@
 package net.sports.nutrition.services.impl;
 
 import net.sports.nutrition.domain.entities.Product;
-import net.sports.nutrition.domain.repositories.IProductRepository;
+import net.sports.nutrition.domain.dao.IProductDao;
 import net.sports.nutrition.services.IProductService;
 import net.sports.nutrition.domain.enumx.SortType;
 import net.sports.nutrition.form.beans.FormFilterBean;
@@ -13,81 +13,85 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 24.01.2016 10:58
- */
 
+/**
+ * Service to work with the Product, using IProductDao.
+ * .<p>
+ * Implementation of IProductDao interface is annotated for automatic resource injection.
+ * </p>
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
+ */
 @Transactional
 @Service
 public class ProductServiceImpl implements IProductService {
 
     @Autowired
-    private IProductRepository productRepository;
+    private IProductDao productDao;
 
     @Override
     public Product saveProduct(Product product) {
 
-        return productRepository.saveOrUpdate(product);
+        return productDao.saveOrUpdate(product);
     }
 
     @Override
     public Product saveProductWithImage(Product product, MultipartFile file) throws IOException {
         product.setImageByte(file.getBytes());
 
-        return productRepository.saveOrUpdate(product);
+        return productDao.saveOrUpdate(product);
     }
 
     @Transactional(readOnly = true)
     @Override
     public Product getProductById(Long productId) {
 
-        return productRepository.findById(productId);
+        return productDao.findById(productId);
     }
 
     @Override
     public Product updateProduct(Product product) {
-        return productRepository.edit(product);
+        return productDao.edit(product);
     }
 
     @Transactional(readOnly = true)
     @Override
     public Product getProductByName(String name) {
 
-        return productRepository.getProductByName(name);
+        return productDao.getProductByName(name);
     }
 
     @Transactional(readOnly = true)
     @Override
     public Product getProductByArticleNumber(Long articleNumber) {
 
-        return productRepository.getProductByArticleNumber(articleNumber);
+        return productDao.getProductByArticleNumber(articleNumber);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Product> getProductsByCriteria(Long categoryId, FormFilterBean filterParams, SortType sortType, Integer firstResult, Integer maxFetchSise) {
+    public List<Product> getProductsByCriteria(Long categoryId, FormFilterBean filterParams, SortType sortType, Integer firstResult, Integer maxFetchSize) {
 
-        return productRepository.getProductsByCriteria(categoryId, filterParams, sortType, firstResult, maxFetchSise);
+        return productDao.getProductsByCriteria(categoryId, filterParams, sortType, firstResult, maxFetchSize);
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Product> getProductsByCriteria(Long categoryId, FormFilterBean filterParams, SortType sortType) {
 
-        return productRepository.getProductsByCriteria(categoryId, filterParams, sortType);
+        return productDao.getProductsByCriteria(categoryId, filterParams, sortType);
     }
 
     @Override
     public Integer deleteAllProductByCategoryId(Long categoryId) {
 
-        return productRepository.deleteAllProductByCategoryId(categoryId);
+        return productDao.deleteAllProductByCategoryId(categoryId);
     }
 
     @Override
     public Integer deleteProductById(Long productId) {
 
-        return productRepository.deleteProductById(productId);
+        return productDao.deleteProductById(productId);
     }
 
     @Transactional(readOnly = true)

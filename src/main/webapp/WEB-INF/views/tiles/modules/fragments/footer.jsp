@@ -1,10 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%--
-  Created by IntelliJ IDEA.
-  User: Sasha
-  Date: 17.01.2016
-  Time: 19:45
-  To change this template use File | Settings | File Templates.
+ Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
 --%>
 <spring:message code="footer.copywrite" var="copy"/>
 <spring:message code="footer.text" var="text"/>

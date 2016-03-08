@@ -1,7 +1,7 @@
-package net.sports.nutrition.domain.repositories.impl;
+package net.sports.nutrition.domain.dao.impl;
 
 import net.sports.nutrition.domain.entities.Cart;
-import net.sports.nutrition.domain.repositories.ICartRepository;
+import net.sports.nutrition.domain.dao.ICartDao;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
@@ -9,14 +9,15 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 06.02.2016 16:12
+ * The Cart Data Access Object is the class providing
+ * access to cart and cart type related data.
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
-
 @Repository
-public class CartRepositoryImpl extends GenericRepositoryImpl<Cart, Long> implements ICartRepository {
+public class CartDaoImpl extends GenericDaoImpl<Cart, Long> implements ICartDao {
 
-    public CartRepositoryImpl() {
+    public CartDaoImpl() {
         super(Cart.class);
     }
 

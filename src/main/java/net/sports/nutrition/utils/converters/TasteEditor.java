@@ -7,8 +7,9 @@ import org.jboss.logging.Logger;
 import java.beans.PropertyEditorSupport;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 30.01.2016 21:15
+ * This TasteEditor converting text value(id) to Taste object.
+ *
+ * @author : Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 public class TasteEditor extends PropertyEditorSupport {
 

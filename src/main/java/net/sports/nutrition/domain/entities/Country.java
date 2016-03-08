@@ -6,8 +6,13 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 07.01.2016 13:04
+ * Represents Country.
+ * <p>
+ * It's marked as an entity class, and  provides the ability to store
+ * Country objects in the database and retrieve Country objects from the database.
+ * </p>
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 @NamedQueries({
         @NamedQuery(name = "Country.getAmountProducts",
@@ -27,9 +32,21 @@ public class Country implements Serializable {
     @OneToMany(mappedBy = "country", cascade = CascadeType.DETACH)
     private Set<Brand> brandSet = new TreeSet<Brand>();
 
+    /**
+     * Creates new empty instance of the Country.
+     *
+     * @see Country#Country(String, String)
+     */
     public Country() {
     }
 
+    /**
+     * Creates a new instance of the Country with the specified values.
+     *
+     * @param name - name of category
+     * @param iso  - iso of country
+     * @see Country#Country()
+     */
     public Country(String name, String iso) {
         this.name = name;
         this.iso = iso;
@@ -62,7 +79,7 @@ public class Country implements Serializable {
                 "Id=" + id +
                 ", name='" + name + '\'' +
                 ", iso='" + iso + '\'' +
-               // ", brandSet=" + brandSet +
+                // ", brandSet=" + brandSet +
                 '}';
     }
 

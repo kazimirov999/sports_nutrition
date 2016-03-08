@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import java.util.List;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 08.02.2016 13:13
+ * Parent class for all controllers.
+ *
+ * @author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
-
 public abstract class AbstractGlobalController {
 
     @Autowired
@@ -26,6 +26,9 @@ public abstract class AbstractGlobalController {
     @Autowired
     protected ITasteService tasteService;
 
+    /**
+     * Writes all categories to the Model
+     */
     @ModelAttribute("categories")
     public List<Category> getCategories() {
         return categoryService.findAllCategories();

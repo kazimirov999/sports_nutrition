@@ -29,8 +29,11 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 08.02.2016 13:08
+ * The Controller is responsible for processing user requests
+ * related to order and building appropriate model and
+ * passes it to the view for rendering.
+ *
+ * @author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 @Controller
 public class OrderController extends AbstractGlobalController {
@@ -50,6 +53,11 @@ public class OrderController extends AbstractGlobalController {
         binder.registerCustomEditor(Country.class, new CountryEditor(countryService));
     }
 
+    /**
+     * Shows order form
+     *
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.ORDER_SHOW_FORM, method = RequestMethod.GET)
     public String showOrderForm(Model uiModel) {
         uiModel.addAttribute("formCustomerBean", new Customer());
@@ -57,6 +65,16 @@ public class OrderController extends AbstractGlobalController {
         return ConstantsView.ORDER_PLACE;
     }
 
+    /**
+     * Adds new order.
+     *
+     * @param customer - customer
+     * @param result   - error register
+     * @param redirect - redirect attributes
+     * @param session  - session between an HTTP client and an HTTP server.
+     * @return modelAndView
+     * @see Customer
+     */
     @RequestMapping(value = ConstantsUri.ORDER_SAVE, method = RequestMethod.POST)
     public String saveOrder(@Valid @ModelAttribute("formCustomerBean") Customer customer, BindingResult result,
                             RedirectAttributes redirect, HttpSession session) {
@@ -98,8 +116,16 @@ public class OrderController extends AbstractGlobalController {
         return ConstantsView.ORDER_SHOW_ALL;
     }
 
+    /**
+     * Removes order  and sends email to the customer.
+     *
+     * @param orderId  - order id
+     * @param session  - session between an HTTP client and an HTTP server.
+     * @param redirect - redirect attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.ORDER_PLACE_DELETE, method = RequestMethod.GET)
-    public String placeOrderDelete(@PathVariable("orderId") Long orderId, HttpSession session, final RedirectAttributes redirect) {
+    public String placeOrderDelete(@PathVariable("orderId") Long orderId, HttpSession session, RedirectAttributes redirect) {
 
         final String emailSubject = messageSource.getMessage("email.order.subject", null, LocaleContextHolder.getLocale());
         final String emailTextPattern = messageSource.getMessage("email.order.text.for.failure.place", null, LocaleContextHolder.getLocale());
@@ -123,8 +149,17 @@ public class OrderController extends AbstractGlobalController {
         return "redirect:" + (String) session.getAttribute("lastUri");
     }
 
+    /**
+     * Places order.
+     * Removes order and sends email to the customer.
+     *
+     * @param orderId  - order id
+     * @param session  - session between an HTTP client and an HTTP server.
+     * @param redirect - redirect attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.ORDER_PLACE_SEND, method = RequestMethod.GET)
-    public String placeOrderSend(@PathVariable("orderId") Long orderId, HttpSession session, final RedirectAttributes redirect) {
+    public String placeOrderSend(@PathVariable("orderId") Long orderId, HttpSession session, RedirectAttributes redirect) {
 
         final String emailSubject = messageSource.getMessage("email.order.subject", null, LocaleContextHolder.getLocale());
         final String emailTextPattern = messageSource.getMessage("email.order.text.for.success.place", null, LocaleContextHolder.getLocale());
@@ -149,6 +184,9 @@ public class OrderController extends AbstractGlobalController {
         return "redirect:" + (String) session.getAttribute("lastUri");
     }
 
+    /**
+     * Writes all countries to the Model
+     */
     @ModelAttribute("countryList")
     public List<Country> getAllCountries() {
         return countryService.findAllCountries();

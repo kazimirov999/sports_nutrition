@@ -12,8 +12,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 07.01.2016 13:04
+ * Represents Discount.
+ * <p>
+ * It's marked as an entity class, and  provides the ability to store
+ * Discount objects in the database and retrieve Discount objects from the database.
+ * </p>
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 @NamedQueries({
         @NamedQuery(name = "Discount.getAll",
@@ -45,9 +50,23 @@ public class Discount implements Serializable {
     @OneToMany(mappedBy = "discount", cascade = {CascadeType.DETACH}, fetch = FetchType.LAZY)
     private Set<Product> productSet = new HashSet<Product>();
 
+    /**
+     * Creates new instance of the Discount.
+     *
+     * @see Discount#Discount(String, BigDecimal, DateTime, Set)
+     */
     public Discount() {
     }
 
+    /**
+     * Creates a new instance of the Discount with the specified values.
+     *
+     * @param name           - name of discount
+     * @param size           - size of discount
+     * @param expirationDate - expiration date discounts
+     * @param productSet     - products that have this discount
+     * @see Discount#Discount()
+     */
     public Discount(String name, BigDecimal size, DateTime expirationDate, Set<Product> productSet) {
         this.name = name;
         this.size = size;
@@ -88,9 +107,10 @@ public class Discount implements Serializable {
                 '}';
     }
 
-    public int getAroundSize(){
+    public int getAroundSize() {
         return size.intValue();
     }
+
     public Long getId() {
         return id;
     }

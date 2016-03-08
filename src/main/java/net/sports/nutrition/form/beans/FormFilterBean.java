@@ -11,22 +11,22 @@ import java.math.BigDecimal;
 import java.util.Set;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 21.01.2016 23:55
+ * Class contains selected  properties of product that sought.
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
-
-public class FormFilterBean implements Serializable{
-     final static private String MESSAGE = "error.input.integer.filter";
-
-    @Digits(message = MESSAGE , integer = 2000, fraction = 100000)
-    @Min(value = 0, message ="error.input.integer.filter")
-    @Max(value = 10000000, message = MESSAGE)
-    private BigDecimal lowPrice ;
+public class FormFilterBean implements Serializable {
+    final static private String MESSAGE = "error.input.integer.filter";
 
     @Digits(message = MESSAGE, integer = 2000, fraction = 100000)
-    @Min(value = 0, message ="error.input.integer.filter")
+    @Min(value = 0, message = MESSAGE)
     @Max(value = 10000000, message = MESSAGE)
-    private BigDecimal highPrice ;
+    private BigDecimal lowPrice;
+
+    @Digits(message = MESSAGE, integer = 2000, fraction = 100000)
+    @Min(value = 0, message = MESSAGE)
+    @Max(value = 10000000, message = MESSAGE)
+    private BigDecimal highPrice;
     private Set<Long> brandIdList;
     private Set<Long> tasteIdList;
     private Set<Long> discountIdList;
@@ -34,10 +34,6 @@ public class FormFilterBean implements Serializable{
     private Set<Gender> genderList;
 
     private Boolean productAvailability = false;
-
-    public FormFilterBean() {
-
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -67,6 +63,19 @@ public class FormFilterBean implements Serializable{
         result = 31 * result + (formList != null ? formList.hashCode() : 0);
         result = 31 * result + (genderList != null ? genderList.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "FormFilterBean{" +
+                "lowPrice=" + lowPrice +
+                ", highPrice=" + highPrice +
+                ", brandIdList=" + brandIdList +
+                ", tasteIdList=" + tasteIdList +
+                ", discountIdList=" + discountIdList +
+                ", formList=" + formList +
+                ", genderList=" + genderList +
+                '}';
     }
 
     public Set<Form> getFormList() {
@@ -137,16 +146,4 @@ public class FormFilterBean implements Serializable{
         this.productAvailability = productAvailability;
     }
 
-    @Override
-    public String toString() {
-        return "FormFilterBean{" +
-                "lowPrice=" + lowPrice +
-                ", highPrice=" + highPrice +
-                ", brandIdList=" + brandIdList +
-                ", tasteIdList=" + tasteIdList +
-                ", discountIdList=" + discountIdList +
-                ", formList=" + formList +
-                ", genderList=" + genderList +
-                '}';
-    }
 }

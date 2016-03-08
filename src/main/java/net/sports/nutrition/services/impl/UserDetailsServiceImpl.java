@@ -18,10 +18,13 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 10.02.2016 15:58
+ * Class which loads user-specific data.
+ * .<p>
+ * Implementation of IUserService is annotated for automatic resource injection.
+ * </p>
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
-
 @Transactional(readOnly = true)
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -29,6 +32,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private IUserService userService;
 
+    /**
+     * Locates the user based on the username.
+     *
+     * @param userName- the username identifying the user whose data is required.
+     * @return <tt>a fully populated user record</tt> (never null)
+     * @throws UsernameNotFoundException - if user not found
+     */
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         User user = userService.findUserByLogin(userName);

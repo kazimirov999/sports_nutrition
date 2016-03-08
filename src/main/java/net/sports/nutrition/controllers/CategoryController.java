@@ -20,10 +20,12 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 26.01.2016 17:18
+ * The Controller is responsible for processing user requests
+ * related to categories and building appropriate model and
+ * passes it to the view for rendering.
+ *
+ * @author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
-
 @Controller
 public class CategoryController extends AbstractGlobalController {
 
@@ -31,6 +33,12 @@ public class CategoryController extends AbstractGlobalController {
 
     private static final Logger log = Logger.getLogger(CategoryController.class);
 
+    /**
+     * Adds new empty category bean to the Model.
+     *
+     * @return modelAndView
+     * @see FormCategoryBean
+     */
     @RequestMapping(value = ConstantsUri.CATEGORY_ADD, method = RequestMethod.GET)
     public String addCategoryShowForm(Model uiModel) {
         uiModel.addAttribute(MODEL_CATEGORY_FORM_BEAN, new FormCategoryBean());
@@ -38,6 +46,16 @@ public class CategoryController extends AbstractGlobalController {
         return ConstantsView.CATEGORY_ADD;
     }
 
+    /**
+     * Adds new category.
+     *
+     * @param categoryBean - contains information about the category
+     * @param result       - error register
+     * @param uiModel      - model attributes
+     * @param redirect     - redirect attributes
+     * @return modelAndView
+     * @see FormCategoryBean
+     */
     @RequestMapping(value = ConstantsUri.CATEGORY_ADD, method = RequestMethod.POST)
     public String addCategory(@Valid @ModelAttribute(MODEL_CATEGORY_FORM_BEAN) FormCategoryBean categoryBean,
                               BindingResult result, Model uiModel, RedirectAttributes redirect) {
@@ -62,6 +80,14 @@ public class CategoryController extends AbstractGlobalController {
 
     }
 
+    /**
+     * Removes category.
+     *
+     * @param id       - category id
+     * @param uiModel  - model attributes
+     * @param redirect - redirect attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.CATEGORY_DELETE, method = RequestMethod.GET)
     public String deleteCategory(@PathVariable Long id, Model uiModel, RedirectAttributes redirect) {
         String serviceMessage = null;
@@ -79,26 +105,54 @@ public class CategoryController extends AbstractGlobalController {
 
     }
 
+    /**
+     * Shows removing result.
+     *
+     * @param uiModel - model attributes
+     * @return modelAndView
+     * @see FormCategoryBean
+     */
     @RequestMapping(value = ConstantsUri.CATEGORY_DELETE_RESULT, method = RequestMethod.GET)
     public String deleteCategoryResult(Model uiModel) {
 
         return ConstantsView.CATEGORY_DELETE;
     }
 
+    /**
+     * Removes all products of category.
+     *
+     * @param categoryId - category id
+     * @param uiModel    - model attributes
+     * @param redirect   - redirect attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.CATEGORY_DELETE_ALL_PRODUCT, method = RequestMethod.GET)
-    public String deleteAllProductsByCategoryId(@PathVariable Long categoryId, RedirectAttributes redirect, Model uiModel) {
+    public String deleteAllProductsByCategoryId(@PathVariable Long categoryId, Model uiModel, RedirectAttributes redirect) {
         productService.deleteAllProductByCategoryId(categoryId);
         ServiceRedirectMessage.write(redirect, "category.products.success.delete");
 
         return "redirect:" + ConstantsUri.CATEGORY_DELETE_RESULT;
     }
 
+    /**
+     * Shows edits result.
+     *
+     * @param uiModel - model attributes
+     */
     @RequestMapping(value = ConstantsUri.CATEGORY_EDIT_RESULT, method = RequestMethod.GET)
     public String editCategoryResult(Model uiModel) {
 
         return ConstantsView.CATEGORY_EDIT_RESULT;
     }
 
+    /**
+     * Writes category for edit to the Model.
+     *
+     * @param categoryId - category id
+     * @param uiModel    - model attributes
+     * @param session    - session between an HTTP client and an HTTP server.
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.CATEGORY_SHOW_EDIT_FORM, method = RequestMethod.GET)
     public String showEditCategory(@PathVariable Long categoryId, Model uiModel, HttpSession session) {
         Category category = categoryService.getCategoryById(categoryId);
@@ -110,6 +164,16 @@ public class CategoryController extends AbstractGlobalController {
         return ConstantsView.CATEGORY_EDIT;
     }
 
+    /**
+     * Adds edited category.
+     *
+     * @param categoryBean - contains information about the category
+     * @param result       - error register
+     * @param uiModel      - model attributes
+     * @param redirect     - redirect attributes
+     * @return modelAndView
+     * @see FormCategoryBean
+     */
     @RequestMapping(value = ConstantsUri.CATEGORY_EDIT, method = RequestMethod.POST)
     public String editCategory(@Valid FormCategoryBean categoryBean, BindingResult result,
                                RedirectAttributes redirect, HttpSession session, Model uiModel) {

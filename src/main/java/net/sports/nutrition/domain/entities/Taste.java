@@ -1,13 +1,24 @@
 package net.sports.nutrition.domain.entities;
 
+import org.hibernate.annotations.*;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 19.01.2016 21:31
+ * Represents Taste.
+ * <p>
+ * It's marked as an entity class, and  provides the ability to store
+ * Taste objects in the database and retrieve Taste objects from the database.
+ * </p>
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 @NamedQueries({
         @NamedQuery(name = "Taste.getAll",
@@ -30,9 +41,20 @@ public class Taste implements Serializable {
     @NotEmpty(message = "Input name!")
     private String name;
 
+    /**
+     * Creates new empty instance of the Taste.
+     *
+     * @see Taste#Taste(String)
+     */
     public Taste() {
     }
 
+    /**
+     * Creates a new instance of the Taste, with the specified values.
+     *
+     * @param name - name of Taste
+     * @see Taste#Taste()
+     */
     public Taste(String name) {
         this.name = name;
     }

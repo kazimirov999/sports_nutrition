@@ -6,8 +6,9 @@ import org.jboss.logging.Logger;
 import java.beans.PropertyEditorSupport;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 06.02.2016 13:00
+ * This ProductEditor converting text value(id) to Product object.
+ *
+ * @author : Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 public class ProductEditor extends PropertyEditorSupport {
 

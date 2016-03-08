@@ -4,9 +4,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 07.01.2016 13:04
+ * Represents Video.
+ * <p>
+ * It's marked as an entity class, and  provides the ability to store
+ * Video objects in the database and retrieve Video objects from the database.
+ * </p>
  *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 @Entity
 @Table(name = "videos")
@@ -21,13 +25,28 @@ public class Video implements Serializable {
     @Column(columnDefinition = "TEXT")
     private String playerCode;
 
+    /**
+     * Creates new empty instance of the Video.
+     *
+     * @see Video#Video(String, String, String)
+     */
+    public Video() {
+    }
+
+    /**
+     * Creates new empty instance of the Video.
+     *
+     * @param name        - name of video
+     * @param description - description of video
+     * @param playerCode  - playerCode of video
+     * @see Video#Video(String, String, String)
+     */
     public Video(String name, String description, String playerCode) {
         this.name = name;
         this.description = description;
         this.playerCode = playerCode;
     }
 
-    public Video() {}
 
     @Override
     public boolean equals(Object o) {

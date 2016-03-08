@@ -1,7 +1,7 @@
-package net.sports.nutrition.domain.repositories.impl;
+package net.sports.nutrition.domain.dao.impl;
 
 
-import net.sports.nutrition.domain.repositories.IGenericRepository;
+import net.sports.nutrition.domain.dao.IGenericDao;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,21 +11,24 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 11.01.2016 12:49
+ * Implementation of IGenericDao using Hibernate.
+ * <p>
+ * The HibernateTemplate property is annotated for automatic resource injection.
+ * </p>
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
-
-public abstract class GenericRepositoryImpl<T, PK extends Serializable> implements IGenericRepository<T, PK> {
+public abstract class GenericDaoImpl<T, PK extends Serializable> implements IGenericDao<T, PK> {
 
     @Resource(name = "hibernateTemplate")
     private HibernateTemplate hibernateTemplate;
 
     private Class<T> type;
 
-    public GenericRepositoryImpl() {
+    public GenericDaoImpl() {
     }
 
-    public GenericRepositoryImpl(Class<T> type) {
+    public GenericDaoImpl(Class<T> type) {
         this.type = type;
     }
 
@@ -70,7 +73,6 @@ public abstract class GenericRepositoryImpl<T, PK extends Serializable> implemen
             return null;
         }
     }
-
 
     public <T> T findById(PK entityId) {
         return (T) getHibernateTemplate().get(type, entityId);

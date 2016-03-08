@@ -4,11 +4,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--
-  Created by IntelliJ IDEA.
-  User: Sasha
-  Date: 26.01.2016
-  Time: 16:14
-  To change this template use File | Settings | File Templates.
+ Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
 --%>
 <h3 class="desc_page"><spring:message code="category.add.page.description"/></h3>
 

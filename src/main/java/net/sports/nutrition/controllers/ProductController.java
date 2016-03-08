@@ -3,26 +3,25 @@ package net.sports.nutrition.controllers;
 import net.sports.nutrition.constants.ConstantsUri;
 import net.sports.nutrition.constants.ConstantsView;
 import net.sports.nutrition.domain.entities.Brand;
+import net.sports.nutrition.domain.entities.Category;
 import net.sports.nutrition.domain.entities.Discount;
 import net.sports.nutrition.domain.entities.Product;
 import net.sports.nutrition.exceptions.ProductNotFoundException;
 import net.sports.nutrition.form.beans.FormBuyBean;
+import net.sports.nutrition.form.beans.FormFilterBean;
 import net.sports.nutrition.form.beans.FormProductBean;
 import net.sports.nutrition.form.beans.FormSortedBean;
-import net.sports.nutrition.form.containers.FormPropertyContent;
+import net.sports.nutrition.form.containers.FormFilterContent;
+import net.sports.nutrition.services.IBrandService;
+import net.sports.nutrition.services.IDiscountService;
 import net.sports.nutrition.services.IFormService;
 import net.sports.nutrition.utils.Pager;
+import net.sports.nutrition.utils.ServiceMessage;
 import net.sports.nutrition.utils.ServiceRedirectMessage;
 import net.sports.nutrition.utils.converters.BrandEditor;
 import net.sports.nutrition.utils.converters.CategoryEditor;
 import net.sports.nutrition.utils.converters.DiscountEditor;
 import net.sports.nutrition.utils.converters.TasteCustomCollectionEditor;
-import net.sports.nutrition.domain.entities.Category;
-import net.sports.nutrition.form.beans.FormFilterBean;
-import net.sports.nutrition.form.containers.FormFilterContent;
-import net.sports.nutrition.services.IBrandService;
-import net.sports.nutrition.services.IDiscountService;
-import net.sports.nutrition.utils.ServiceMessage;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
@@ -41,6 +40,13 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * The Controller is responsible for processing user requests
+ * related to products and building appropriate model and
+ * passes it to the view for rendering.
+ *
+ * @author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
+ */
 @Controller
 @SessionAttributes(value = "formSortedBean", types = {FormSortedBean.class})
 public class ProductController extends AbstractGlobalController {
@@ -72,6 +78,14 @@ public class ProductController extends AbstractGlobalController {
         binder.registerCustomEditor(List.class, "product.tasteList", new TasteCustomCollectionEditor(List.class, tasteService));
     }
 
+    /**
+     * Writes filter bean to the Session and redirects to the pagedProductsPage method.
+     *
+     * @param categoryId     - category id
+     * @param formFilterBean - filter form bean
+     * @param session        - session between an HTTP client and an HTTP server.
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.PRODUCT_SHOW_ALL_WITH_PAGE, method = RequestMethod.POST)
     public String productsFilterFormRedirect(@PathVariable Long categoryId, FormFilterBean formFilterBean, HttpSession session) {
         session.setAttribute(MODEL_ATTRIBUTE_FILTER + categoryId, formFilterBean);
@@ -80,6 +94,16 @@ public class ProductController extends AbstractGlobalController {
         return "redirect:" + ConstantsUri.PRODUCT_SHOW_ALL_FIRST_PAGE;
     }
 
+    /**
+     * Redirects to  pagedProductsPage method .
+     * Removes filter bean and products from the Session.
+     *
+     * @param categoryId     - category id
+     * @param formFilterBean - filter form bean
+     * @param session        - session between an HTTP client and an HTTP server.
+     * @return modelAndView
+     * @see ProductController#pagedProductsPage(HttpSession, Long, Integer, Model)
+     */
     @RequestMapping(value = ConstantsUri.PRODUCT_SHOW_ALL, method = RequestMethod.GET)
     public String productsRedirect(@PathVariable Long categoryId, FormFilterBean formFilterBean, HttpSession session) {
         session.setAttribute(MODEL_ATTRIBUTE_FILTER + categoryId, null);
@@ -95,8 +119,17 @@ public class ProductController extends AbstractGlobalController {
         return "redirect:" + (String) session.getAttribute("lastUri");
     }
 
+    /**
+     * Writes products list and Pager to the Model.
+     *
+     * @param categoryId - category id
+     * @param pageNumber - page number
+     * @param uiModel    - model attributes
+     * @param session    - session between an HTTP client and an HTTP server.
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.PRODUCT_SHOW_ALL_WITH_PAGE, method = RequestMethod.GET)
-    public String pagedProductsPage(HttpSession session, @PathVariable Long categoryId, @PathVariable Integer pageNumber, Model uiModel) throws ProductNotFoundException {
+    public String pagedProductsPage(@PathVariable Long categoryId, @PathVariable Integer pageNumber, Model uiModel, HttpSession session) throws ProductNotFoundException {
         Long start = System.nanoTime();
         FormFilterBean formFilterBean = (FormFilterBean) session.getAttribute(MODEL_ATTRIBUTE_FILTER + categoryId);
         FormSortedBean formSortedBean = (session.getAttribute("formSortedBean") == null) ? new FormSortedBean() : (FormSortedBean) session.getAttribute("formSortedBean");
@@ -144,15 +177,28 @@ public class ProductController extends AbstractGlobalController {
     }
 
 
+    /**
+     * Writes product to the Model.
+     *
+     * @param productId - product id
+     * @param uiModel   - model attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.PRODUCT_SHOW, method = RequestMethod.GET)
-    public String productShow(@PathVariable("productId") Long productId, Model model) {
+    public String productShow(@PathVariable("productId") Long productId, Model uiModel) {
         Product product = productService.getProductById(productId);
         log.info("Show product: " + product);
-        model.addAttribute("product", product);
+        uiModel.addAttribute("product", product);
 
         return ConstantsView.PRODUCT_SHOW;
     }
 
+    /**
+     * Shows product form
+     *
+     * @param uiModel - model attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.PRODUCT_ADD_FORM, method = RequestMethod.GET)
     public String addProductShowForm(Model uiModel) {
         uiModel.addAttribute("formProductBean", new FormProductBean());
@@ -160,6 +206,15 @@ public class ProductController extends AbstractGlobalController {
         return ConstantsView.PRODUCT_ADD;
     }
 
+    /**
+     * Adds product to the database.
+     *
+     * @param productBean - contains information about the product
+     * @param result      - error register
+     * @param uiModel     - model attributes
+     * @param redirect    - redirect attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.PRODUCT_ADD, method = RequestMethod.POST)
     public String addProduct(@Valid @ModelAttribute("formProductBean") FormProductBean productBean,
                              BindingResult result, Model uiModel, RedirectAttributes redirect) {
@@ -185,6 +240,14 @@ public class ProductController extends AbstractGlobalController {
 
     }
 
+    /**
+     * Writes product for edit to the model.
+     *
+     * @param productId - product id
+     * @param uiModel   - model attributes
+     * @param session   - session between an HTTP client and an HTTP server.
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.PRODUCT_EDIT_FORM, method = RequestMethod.GET)
     public String showEditProductForm(@PathVariable Long productId, Model uiModel, HttpSession session) {
         Product product = productService.getProductById(productId);
@@ -196,9 +259,19 @@ public class ProductController extends AbstractGlobalController {
         return ConstantsView.PRODUCT_EDIT;
     }
 
+    /**
+     * Saves edit product to the database.
+     *
+     * @param productBean - contains information about the product
+     * @param result      - error register
+     * @param uiModel     - model attributes
+     * @param redirect    - redirect attributes
+     * @param session     - session between an HTTP client and an HTTP server.
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.PRODUCT_EDIT, method = RequestMethod.POST)
     public String editProduct(@Valid @ModelAttribute("formProductBean") FormProductBean productBean,
-                              BindingResult result, RedirectAttributes redirect, HttpSession session, Model uiModel) {
+                              BindingResult result, Model uiModel, RedirectAttributes redirect, HttpSession session) {
         String serviceMessage = null;
         if (result.hasErrors()) {
             return ConstantsView.PRODUCT_EDIT;
@@ -228,6 +301,14 @@ public class ProductController extends AbstractGlobalController {
         return "redirect:" + ConstantsUri.MESSAGE_SHOW;
     }
 
+    /**
+     * Removes  product from the database.
+     *
+     * @param productId - product id
+     * @param uiModel   - model attributes
+     * @param redirect  - redirect attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.PRODUCT_DELETE, method = RequestMethod.GET)
     public String deleteProduct(@PathVariable Long productId, Model uiModel, RedirectAttributes redirect) {
         String serviceMessage = null;
@@ -243,6 +324,9 @@ public class ProductController extends AbstractGlobalController {
 
     }
 
+    /**
+     * ProductNotFoundException handler.
+     */
     @ExceptionHandler(ProductNotFoundException.class)
     public ModelAndView handleProductNotFoundException(ProductNotFoundException e) {
         log.error("Product not found", e);
@@ -250,18 +334,18 @@ public class ProductController extends AbstractGlobalController {
     }
 
 
-    @ModelAttribute(MODEL_ATTRIBUTE_FILTER_CONTENT)
-    public FormPropertyContent getPropertyContent() {
-
-        return formService.createContentForProductForm();
-    }
-
+    /**
+     * Writes formSortedBean to the Model
+     */
     @ModelAttribute("formSortedBean")
     public FormSortedBean getFormSortedBean() {
 
         return this.formSortedBean;
     }
 
+    /**
+     * Writes formBuyBean to the Model
+     */
     @ModelAttribute("formBuyBean")
     public FormBuyBean getBuyBean() {
 

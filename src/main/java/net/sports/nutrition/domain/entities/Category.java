@@ -9,24 +9,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 06.01.2016 13:03
+ * Represents category of products.
+ * <p>
+ * It's marked as an entity class, and  provides the ability to store
+ * Category objects in the database and retrieve Category objects from the database.
+ * </p>
  *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 @NamedQueries({
-        @NamedQuery(name="Category.deleteById",query = "delete from Category where id= :id"),
+        @NamedQuery(name = "Category.deleteById", query = "delete from Category where id= :id"),
 })
 @Entity
 @Table(name = "categories",
-        uniqueConstraints=@UniqueConstraint(columnNames={"name"}))
+        uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
 public class Category implements Serializable {
-
-    public Category() {}
-
-    public Category(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,13 +37,34 @@ public class Category implements Serializable {
     @NotEmpty(message = "{error.field.not.empty}")
     private String description;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     public Set<Product> productSet = new HashSet<>();
 
     @Lob
     @Basic(fetch = FetchType.EAGER)
     @Column(columnDefinition = "MEDIUMBLOB")
     private byte[] imageByte;
+
+    /**
+     * Creates new empty instance of the Category.
+     *
+     * @see Category#Category(String, String)
+     */
+    public Category() {
+    }
+
+    /**
+     * Creates a new instance of the Category with the specified values.
+     *
+     * @param name        - name of category
+     * @param description - description of category
+     * @see Country#Country()
+     * @see Country
+     */
+    public Category(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -1,8 +1,7 @@
 package net.sports.nutrition.exceptions;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 29.02.2016 15:24
+ * @author  Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 public class UserNotFoundException extends Exception {
 

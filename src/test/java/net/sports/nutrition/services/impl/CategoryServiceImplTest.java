@@ -1,7 +1,7 @@
 package net.sports.nutrition.services.impl;
 
 import net.sports.nutrition.domain.entities.Category;
-import net.sports.nutrition.domain.repositories.impl.CategoryRepositoryImpl;
+import net.sports.nutrition.domain.dao.ICategoryDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 public class CategoryServiceImplTest {
 
     @Mock
-    private CategoryRepositoryImpl categoryRepository;
+    private ICategoryDao categoryDao;
     @InjectMocks
     private CategoryServiceImpl categoryService;
     @Mock
@@ -32,7 +32,7 @@ public class CategoryServiceImplTest {
         when(category.getId()).thenReturn(new Long(1));
         when(categoryToCheck.getId()).thenReturn(new Long(1));
         when(categoryToCheck.getName()).thenReturn("Amino");
-        when(categoryRepository.getCategoryByName("Amino")).thenReturn(category);
+        when(categoryDao.getCategoryByName("Amino")).thenReturn(category);
 
         Boolean resultTrue = categoryService.checkBeforeUpdateCategory(categoryToCheck);
         assertNotNull(resultTrue);
@@ -47,13 +47,13 @@ public class CategoryServiceImplTest {
     @Test
     public void testCategoryIsExist() throws Exception {
         when(category.getName()).thenReturn("Amino");
-        when(categoryRepository.getCategoryByName("Amino")).thenReturn(category);
+        when(categoryDao.getCategoryByName("Amino")).thenReturn(category);
 
         Boolean resultTrue = categoryService.categoryIsExist(category);
         assertNotNull(resultTrue);
         assertTrue(resultTrue);
 
-        when(categoryRepository.getCategoryByName("Amino")).thenReturn(null);
+        when(categoryDao.getCategoryByName("Amino")).thenReturn(null);
         Boolean resultFalse = categoryService.categoryIsExist(category);
         assertNotNull(resultFalse);
         assertFalse(resultFalse);

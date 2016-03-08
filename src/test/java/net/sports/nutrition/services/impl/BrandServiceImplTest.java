@@ -1,16 +1,14 @@
 package net.sports.nutrition.services.impl;
 
 import net.sports.nutrition.domain.entities.Brand;
-import net.sports.nutrition.domain.repositories.impl.BrandRepositoryImpl;
+import net.sports.nutrition.domain.dao.IBrandDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 /**
@@ -21,7 +19,7 @@ import static org.mockito.Mockito.when;
 public class BrandServiceImplTest {
 
     @Mock
-    private BrandRepositoryImpl brandRepository;
+    private IBrandDao brandDao;
     @InjectMocks
     private BrandServiceImpl brandService;
     @Mock
@@ -34,7 +32,7 @@ public class BrandServiceImplTest {
         when(brand.getId()).thenReturn(new Long(1));
         when(brandToCheck.getId()).thenReturn(new Long(1));
         when(brandToCheck.getName()).thenReturn("Olimp");
-        when(brandRepository.getBrandByName("Olimp")).thenReturn(brand);
+        when(brandDao.getBrandByName("Olimp")).thenReturn(brand);
 
         Boolean resultTrue = brandService.checkBeforeUpdateBrand(brandToCheck);
         assertNotNull(resultTrue);
@@ -49,12 +47,12 @@ public class BrandServiceImplTest {
     @Test
     public void testBrandIsExist() {
         when(brand.getName()).thenReturn("Olimp");
-        when(brandRepository.getBrandByName("Olimp")).thenReturn(brand);
+        when(brandDao.getBrandByName("Olimp")).thenReturn(brand);
         Boolean resultTrue = brandService.brandIsExist(brand);
         assertNotNull(resultTrue);
         assertTrue(resultTrue);
 
-        when(brandRepository.getBrandByName("Olimp")).thenReturn(null);
+        when(brandDao.getBrandByName("Olimp")).thenReturn(null);
         Boolean resultFalse = brandService.brandIsExist(brand);
         assertNotNull(resultFalse);
         assertFalse(resultFalse);

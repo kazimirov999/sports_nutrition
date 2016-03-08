@@ -6,8 +6,9 @@ import org.jboss.logging.Logger;
 import java.beans.PropertyEditorSupport;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 03.02.2016 14:52
+ * This CountryEditor converting text value(id) to Country object.
+ *
+ * @author : Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 public class CountryEditor extends PropertyEditorSupport {
 

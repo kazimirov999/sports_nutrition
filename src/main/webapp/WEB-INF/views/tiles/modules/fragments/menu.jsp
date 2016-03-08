@@ -1,8 +1,5 @@
 <%--
-  Created by IntelliJ IDEA.
-  User: Sasha
-  Date: 19.01.2016
-  Time: 10:36
+ Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
 --%>
 
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>

@@ -1,7 +1,7 @@
 package net.sports.nutrition.services.impl;
 
 import net.sports.nutrition.domain.entities.Cart;
-import net.sports.nutrition.domain.repositories.ICartRepository;
+import net.sports.nutrition.domain.dao.ICartDao;
 import net.sports.nutrition.services.ICartService;
 import net.sports.nutrition.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,41 +11,43 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 06.02.2016 16:23
+ * Service to work with the Cart, using ICartDao.
+ * .<p>
+ * Implementation of ICartDao interface is annotated for automatic resource injection.
+ * </p>
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
-
 @Transactional
 @Service
 public class CartServiceImpl implements ICartService {
 
     @Autowired
-    private ICartRepository cartRepository;
+    private ICartDao cartDao;
 
     @Override
     public Cart saveCart(Cart cart) {
 
-        return cartRepository.saveOrUpdate(cart);
+        return cartDao.saveOrUpdate(cart);
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Cart> findAllCarts() {
 
-        return cartRepository.findAll();
+        return cartDao.findAll();
     }
 
     @Transactional(readOnly = true)
     @Override
     public Cart getCartById(Long cartId) {
 
-        return cartRepository.findById(cartId);
+        return cartDao.findById(cartId);
     }
 
     @Override
     public Boolean deleteCart(Cart cart) {
 
-        return cartRepository.delete(cart);
+        return cartDao.delete(cart);
     }
 
     @Override

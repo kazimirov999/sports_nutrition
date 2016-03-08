@@ -1,20 +1,22 @@
-package net.sports.nutrition.domain.repositories.impl;
+package net.sports.nutrition.domain.dao.impl;
 
 import net.sports.nutrition.domain.entities.Category;
-import net.sports.nutrition.domain.repositories.ICategoryRepository;
+import net.sports.nutrition.domain.dao.ICategoryDao;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 14.01.2016 20:36
+ * The Category Data Access Object is the class providing
+ * access to category and category type related data.
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 @Repository
-public class CategoryRepositoryImpl extends GenericRepositoryImpl<Category, Long> implements ICategoryRepository {
+public class CategoryDaoImpl extends GenericDaoImpl<Category, Long> implements ICategoryDao {
 
-    public CategoryRepositoryImpl() {
+    public CategoryDaoImpl() {
         super(Category.class);
     }
 

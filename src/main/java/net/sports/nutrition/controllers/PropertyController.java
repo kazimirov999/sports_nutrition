@@ -28,8 +28,11 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 02.02.2016 19:51
+ * The Controller is responsible for processing user requests
+ * related to properties and building appropriate model and
+ * passes it to the view for rendering.
+ *
+ * @author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 @Controller
 public class PropertyController extends AbstractGlobalController {
@@ -47,12 +50,25 @@ public class PropertyController extends AbstractGlobalController {
         binder.registerCustomEditor(DateTime.class, new DateTimeEditor());
     }
 
+    /**
+     * Shows properties menu
+     *
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.PROPERTY_MENU)
     public String showMenuProperty() {
 
         return ConstantsView.PROPERTY;
     }
 
+    /**
+     * Shows properties.
+     * Selects necessary view by property name.
+     *
+     * @param propertyName - property name
+     * @param uiModel      - model attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.PROPERTY_MENU_DISPATCHER, method = RequestMethod.GET)
     public String propertyMenuDispatcher(@PathVariable("propertyName") String propertyName, Model uiModel) {
         String page = "property_page";
@@ -67,6 +83,13 @@ public class PropertyController extends AbstractGlobalController {
         return page;
     }
 
+    /**
+     * Shows form to add property.
+     *
+     * @param propertyName - property name
+     * @param uiModel      - model attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.PROPERTY_ADD_FORM, method = RequestMethod.GET)
     public String addPropertyShowForm(@PathVariable("propertyName") String propertyName, Model uiModel) {
         String page = ConstantsView.PROPERTY;
@@ -84,7 +107,13 @@ public class PropertyController extends AbstractGlobalController {
         return page;
     }
 
-
+    /**
+     * Shows form to edit property.
+     *
+     * @param propertyName - property name
+     * @param uiModel      - model attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.PROPERTY_EDIT_FORM, method = RequestMethod.GET)
     public String editPropertyShowForm(@PathVariable("propertyName") String propertyName, @PathVariable("propertyId") Long propertyId, Model uiModel) {
         String page = ConstantsView.PROPERTY;
@@ -102,6 +131,15 @@ public class PropertyController extends AbstractGlobalController {
         return page;
     }
 
+    /**
+     * Adds new brand.
+     *
+     * @param brand    - brand for add
+     * @param result   - error register
+     * @param redirect - redirect attributes
+     * @param uiModel  - model attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.PROPERTY_BRAND_ADD, method = RequestMethod.POST)
     public String addBrand(@Valid @ModelAttribute("brandToAddBean") Brand brand, BindingResult result, RedirectAttributes redirect, Model uiModel) {
         if (result.hasErrors()) {
@@ -123,6 +161,15 @@ public class PropertyController extends AbstractGlobalController {
         return "redirect:" + ConstantsUri.PROPERTY + "brand";
     }
 
+    /**
+     * Adds new taste.
+     *
+     * @param taste    - taste for add
+     * @param result   - error register
+     * @param redirect - redirect attributes
+     * @param uiModel  - model attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.PROPERTY_TASTE_ADD, method = RequestMethod.POST)
     public String addTaste(@Valid @ModelAttribute("tasteToAddBean") Taste taste, BindingResult result,
                            RedirectAttributes redirect, Model uiModel) {
@@ -145,6 +192,15 @@ public class PropertyController extends AbstractGlobalController {
         return "redirect:" + ConstantsUri.PROPERTY + "taste";
     }
 
+    /**
+     * Adds new discount.
+     *
+     * @param discount - discount for add
+     * @param result   - error register
+     * @param redirect - redirect attributes
+     * @param uiModel  - model attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.PROPERTY_DISCOUNT_ADD, method = RequestMethod.POST)
     public String addDiscount(@Valid @ModelAttribute("discountToAddBean") Discount discount, BindingResult result, RedirectAttributes redirect, Model uiModel) {
         if (result.hasErrors()) {
@@ -166,6 +222,15 @@ public class PropertyController extends AbstractGlobalController {
         return "redirect:" + ConstantsUri.PROPERTY + "discount";
     }
 
+    /**
+     * Saves edited brand.
+     *
+     * @param brand    - edited brand
+     * @param result   - error register
+     * @param redirect - redirect attributes
+     * @param uiModel  - model attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.PROPERTY_BRAND_EDIT, method = RequestMethod.POST)
     public String editBrand(@Valid @ModelAttribute("brandToEditBean") Brand brand,
                             BindingResult result, RedirectAttributes redirect, Model uiModel) {
@@ -189,6 +254,15 @@ public class PropertyController extends AbstractGlobalController {
         return "redirect:" + ConstantsUri.PROPERTY + "brand";
     }
 
+    /**
+     * Saves edited taste.
+     *
+     * @param taste    - edited taste
+     * @param result   - error register
+     * @param redirect - redirect attributes
+     * @param uiModel  - model attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.PROPERTY_TASTE_EDIT, method = RequestMethod.POST)
     public String editTaste(@Valid @ModelAttribute("tasteToEditBean") Taste taste,
                             BindingResult result, RedirectAttributes redirect, Model uiModel) {
@@ -212,6 +286,15 @@ public class PropertyController extends AbstractGlobalController {
         return "redirect:" + ConstantsUri.PROPERTY + "taste";
     }
 
+    /**
+     * Saves edited discount.
+     *
+     * @param discount - edited discount
+     * @param result   - error register
+     * @param redirect - redirect attributes
+     * @param uiModel  - model attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.PROPERTY_DISCOUNT_EDIT, method = RequestMethod.POST)
     public String editDiscount(@Valid @ModelAttribute("discountToEditBean") Discount discount, BindingResult result, RedirectAttributes redirect, HttpSession session, Model uiModel) {
         if (result.hasErrors()) {
@@ -234,6 +317,14 @@ public class PropertyController extends AbstractGlobalController {
         return "redirect:" + ConstantsUri.PROPERTY + "discount";
     }
 
+    /**
+     * Remove brand.
+     *
+     * @param brandId  - brand id
+     * @param uiModel  - model attributes
+     * @param redirect - redirect attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.PROPERTY_BRAND_DELETE, method = RequestMethod.GET)
     public String deleteBrand(@PathVariable Long brandId, Model uiModel, RedirectAttributes redirect) {
         String serviceMessage = null;
@@ -252,6 +343,14 @@ public class PropertyController extends AbstractGlobalController {
 
     }
 
+    /**
+     * Remove taste.
+     *
+     * @param tasteId  - taste id
+     * @param uiModel  - model attributes
+     * @param redirect - redirect attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.PROPERTY_TASTE_DELETE, method = RequestMethod.GET)
     public String deleteTaste(@PathVariable Long tasteId, Model uiModel, RedirectAttributes redirect) {
         String serviceMessage = null;
@@ -270,6 +369,14 @@ public class PropertyController extends AbstractGlobalController {
 
     }
 
+    /**
+     * Remove discount.
+     *
+     * @param discountId - discount id
+     * @param uiModel    - model attributes
+     * @param redirect   - redirect attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.PROPERTY_DISCOUNT_DELETE, method = RequestMethod.GET)
     public String deleteDiscount(@PathVariable Long discountId, Model uiModel, RedirectAttributes redirect) {
         String serviceMessage = null;
@@ -285,24 +392,36 @@ public class PropertyController extends AbstractGlobalController {
 
     }
 
+    /**
+     * Writes all brands to the Model
+     */
     @ModelAttribute("brandList")
     public List<Brand> getAllBrands() {
 
         return brandService.findAllBrands();
     }
 
+    /**
+     * Writes all tastes to the Model
+     */
     @ModelAttribute("tasteList")
     public List<Taste> getAllTastes() {
 
         return tasteService.findAllTastes();
     }
 
+    /**
+     * Writes all discounts to the Model
+     */
     @ModelAttribute("discountList")
     public List<Discount> getAllDiscounts() {
 
         return discountService.findAllDiscounts();
     }
 
+    /**
+     * Writes all countries to the Model
+     */
     @ModelAttribute("countryList")
     public List<Country> getAllCountries() {
 

@@ -1,7 +1,7 @@
 package net.sports.nutrition.services.impl;
 
 import net.sports.nutrition.domain.entities.Taste;
-import net.sports.nutrition.domain.repositories.impl.TasteRepositoryImpl;
+import net.sports.nutrition.domain.dao.ITasteDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 public class TasteServiceImplTest {
 
     @Mock
-    private TasteRepositoryImpl tasteRepository;
+    private ITasteDao tasteDao;
     @InjectMocks
     private TasteServiceImpl tasteService;
     @Mock
@@ -32,7 +32,7 @@ public class TasteServiceImplTest {
         when(taste.getId()).thenReturn(new Long(1));
         when(tasteToCheck.getId()).thenReturn(new Long(1));
         when(tasteToCheck.getName()).thenReturn("Chocolate");
-        when(tasteRepository.getTasteByName("Chocolate")).thenReturn(taste);
+        when(tasteDao.getTasteByName("Chocolate")).thenReturn(taste);
 
         Boolean resultTrue = tasteService.checkBeforeUpdateTaste(tasteToCheck);
         assertNotNull(resultTrue);
@@ -47,12 +47,12 @@ public class TasteServiceImplTest {
     @Test
     public void testTasteIsExist() throws Exception {
         when(taste.getName()).thenReturn("Chocolate");
-        when(tasteRepository.getTasteByName("Chocolate")).thenReturn(taste);
+        when(tasteDao.getTasteByName("Chocolate")).thenReturn(taste);
         Boolean resultTrue = tasteService.tasteIsExist(taste);
         assertNotNull(resultTrue);
         assertTrue(resultTrue);
 
-        when(tasteRepository.getTasteByName("Chocolate")).thenReturn(null);
+        when(tasteDao.getTasteByName("Chocolate")).thenReturn(null);
         Boolean resultFalse = tasteService.tasteIsExist(taste);
         assertNotNull(resultFalse);
         assertFalse(resultFalse);

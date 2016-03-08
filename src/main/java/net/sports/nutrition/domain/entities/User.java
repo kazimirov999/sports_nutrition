@@ -1,8 +1,6 @@
 package net.sports.nutrition.domain.entities;
 
 
-
-
 import net.sports.nutrition.domain.enumx.Role;
 import net.sports.nutrition.utils.EncodeUtil;
 import org.hibernate.annotations.Type;
@@ -13,8 +11,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 08.01.2016 15:02
+ * Represents User.
+ * <p>
+ * It's marked as an entity class, and  provides the ability to store
+ * User objects in the database and retrieve User objects from the database.
+ * </p>
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 @Entity
 @Table(name = "users")
@@ -29,7 +32,7 @@ public class User implements Serializable {
     @Email(message = "{error.login.is.not.correct}")
     private String loginEmail;
     private String phoneNumber;
-    private  String password;
+    private String password;
     private transient String passwordOriginal;
     private transient String passwordDubl;
 
@@ -47,6 +50,12 @@ public class User implements Serializable {
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime dateRegister;
 
+    /**
+     * Creates new instance of the User and
+     * initializes the date of registration.
+     *
+     * @see CartItem#CartItem(Product, Taste)
+     */
     public User() {
         this.dateRegister = DateTime.now();
     }

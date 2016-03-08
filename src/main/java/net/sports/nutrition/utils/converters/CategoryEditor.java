@@ -7,8 +7,9 @@ import org.jboss.logging.Logger;
 import java.beans.PropertyEditorSupport;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 30.01.2016 21:15
+ * This CategoryEditor converting text value(id) to Category object.
+ *
+ * @author : Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 public class CategoryEditor extends PropertyEditorSupport {
 

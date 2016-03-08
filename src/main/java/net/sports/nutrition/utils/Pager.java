@@ -3,14 +3,11 @@ package net.sports.nutrition.utils;
 import org.springframework.beans.support.PagedListHolder;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 25.01.2016 15:43
+ * This class creates information for pagination from PageListHolder.
+ *
+ * @author : Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
-
 public class Pager implements java.io.Serializable {
-
-    public Pager() {
-    }
 
     private int beginIndex;
     private int endIndex;
@@ -19,6 +16,13 @@ public class Pager implements java.io.Serializable {
     private String baseUrl;
     private int totalItems;
 
+    /**
+     * Returns new Page instance width pagination information.
+     *
+     * @param pagedListHolder - a simple state holder for handling lists of objects
+     * @param BASE_URL        - url for build pagination
+     * @return Pager object
+     */
     public static Pager currentPage(PagedListHolder<?> pagedListHolder, String BASE_URL) {
         int currentIndex = pagedListHolder.getPage() + 1;
         int beginIndex = Math.max(1, currentIndex - 2);

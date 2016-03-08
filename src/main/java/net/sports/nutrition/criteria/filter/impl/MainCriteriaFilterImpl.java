@@ -10,9 +10,12 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 
+
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 24.01.2016 12:15
+ * This class provides construction Hibernate criteria object,
+ * for access to a group of products.
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 @Component
 public class MainCriteriaFilterImpl implements IMainCriteriaFilter {

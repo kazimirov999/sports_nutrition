@@ -5,6 +5,7 @@
     background: url(../images/headerXX.jpg);
 }
 
+/*---auth block----*/
 .authBlockHeader {
     position: absolute;
     left: 870px;
@@ -22,7 +23,7 @@
     color: #31FF00;
 }
 
-
+/*--busket block----*/
 .busket {
     width: 100px;
     height: 100px;

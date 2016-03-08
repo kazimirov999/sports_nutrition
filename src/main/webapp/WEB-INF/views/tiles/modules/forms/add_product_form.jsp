@@ -2,11 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
-  Created by IntelliJ IDEA.
-  User: Sasha
-  Date: 28.01.2016
-  Time: 11:45
-  To change this template use File | Settings | File Templates.
+ Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
 --%>
 <div class="product_form">
     <form:form method="post" action="/add/product" commandName="formProductBean" enctype="multipart/form-data">
@@ -48,16 +44,16 @@
                 </td>
         </table>
 
-            <div id="composition">
-                <p class="error"><form:errors path="product.composition" cssclass="error"></form:errors></p>
-                <spring:message code="product.composition.input"/><br>
-                <form:textarea class="composition_input" path="product.composition"/>
-            </div>
-            <div id="description">
-                <p class="error"><form:errors path="product.description" cssclass="error"></form:errors></p>
-                <spring:message code="product.description.input"/>
-                <form:textarea class="description_input" path="product.description"/>
-            </div>
+        <div id="composition">
+            <p class="error"><form:errors path="product.composition" cssclass="error"></form:errors></p>
+            <spring:message code="product.composition.input"/><br>
+            <form:textarea class="composition_input" path="product.composition"/>
+        </div>
+        <div id="description">
+            <p class="error"><form:errors path="product.description" cssclass="error"></form:errors></p>
+            <spring:message code="product.description.input"/>
+            <form:textarea class="description_input" path="product.description"/>
+        </div>
 
         <div id="full_description">
             <p class="error"><form:errors path="product.fullDescription" cssclass="error"></form:errors></p>
@@ -86,7 +82,7 @@
             <tr>
                 <td><spring:message code="form.product" text="Form"/></td>
                 <td>
-                    <form:select  path="product.form">
+                    <form:select path="product.form">
                         <form:option value="" label="........."/>
                         <c:forEach var="formName" items="${formPropertyContent.form}">
                             <form:option value="${formName}"><spring:message code="${formName}.form"/></form:option>

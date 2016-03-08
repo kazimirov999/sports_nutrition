@@ -4,8 +4,9 @@ import net.sports.nutrition.domain.entities.Product;
 import net.sports.nutrition.domain.entities.Taste;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 06.02.2016 12:57
+ * Class contains information about the product that is bought.
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 public class FormBuyBean {
 

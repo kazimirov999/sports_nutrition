@@ -7,10 +7,10 @@ import org.jboss.logging.Logger;
 import java.beans.PropertyEditorSupport;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 31.01.2016 2:13
+ * This DiscountEditor converting text values to Discount object.
+ *
+ * @author : Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
-
 public class DiscountEditor extends PropertyEditorSupport {
 
     private static final Logger log = Logger.getLogger(DiscountEditor.class);

@@ -1,8 +1,8 @@
-package net.sports.nutrition.domain.repositories.impl;
+package net.sports.nutrition.domain.dao.impl;
 
 import net.sports.nutrition.domain.entities.Discount;
 import net.sports.nutrition.domain.entities.Product;
-import net.sports.nutrition.domain.repositories.IDiscountRepository;
+import net.sports.nutrition.domain.dao.IDiscountDao;
 import org.hibernate.Hibernate;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -11,13 +11,15 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 21.01.2016 0:08
+ * The Discount Data Access Object is the class providing
+ * access to discount and discount type related data.
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 @Repository
-public class DiscountRepositoryImpl extends GenericRepositoryImpl<Discount, Long> implements IDiscountRepository {
+public class DiscountDaoImpl extends GenericDaoImpl<Discount, Long> implements IDiscountDao {
 
-    public DiscountRepositoryImpl() {
+    public DiscountDaoImpl() {
         super(Discount.class);
     }
 

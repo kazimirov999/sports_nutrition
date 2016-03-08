@@ -1,7 +1,7 @@
-package net.sports.nutrition.domain.repositories.impl;
+package net.sports.nutrition.domain.dao.impl;
 
 import net.sports.nutrition.domain.entities.User;
-import net.sports.nutrition.domain.repositories.IUserRepository;
+import net.sports.nutrition.domain.dao.IUserDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +22,15 @@ import static org.junit.Assert.*;
 @Transactional
 @ContextConfiguration({"classpath:/test-root-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class UserRepositoryImplTest {
+public class UserDaoImplTest {
 
     @Autowired
-    private IUserRepository userRepository;
+    private IUserDao userDao;
 
     @Test
     @Rollback(true)
     public void testFindUserByLogin() throws Exception {
-        User user = userRepository.findUserByLogin("simpleUser@mail.ru");
+        User user = userDao.findUserByLogin("simpleUser@mail.ru");
         assertNotNull(user);
         assertEquals("simpleUser@mail.ru", user.getLoginEmail());
     }
@@ -41,28 +41,28 @@ public class UserRepositoryImplTest {
         User user = new User();
         user.setFirstName("Nik");
         user.setLoginEmail("mail@mk.net");
-        User userSave = userRepository.save(user);
+        User userSave = userDao.save(user);
         assertNotNull(userSave);
         assertEquals("mail@mk.net", userSave.getLoginEmail());
-        assertNotNull(userRepository.findUserByLogin("mail@mk.net"));
+        assertNotNull(userDao.findUserByLogin("mail@mk.net"));
     }
 
     @Test
     @Rollback(true)
     public void testEdit() throws Exception {
-        User user = userRepository.findUserByLogin("kazimirov@ro.ru");
+        User user = userDao.findUserByLogin("kazimirov@ro.ru");
         user.setLoginEmail("test@test.net");
-        User userEdit = userRepository.edit(user);
+        User userEdit = userDao.edit(user);
         assertNotNull(userEdit);
         assertEquals("test@test.net", userEdit.getLoginEmail());
-        assertNotNull(userRepository.findUserByLogin("test@test.net"));
-        assertNull(userRepository.findUserByLogin("kazimirov@ro.ru"));
+        assertNotNull(userDao.findUserByLogin("test@test.net"));
+        assertNull(userDao.findUserByLogin("kazimirov@ro.ru"));
     }
 
     @Test
     @Rollback(true)
     public void testGetAllUsers() throws Exception {
-        List<User> users = userRepository.getAllUsers();
+        List<User> users = userDao.findAllUsers();
         assertNotNull(users);
         assertEquals(2, users.size());
         assertEquals("Alexandr", users.get(0).getFirstName());
@@ -73,7 +73,7 @@ public class UserRepositoryImplTest {
     @Test
     @Rollback(true)
     public void testGetUserById() throws Exception {
-        User user = userRepository.getUserById(new Long(2));
+        User user = userDao.getUserById(new Long(2));
         assertNotNull(user);
         assertEquals("Easy", user.getFirstName());
     }
@@ -81,10 +81,10 @@ public class UserRepositoryImplTest {
     @Test
     @Rollback(true)
     public void testDelete() throws Exception {
-        User user = userRepository.findUserByLogin("simpleUser@mail.ru");
-        Boolean result = userRepository.delete(user);
+        User user = userDao.findUserByLogin("simpleUser@mail.ru");
+        Boolean result = userDao.delete(user);
         assertNotNull(result);
         assertTrue(result);
-        assertNull(userRepository.findUserByLogin("simpleUser@mail.ru"));
+        assertNull(userDao.findUserByLogin("simpleUser@mail.ru"));
     }
 }

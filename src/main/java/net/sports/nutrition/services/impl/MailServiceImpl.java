@@ -8,10 +8,13 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 09.02.2016 19:16
+ * Service to work with the Mail, using MailSender.
+ * .<p>
+ * MailSender is annotated for automatic resource injection.
+ * </p>
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
-
 @Service
 public class MailServiceImpl implements IMailService {
 
@@ -19,7 +22,7 @@ public class MailServiceImpl implements IMailService {
     private MailSender mailSender;
 
     @Override
-    public void sendMail(String to, String subject, String body)throws MailException{
+    public void sendMail(String to, String subject, String body) throws MailException {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
         message.setSubject(subject);

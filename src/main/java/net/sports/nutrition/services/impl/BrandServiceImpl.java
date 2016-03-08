@@ -1,6 +1,6 @@
 package net.sports.nutrition.services.impl;
 
-import net.sports.nutrition.domain.repositories.IBrandRepository;
+import net.sports.nutrition.domain.dao.IBrandDao;
 import net.sports.nutrition.domain.entities.Brand;
 import net.sports.nutrition.services.IBrandService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,42 +10,44 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 30.01.2016 17:50
+ * Service to work with the Brand, using IBrandDao.
+ * .<p>
+ * Implementation of IBrandDao interface is annotated for automatic resource injection.
+ * </p>
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
-
 @Transactional
 @Service
 public class BrandServiceImpl implements IBrandService {
 
     @Autowired
-    private IBrandRepository brandRepository;
+    private IBrandDao brandDao;
 
     @Transactional(readOnly = true)
     @Override
     public Brand getBrandById(Long id) {
 
-        return brandRepository.findById(id);
+        return brandDao.findById(id);
     }
 
     @Override
     public Brand saveBrand(Brand brand) {
 
-        return brandRepository.saveOrUpdate(brand);
+        return brandDao.saveOrUpdate(brand);
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Brand> findAllBrands() {
 
-        return brandRepository.findAll();
+        return brandDao.findAll();
     }
 
     @Transactional(readOnly = true)
     @Override
     public Brand getBrandByName(String brandName) {
 
-        return brandRepository.getBrandByName(brandName);
+        return brandDao.getBrandByName(brandName);
     }
 
     @Transactional(readOnly = true)
@@ -62,13 +64,13 @@ public class BrandServiceImpl implements IBrandService {
     @Override
     public Brand updateBrand(Brand brand) {
 
-        return brandRepository.edit(brand);
+        return brandDao.edit(brand);
     }
 
     @Override
     public Integer deleteById(Long brandId) {
 
-        return brandRepository.deleteById(brandId);
+        return brandDao.deleteById(brandId);
     }
 
     @Override
@@ -81,7 +83,7 @@ public class BrandServiceImpl implements IBrandService {
         return check;
     }
 
-    public void setBrandRepository(IBrandRepository brandRepository) {
-        this.brandRepository = brandRepository;
+    public void setBrandDao(IBrandDao brandDao) {
+        this.brandDao = brandDao;
     }
 }

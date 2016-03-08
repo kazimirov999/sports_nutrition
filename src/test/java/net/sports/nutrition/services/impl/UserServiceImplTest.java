@@ -1,6 +1,6 @@
 package net.sports.nutrition.services.impl;
 
-import net.sports.nutrition.domain.repositories.impl.UserRepositoryImpl;
+import net.sports.nutrition.domain.dao.IUserDao;
 import net.sports.nutrition.exceptions.UserNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,13 +19,13 @@ import static org.mockito.Mockito.when;
 public class UserServiceImplTest {
 
     @Mock
-    private UserRepositoryImpl userRepository;
+    private IUserDao userDao;
     @InjectMocks
     private UserServiceImpl userServiceImpl;
 
     @Before
     public void init() {
-        when(userRepository.getUserById(new Long(3))).thenReturn(null);
+        when(userDao.getUserById(new Long(3))).thenReturn(null);
     }
 
     @Test(expected = UserNotFoundException.class)

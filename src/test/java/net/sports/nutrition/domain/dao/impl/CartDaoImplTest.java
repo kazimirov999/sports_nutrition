@@ -1,9 +1,9 @@
-package net.sports.nutrition.domain.repositories.impl;
+package net.sports.nutrition.domain.dao.impl;
 
 import net.sports.nutrition.domain.entities.*;
-import net.sports.nutrition.domain.repositories.ICartRepository;
-import net.sports.nutrition.domain.repositories.IProductRepository;
-import net.sports.nutrition.domain.repositories.ITasteRepository;
+import net.sports.nutrition.domain.dao.ICartDao;
+import net.sports.nutrition.domain.dao.IProductDao;
+import net.sports.nutrition.domain.dao.ITasteDao;
 import org.hibernate.Session;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,21 +27,21 @@ import static org.junit.Assert.*;
 @Transactional
 @ContextConfiguration({"classpath:/test-root-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class CartRepositoryImplTest {
+public class CartDaoImplTest {
 
     @Autowired
     private HibernateTemplate hibernateTemplate;
     @Autowired
-    private ICartRepository cartRepository;
+    private ICartDao cartDao;
     @Autowired
-    private IProductRepository productRepository;
+    private IProductDao productDao;
     @Autowired
-    private ITasteRepository tasteRepository;
+    private ITasteDao tasteDao;
 
     @Test
     @Rollback(true)//test save mapping and cascade
     public void testFindById() {
-        Cart cart = cartRepository.findById(new Long(1));
+        Cart cart = cartDao.findById(new Long(1));
         assertNotNull(cart);
 
         Customer customer = cart.getCustomer();
@@ -56,7 +56,7 @@ public class CartRepositoryImplTest {
     @Test
     @Rollback(true)
     public void testFindAll() throws Exception {
-        List<Cart> carts = cartRepository.findAll();
+        List<Cart> carts = cartDao.findAll();
         assertNotNull(carts);
         assertEquals(2, carts.size());
         assertEquals("03002967", carts.get(0).getOrderId());
@@ -66,14 +66,14 @@ public class CartRepositoryImplTest {
     @Test
     @Rollback(true)//test save, mapping and cascade
     public void testSave() throws Exception {
-        Product product = productRepository.getProductByName("Super BCA");
-        Taste taste = tasteRepository.getTasteByName("Chocolate");
+        Product product = productDao.getProductByName("Super BCA");
+        Taste taste = tasteDao.getTasteByName("Chocolate");
         CartItem cartItem = new CartItem(product, taste);
         Set<CartItem> cartItems = new HashSet<>();
         cartItems.add(cartItem);
         Customer customer = new Customer("Nik", "Blumberg", "nick@nk.net", "096555555", "Black str.,81");
 
-        Cart cart = cartRepository.save(new Cart(cartItems, customer));
+        Cart cart = cartDao.save(new Cart(cartItems, customer));
         assertNotNull(cart);
         assertNotNull(cart.getCartItems());
         assertNotNull(cart.getCartItems().iterator().next().getProduct());
@@ -88,12 +88,12 @@ public class CartRepositoryImplTest {
     @Test
     @Rollback(true)//test delete, mapping and cascade
     public void testDelete() throws Exception {
-        Cart cart = cartRepository.findById(new Long(1));
-        Boolean result = cartRepository.delete(cart);
+        Cart cart = cartDao.findById(new Long(1));
+        Boolean result = cartDao.delete(cart);
         assertTrue(result);
 
         Session session = hibernateTemplate.getSessionFactory().getCurrentSession();
-        assertNull(cartRepository.findById(new Long(1)));
+        assertNull(cartDao.findById(new Long(1)));
         assertNull(session.byId(CartItem.class).load(new Long(1)));
         assertNull(session.byId(CartItem.class).load(new Long(2)));
         assertNull(session.byId(Customer.class).load(new Long(1)));

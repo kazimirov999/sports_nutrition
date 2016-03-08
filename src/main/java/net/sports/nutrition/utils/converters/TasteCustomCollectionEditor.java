@@ -8,8 +8,9 @@ import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import java.util.Collection;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 31.01.2016 1:14
+ * This TasteCustomCollectionEditor converting text values(id) to collection of Taste object.
+ *
+ * @author : Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 public class TasteCustomCollectionEditor extends CustomCollectionEditor {
 

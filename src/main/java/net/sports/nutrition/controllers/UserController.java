@@ -23,10 +23,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 11.02.2016 17:30
+ * The Controller is responsible for processing user requests
+ * related to user(register, activate, deactivate, remove, set role)
+ * and building appropriate model and passes it to the view for rendering.
+ *
+ * @author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
-
 @Controller
 public class UserController extends AbstractGlobalController {
 
@@ -43,6 +45,12 @@ public class UserController extends AbstractGlobalController {
         binder.registerCustomEditor(DateTime.class, new DateTimeEditor());
     }
 
+    /**
+     * Shows register form.
+     *
+     * @param uiModel - model attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.USER_REGISTER, method = RequestMethod.GET)
     public String showRegisterForm(Model uiModel) {
         uiModel.addAttribute("formUserBean", new User());
@@ -51,6 +59,14 @@ public class UserController extends AbstractGlobalController {
         return ConstantsView.USER_REGISTER;
     }
 
+    /**
+     * Registers user.
+     *
+     * @param user     - user fo register
+     * @param result   - error register
+     * @param redirect - redirect attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.USER_REGISTER, method = RequestMethod.POST)
     public String register(@Valid @ModelAttribute("formUserBean") User user, BindingResult result, RedirectAttributes redirect) {
 
@@ -73,6 +89,12 @@ public class UserController extends AbstractGlobalController {
         return "redirect:" + ConstantsUri.MESSAGE_SHOW;
     }
 
+    /**
+     * Shows all users.
+     *
+     * @param uiModel - model attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.USER_SHOW_ALL, method = RequestMethod.GET)
     public String showUsers(Model uiModel) {
 
@@ -81,6 +103,13 @@ public class UserController extends AbstractGlobalController {
         return ConstantsView.USER_SHOW_ALL;
     }
 
+    /**
+     * Activates user.
+     *
+     * @param userId  - user id
+     * @param uiModel - model attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.USER_ACTIVATE, method = RequestMethod.GET)
     public String activateUser(@PathVariable("userId") Long userId, Model uiModel) {
 
@@ -97,6 +126,13 @@ public class UserController extends AbstractGlobalController {
         return "forward:" + ConstantsUri.USER_SHOW_ALL;
     }
 
+    /**
+     * Deactivates user.
+     *
+     * @param userId  - user id
+     * @param uiModel - model attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.USER_DEACTIVATE, method = RequestMethod.GET)
     public String deactivateUser(@PathVariable("userId") Long userId, Model uiModel) {
 
@@ -113,6 +149,13 @@ public class UserController extends AbstractGlobalController {
         return "forward:" + ConstantsUri.USER_SHOW_ALL;
     }
 
+    /**
+     * Sets user's role as ADMIN.
+     *
+     * @param userId  - user id
+     * @param uiModel - model attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.USER_MAKE_ADMIN, method = RequestMethod.GET)
     public String setUserRoleAdmin(@PathVariable("userId") Long userId, Model uiModel) {
 
@@ -129,6 +172,13 @@ public class UserController extends AbstractGlobalController {
         return "forward:" + ConstantsUri.USER_SHOW_ALL;
     }
 
+    /**
+     * Removes user.
+     *
+     * @param userId  - user id
+     * @param uiModel - model attributes
+     * @return modelAndView
+     */
     @RequestMapping(value = ConstantsUri.USER_DELETE, method = RequestMethod.GET)
     public String deleteUser(@PathVariable("userId") Long userId, Model uiModel) {
 

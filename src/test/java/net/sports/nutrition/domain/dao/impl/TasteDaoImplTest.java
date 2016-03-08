@@ -1,7 +1,7 @@
-package net.sports.nutrition.domain.repositories.impl;
+package net.sports.nutrition.domain.dao.impl;
 
 import net.sports.nutrition.domain.entities.Taste;
-import net.sports.nutrition.domain.repositories.ITasteRepository;
+import net.sports.nutrition.domain.dao.ITasteDao;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,15 +21,15 @@ import static org.junit.Assert.*;
 @Transactional
 @ContextConfiguration({"classpath:/test-root-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class TasteRepositoryImplTest {
+public class TasteDaoImplTest {
 
     @Autowired
-    private ITasteRepository tasteRepository;
+    private ITasteDao tasteDao;
 
     @Test
     @Rollback(true)
     public void testGetTasteByName() throws Exception {
-        Taste taste = tasteRepository.getTasteByName("Apple");
+        Taste taste = tasteDao.getTasteByName("Apple");
         assertNotNull(taste);
         assertEquals("Apple", taste.getName());
     }
@@ -38,29 +38,29 @@ public class TasteRepositoryImplTest {
     @Rollback(true)
     public void testSave() throws Exception {
         Taste taste = new Taste("Mango");
-        Taste tasteSave = tasteRepository.save(taste);
+        Taste tasteSave = tasteDao.save(taste);
         assertNotNull(tasteSave);
         assertEquals("Mango", tasteSave.getName());
-        assertNotNull(tasteRepository.getTasteByName("Mango"));
+        assertNotNull(tasteDao.getTasteByName("Mango"));
     }
 
     @Test
     @Rollback(true)
     public void testEdit() throws Exception {
-        Taste taste = tasteRepository.getTasteByName("Malina");
+        Taste taste = tasteDao.getTasteByName("Malina");
         taste.setName("Test name");
-        Taste tasteEdit = tasteRepository.edit(taste);
+        Taste tasteEdit = tasteDao.edit(taste);
         assertNotNull(tasteEdit);
         assertEquals("Test name", tasteEdit.getName());
-        assertNotNull(tasteRepository.getTasteByName("Test name"));
-        assertNull(tasteRepository.getTasteByName("Malina"));
+        assertNotNull(tasteDao.getTasteByName("Test name"));
+        assertNull(tasteDao.getTasteByName("Malina"));
     }
 
     @Test
     @Rollback(true)
     public void testDeleteWithConstraint() throws Exception {
-        Taste taste = tasteRepository.getTasteByName("Apple");
-        Boolean result = tasteRepository.delete(taste);
+        Taste taste = tasteDao.getTasteByName("Apple");
+        Boolean result = tasteDao.delete(taste);
         assertNotNull(result);
         assertFalse(result);
     }
@@ -68,16 +68,16 @@ public class TasteRepositoryImplTest {
     @Test
     @Rollback(true)
     public void testDelete() throws Exception {
-        Taste taste = tasteRepository.getTasteByName("Malina");
-        Boolean result = tasteRepository.delete(taste);
+        Taste taste = tasteDao.getTasteByName("Malina");
+        Boolean result = tasteDao.delete(taste);
         assertNotNull(result);
         assertTrue(result);
-        assertNull(tasteRepository.getTasteByName("Malina"));
+        assertNull(tasteDao.getTasteByName("Malina"));
     }
 
     @Test
     public void testGetAllTastesByCategoryId() throws Exception {
-        List<Taste> tastes = tasteRepository.getAllTastesByCategoryId(new Long(3));
+        List<Taste> tastes = tasteDao.getAllTastesByCategoryId(new Long(3));
         assertNotNull(tastes);
         assertEquals(1, tastes.size());
         assertEquals("Banana", tastes.get(0).getName());
@@ -86,22 +86,22 @@ public class TasteRepositoryImplTest {
     @Test(expected = ConstraintViolationException.class)
     @Rollback(true)
     public void testDeleteTasteByIdWithConstraint() throws Exception {
-        Integer result = tasteRepository.deleteTasteById(new Long(1));
+        Integer result = tasteDao.deleteTasteById(new Long(1));
     }
 
     @Test
     @Rollback(true)
     public void testDeleteTasteById() throws Exception {
-        Integer result = tasteRepository.deleteTasteById(new Long(20));
+        Integer result = tasteDao.deleteTasteById(new Long(20));
         assertNotNull(result);
         assertEquals(1, result.intValue());
-        assertNull(tasteRepository.getTasteByName("Malina"));
+        assertNull(tasteDao.getTasteByName("Malina"));
     }
 
     @Test
     @Rollback(true)
     public void testFindAll() throws Exception {
-        List<Taste> tastes = tasteRepository.findAll();
+        List<Taste> tastes = tasteDao.findAll();
         assertNotNull(tastes);
         assertEquals(4, tastes.size());
     }

@@ -7,13 +7,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 06.02.2016 13:22
+ * This class for tracking requests after processing and recording URI to session.
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 public class LastModelAndViewInterceptor extends HandlerInterceptorAdapter {
 
+    /**
+     * constant storage URI.
+     */
     public static final String LAST_URI = "lastUri";
 
+    /**
+     * Writes URI to session from request. Called after the handler execution.
+     */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 

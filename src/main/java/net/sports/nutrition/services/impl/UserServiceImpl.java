@@ -2,7 +2,7 @@ package net.sports.nutrition.services.impl;
 
 import net.sports.nutrition.domain.entities.User;
 import net.sports.nutrition.domain.enumx.Role;
-import net.sports.nutrition.domain.repositories.IUserRepository;
+import net.sports.nutrition.domain.dao.IUserDao;
 import net.sports.nutrition.exceptions.UserNotFoundException;
 import net.sports.nutrition.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,31 +12,34 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 10.02.2016 15:26
+ * Service to work with the User, using IUserDao.
+ * .<p>
+ * Implementation of IUserDao interface is annotated for automatic resource injection.
+ * </p>
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
-
 @Transactional
 @Service
 public class UserServiceImpl implements IUserService {
 
     @Autowired
-    private IUserRepository userRepository;
+    private IUserDao userDao;
 
     @Override
     public User findUserByLogin(String login) {
 
-        return userRepository.findUserByLogin(login);
+        return userDao.findUserByLogin(login);
     }
 
-    public void setUserRepository(IUserRepository userRepository) {
-        this.userRepository = userRepository;
+    public void setUserDao(IUserDao userDao) {
+        this.userDao = userDao;
     }
 
     @Override
     public User saveUser(User user) {
 
-        return userRepository.saveOrUpdate(user);
+        return userDao.saveOrUpdate(user);
     }
 
     @Override
@@ -47,35 +50,35 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public List<User> getAllUsers() {
-        return userRepository.getAllUsers();
+        return userDao.findAllUsers();
     }
 
     @Transactional(readOnly = false)
     @Override
     public void activateUser(Long userId) throws UserNotFoundException {
-        User user = userRepository.getUserById(userId);
+        User user = userDao.getUserById(userId);
         if (user == null) {
             throw new UserNotFoundException("user is not exist");
         }
         user.setEnabled(true);
-        userRepository.edit(user);
+        userDao.edit(user);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void deactivateUser(Long userId) throws UserNotFoundException {
-        User user = userRepository.getUserById(userId);
+        User user = userDao.getUserById(userId);
         if (user == null) {
             throw new UserNotFoundException("user is not exist");
         }
         user.setEnabled(false);
-        userRepository.edit(user);
+        userDao.edit(user);
     }
 
     @Transactional(readOnly = false)
     @Override
     public void setUserRoleAdmin(Long userId) throws UserNotFoundException {
-        User user = userRepository.getUserById(userId);
+        User user = userDao.getUserById(userId);
         if (user == null) {
             throw new UserNotFoundException("user is not exist");
         }
@@ -86,6 +89,6 @@ public class UserServiceImpl implements IUserService {
     @Override
     public Boolean deleteUserById(Long userId) {
 
-        return userRepository.delete(userRepository.getUserById(userId));
+        return userDao.delete(userDao.getUserById(userId));
     }
 }

@@ -10,8 +10,9 @@ import javax.validation.Valid;
 import java.io.Serializable;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 27.01.2016 15:49
+ * Class contains information about the category that is added or edited in database.
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 public class FormCategoryBean implements Serializable {
 

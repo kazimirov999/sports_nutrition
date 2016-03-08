@@ -7,8 +7,9 @@ import java.beans.PropertyEditorSupport;
 
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 30.01.2016 21:15
+ * This BrandEditor converting text value(id) to Brand object.
+ *
+ * @author : Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 public class BrandEditor extends PropertyEditorSupport {
 

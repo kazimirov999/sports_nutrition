@@ -29,6 +29,7 @@ http://www.springframework.org/schema/util/spring-util.xsd
           p:dataSource-ref="dataSource"
           p:packagesToScan="${packages.to_scan}"
           p:hibernateProperties-ref="hibernateProperties"/>
+
     <util:properties id="hibernateProperties">
         <prop key="hibernate.dialect">${hibernate.dialect}</prop>
         <prop key="hibernate.max_fetch_depth">${hibernate.max.fetch_depth}</prop>

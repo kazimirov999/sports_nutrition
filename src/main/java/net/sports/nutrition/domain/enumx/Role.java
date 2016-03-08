@@ -1,8 +1,10 @@
 package net.sports.nutrition.domain.enumx;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 12.02.2016 8:42
+ * Enum contains types of user roles.
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
+ * @created 12.02.2016 8:42
  */
 public enum Role {
 

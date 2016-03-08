@@ -6,8 +6,9 @@ import org.joda.time.DateTime;
 import java.beans.PropertyEditorSupport;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 04.02.2016 11:46
+ * This DateTimeEditor creates DataTime object from string width date.
+ *
+ * @author : Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  */
 public class DateTimeEditor extends PropertyEditorSupport {
 

@@ -1,6 +1,6 @@
 package net.sports.nutrition.services.impl;
 
-import net.sports.nutrition.domain.repositories.ICategoryRepository;
+import net.sports.nutrition.domain.dao.ICategoryDao;
 import net.sports.nutrition.services.ICategoryService;
 import net.sports.nutrition.domain.entities.Category;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,34 +11,37 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 25.01.2016 14:07
- */
 
+/**
+ * Service to work with the Category, using ICategoryDao.
+ * .<p>
+ * Implementation of ICategoryDao interface is annotated for automatic resource injection.
+ * </p>
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
+ */
 @Transactional
 @Service
 public class CategoryServiceImpl implements ICategoryService {
 
     @Autowired
-    private ICategoryRepository categoryRepository;
+    private ICategoryDao categoryDao;
 
     @Override
     public Integer deleteCategoryById(Long id) {
 
-        return categoryRepository.deleteById(id);
+        return categoryDao.deleteById(id);
     }
 
     @Override
     public void saveCategory(Category category) {
-        categoryRepository.save(category);
+        categoryDao.save(category);
     }
 
     @Transactional(readOnly = true)
     @Override
     public Category getCategoryById(Long id) {
 
-        return categoryRepository.findById(id);
+        return categoryDao.findById(id);
     }
 
     @Override
@@ -50,21 +53,21 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     public Category updateCategory(Category category) {
 
-        return categoryRepository.edit(category);
+        return categoryDao.edit(category);
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Category> findAllCategories() {
 
-        return categoryRepository.findAll();
+        return categoryDao.findAll();
     }
 
     @Transactional(readOnly = true)
     @Override
     public Category getCategoryByName(String name) {
 
-        return categoryRepository.getCategoryByName(name);
+        return categoryDao.getCategoryByName(name);
     }
 
     @Transactional(readOnly = true)

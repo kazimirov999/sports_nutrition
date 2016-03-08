@@ -8,8 +8,15 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 
 /**
- * Author: Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
- * Date: 05.02.2016 1:01
+ * Class contains information about products sorting type.
+ * <p>
+ * Contains information on the need to select all products or only those that
+ * are in stock. By default, selected all products, that are sorted by name.
+ * Instance of the class is stored in a Session.
+ * </p>
+ *
+ * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
+ * @see SortType
  */
 @Component
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
@@ -17,8 +24,6 @@ public class FormSortedBean implements Serializable {
 
     private SortType sortType = SortType.NAME_ASC;
     private Boolean productAvailability = false;
-    public FormSortedBean() {
-    }
 
     @Override
     public boolean equals(Object o) {
