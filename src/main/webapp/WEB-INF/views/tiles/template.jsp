@@ -29,7 +29,7 @@
     <link rel="stylesheet" type="text/css" href="/resources/styles/css/product.css"/>
     <link rel="stylesheet" type="text/css" href="/resources/styles/css/slider.css"/>
 
-    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <script src="/resources/styles/scripts/slider.js" type="text/javascript"></script>
     <script src="/resources/styles/scripts/menu.js" type="text/javascript"></script>
 
