@@ -116,8 +116,8 @@
                 <td>
                     <form:select class="product_taste" path="product.tasteList" items="${formPropertyContent.tasteList}"
                                  itemValue="id"
-                                 itemLabel="name" multiple="true"/>
-                </td>
+                                 itemLabel="name" multiple="true"/>>
+                </td
                 <td><form:errors path="product.tasteList" cssClass="error"/></td>
             </tr>
             <tr>

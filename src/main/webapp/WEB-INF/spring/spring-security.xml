@@ -14,7 +14,6 @@ http://www.springframework.org/schema/context/spring-context.xsd">
         <intercept-url pattern="/home" access="permitAll"/>
         <intercept-url pattern="/add/**" access="hasRole('ADMIN')"/>
         <intercept-url pattern="/edit/**" access="hasRole('ADMIN')"/>
-        <intercept-url pattern="/delete/**" access="hasRole('ADMIN')"/>
         <intercept-url pattern="/show/users" access="hasRole('ADMIN')"/>
         <intercept-url pattern="/activate/**" access="hasRole('ADMIN')"/>
         <intercept-url pattern="/delete/**" access="hasRole('ADMIN')"/>

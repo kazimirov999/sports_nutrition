@@ -102,7 +102,6 @@ public class ProductController extends AbstractGlobalController {
      * @param formFilterBean - filter form bean
      * @param session        - session between an HTTP client and an HTTP server.
      * @return modelAndView
-     * @see ProductController#pagedProductsPage(HttpSession, Long, Integer, Model)
      */
     @RequestMapping(value = ConstantsUri.PRODUCT_SHOW_ALL, method = RequestMethod.GET)
     public String productsRedirect(@PathVariable Long categoryId, FormFilterBean formFilterBean, HttpSession session) {
@@ -176,7 +175,6 @@ public class ProductController extends AbstractGlobalController {
         return ConstantsView.PRODUCT_SHOW_ALL;
     }
 
-
     /**
      * Writes product to the Model.
      *
@@ -202,12 +200,13 @@ public class ProductController extends AbstractGlobalController {
     @RequestMapping(value = ConstantsUri.PRODUCT_ADD_FORM, method = RequestMethod.GET)
     public String addProductShowForm(Model uiModel) {
         uiModel.addAttribute("formProductBean", new FormProductBean());
+        uiModel.addAttribute(MODEL_ATTRIBUTE_FILTER_CONTENT, formService.createContentForProductForm());
 
         return ConstantsView.PRODUCT_ADD;
     }
 
     /**
-     * Adds product to the database.
+     * Adds product.
      *
      * @param productBean - contains information about the product
      * @param result      - error register
@@ -236,8 +235,6 @@ public class ProductController extends AbstractGlobalController {
         ServiceRedirectMessage.write(redirect, "product.success.add");
 
         return "redirect:" + ConstantsUri.PRODUCT_ADD_FORM;
-
-
     }
 
     /**
@@ -255,12 +252,13 @@ public class ProductController extends AbstractGlobalController {
             session.setAttribute(product.getId().toString(), product.getImageByte());
         }
         uiModel.addAttribute("formProductBean", new FormProductBean(product));
+        uiModel.addAttribute(MODEL_ATTRIBUTE_FILTER_CONTENT, formService.createContentForProductForm());
 
         return ConstantsView.PRODUCT_EDIT;
     }
 
     /**
-     * Saves edit product to the database.
+     * Saves edit product.
      *
      * @param productBean - contains information about the product
      * @param result      - error register
@@ -302,7 +300,7 @@ public class ProductController extends AbstractGlobalController {
     }
 
     /**
-     * Removes  product from the database.
+     * Removes  product.
      *
      * @param productId - product id
      * @param uiModel   - model attributes
@@ -333,7 +331,6 @@ public class ProductController extends AbstractGlobalController {
         return new ModelAndView("redirect:" + ConstantsUri.MESSAGE_SHOW, "message", e.getMessage());
     }
 
-
     /**
      * Writes formSortedBean to the Model
      */
@@ -351,6 +348,5 @@ public class ProductController extends AbstractGlobalController {
 
         return new FormBuyBean();
     }
-
 
 }

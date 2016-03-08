@@ -79,7 +79,6 @@ public class Country implements Serializable {
                 "Id=" + id +
                 ", name='" + name + '\'' +
                 ", iso='" + iso + '\'' +
-                // ", brandSet=" + brandSet +
                 '}';
     }
 

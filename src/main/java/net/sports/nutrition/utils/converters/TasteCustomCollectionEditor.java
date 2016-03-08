@@ -24,8 +24,11 @@ public class TasteCustomCollectionEditor extends CustomCollectionEditor {
     }
 
     @Override
-    protected Object convertElement(Object id)
-    {
+    protected Object convertElement(Object id){
+        if(!"String".equals(id.getClass().getSimpleName())){
+            return null;
+        }
+
         Taste taste = new Taste();
         try{
             taste = tasteService.getTasteById(Long.parseLong((String) id));

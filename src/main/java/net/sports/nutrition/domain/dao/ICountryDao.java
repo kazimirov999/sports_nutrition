@@ -20,7 +20,7 @@ public interface ICountryDao extends IGenericDao<Country, Long> {
      * @return <tt>list of Country</tt> if the countries is exist, <tt>null</tt> otherwise
      * @throws HibernateException
      */
-    public List<Country> findAll() throws HibernateException;
+    List<Country> findAll() throws HibernateException;
 
     /**
      * Returns the products amount by each country.

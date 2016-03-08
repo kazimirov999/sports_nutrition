@@ -89,7 +89,6 @@ public class Category implements Serializable {
     @Override
     public String toString() {
         return "Category{" +
-                //"productSet=" + productSet +
                 ", description='" + description + '\'' +
                 ", name='" + name + '\'' +
                 ", id=" + id +

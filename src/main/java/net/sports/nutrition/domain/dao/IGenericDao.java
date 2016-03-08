@@ -31,7 +31,7 @@ public interface IGenericDao<T, PK extends Serializable> {
      * @return <tt>Entity<tt/> if the action is successful, throw exception  otherwise.
      * @throws HibernateException
      */
-    public <T> T save(T entity) throws HibernateException;
+    <T> T save(T entity) throws HibernateException;
 
     /**
      * Saves or updates an Entity.
@@ -43,7 +43,7 @@ public interface IGenericDao<T, PK extends Serializable> {
      * @return <tt>Entity<tt/> if the action is successful, throw exception  otherwise.
      * @throws HibernateException
      */
-    public <T> T saveOrUpdate(T entity) throws HibernateException;
+    <T> T saveOrUpdate(T entity) throws HibernateException;
 
     /**
      * Deletes an Entity.
@@ -63,7 +63,7 @@ public interface IGenericDao<T, PK extends Serializable> {
      * @param entity -  the managed Entity.
      * @return updated Entity if the action is successful, <tt>null</tt>  otherwise.
      */
-    public <T> T edit(T entity);
+    <T> T edit(T entity);
 
     /**
      * Finds an Entity by identifier.
@@ -83,7 +83,7 @@ public interface IGenericDao<T, PK extends Serializable> {
      * @return <tt>list of Entity</tt> containing the results of the query execution
      * @throws HibernateException
      */
-    public <T> List<T> findByQueryName(String queryName) throws HibernateException;
+    <T> List<T> findByQueryName(String queryName) throws HibernateException;
 
 
 }

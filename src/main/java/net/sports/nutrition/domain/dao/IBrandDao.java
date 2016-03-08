@@ -38,7 +38,7 @@ public interface IBrandDao extends IGenericDao<Brand, Long> {
      * @return <tt>list of Brand</tt> if the brands is exist, <tt>null</tt> otherwise
      * @throws HibernateException
      */
-    public List<Brand> getBrandsByCategoryId(Long categoryId) throws HibernateException;
+    List<Brand> getBrandsByCategoryId(Long categoryId) throws HibernateException;
 
     /**
      * Returns the products amount by each brand.

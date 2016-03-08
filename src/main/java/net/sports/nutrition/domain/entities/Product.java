@@ -195,8 +195,7 @@ public class Product implements Serializable {
                 ", imageByte=" + Arrays.toString(imageByte) +
                 ", brand=" + brand +
                 ", form=" + form +
-                //", videoList=" + videoList +
-                ", tasteList=" + tasteList +
+//                ", tasteList=" + tasteList +
                 ", gender=" + gender +
                 '}';
     }

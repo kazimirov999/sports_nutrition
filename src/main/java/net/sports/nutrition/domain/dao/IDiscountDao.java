@@ -30,7 +30,7 @@ public interface IDiscountDao extends IGenericDao<Discount,Long> {
      * @return <tt>number greater than zero</tt> if the action is successful, <tt>-1</tt> otherwise.
      * @throws HibernateException
      */
-    public Boolean deleteDiscountById(Long discountId)throws HibernateException;
+    Boolean deleteDiscountById(Long discountId)throws HibernateException;
 
     /**
      * Returns  the discount by size.

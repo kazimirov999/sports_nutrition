@@ -26,6 +26,7 @@ import java.util.Map;
  * interface is annotated for automatic resource injection.
  * Class build content of filter to find products.
  * </p>
+ *
  * @author Oleksandr Kazimirov (kazimirov.oleksandr@gmail.com)
  * @see FormFilterContent
  */
@@ -45,6 +46,17 @@ public class FormServiceImpl implements IFormService {
     private static final Logger log = org.jboss.logging.Logger.getLogger(OrderController.class);
 
     @Override
+    public FormPropertyContent createContentForProductForm() {
+        FormPropertyContent formPropertyContent = new FormPropertyContent();
+
+        formPropertyContent.setTasteList(tasteDao.findAll());
+        formPropertyContent.setBrandList(brandDao.findAll());
+        formPropertyContent.setDiscountList(discountDao.findAll());
+
+        return formPropertyContent;
+    }
+
+    @Override
     public FormFilterContent createContentForFilterFormWithAmount(Long categoryId, FormFilterBean filterParams) {
         Long start = System.nanoTime();
         FormFilterContent resultContent = new FormFilterContent();
@@ -56,7 +68,7 @@ public class FormServiceImpl implements IFormService {
         resultContent.setGenderMap(productDao.countProductsByProperty("gender", categoryId, Arrays.asList(content.getGender()), filterParams));
         resultContent.setTasteMap(productDao.countProductsByTasteAndCriteria(categoryId, content.getTasteList(), filterParams));
 
-        log.info("Time counted products by properties: " + (System.nanoTime()-start));
+        log.info("Time counted products by properties: " + (System.nanoTime() - start));
 
         return resultContent;
     }
@@ -86,12 +98,12 @@ public class FormServiceImpl implements IFormService {
         return content;
     }
 
-    private <T> Map<T,Long> convertListProductToMap(List<T> elemList){
-        Map<T,Long> result = new HashMap<>();
-        for(T elem : elemList){
-            result.put(elem,new Long(0));
+    private <T> Map<T, Long> convertListProductToMap(List<T> elemList) {
+        Map<T, Long> result = new HashMap<>();
+        for (T elem : elemList) {
+            result.put(elem, new Long(0));
         }
-            return result;
+        return result;
     }
 }
 

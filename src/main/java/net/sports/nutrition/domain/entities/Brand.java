@@ -104,7 +104,6 @@ public class Brand implements Serializable {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", country=" + country +
-                // ", productSet=" + productSet +
                 '}';
     }
 

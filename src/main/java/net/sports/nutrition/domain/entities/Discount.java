@@ -103,7 +103,6 @@ public class Discount implements Serializable {
                 ", name='" + name + '\'' +
                 ", size=" + size +
                 ", expirationDate=" + expirationDate +
-                // ", productSet=" + productSet +
                 '}';
     }
 
