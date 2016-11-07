@@ -39,7 +39,6 @@ public class IndexController extends AbstractGlobalController {
      */
     @RequestMapping(value = ConstantsUri.MESSAGE_SHOW, method = RequestMethod.GET)
     public String showMessage(@RequestParam(value = "message", required = false) String message, Model uiModel) {
-        System.out.println("333333333333333333333333333333");
         if (message!= null) {
             log.info("Show failure message: " + message);
             ServiceMessage.write(uiModel, message);
